@@ -1,0 +1,41 @@
+{
+  "name": "@txjs/bool",
+  "version": "0.0.3",
+  "description": "js常用数据类型校验方法",
+  "main": "./dist/index.cjs.js",
+  "module": "./dist/index.esm.mjs",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "require": "./dist/index.cjs.js",
+      "import": "./dist/index.esm.mjs",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "node ../../build.js",
+    "dev": "npm run build --watch",
+    "lint": "eslint src"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yangtianxia/txjs.git"
+  },
+  "keywords": [
+    "txjs",
+    "@txjs/bool",
+    "javascript",
+    "typescript",
+    "toString",
+    "typeof"
+  ],
+  "author": "yangtianxia",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/yangtianxia/txjs/issues"
+  },
+  "homepage": "https://github.com/yangtianxia/txjs#readme"
+}

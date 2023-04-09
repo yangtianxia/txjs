@@ -1,0 +1,53 @@
+{
+  "name": "@txjs/taro-request",
+  "version": "0.0.1-alphe.0",
+  "description": "tarojs请求方法封装",
+  "main": "./dist/index.cjs.js",
+  "module": "./dist/index.esm.mjs",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "require": "./dist/index.cjs.js",
+      "import": "./dist/index.esm.mjs",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "node ../../build.js",
+    "dev": "node build.js --watch",
+    "lint": "eslint src"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yangtianxia/txjs.git"
+  },
+  "keywords": [
+    "txjs",
+    "tarojs",
+    "taro.request",
+    "@txjs/taro-request",
+    "taro-request",
+    "javascript",
+    "typescript"
+  ],
+  "author": "yangtianxia",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/yangtianxia/txjs/issues"
+  },
+  "homepage": "https://github.com/yangtianxia/txjs#readme",
+  "dependencies": {
+    "@tarojs/taro": "^3.6.4",
+    "@txjs/bool": "^0.0.3",
+    "@txjs/shared": "^0.0.2",
+    "extend": "^3.0.2",
+    "miniprogram-cancel-token": "^5.1.2",
+    "miniprogram-network-utils": "^5.3.0-alpha.0"
+  },
+  "devDependencies": {
+    "@types/extend": "^3.0.1"
+  }
+}

@@ -1,0 +1,47 @@
+{
+  "name": "@txjs/bem",
+  "version": "0.0.1",
+  "description": "css命名方法，支持css-modules绑定使用",
+  "main": "./dist/index.cjs.js",
+  "module": "./dist/index.esm.mjs",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "require": "./dist/index.cjs.js",
+      "import": "./dist/index.esm.mjs",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "node ../../build.js",
+    "dev": "npm run build --watch",
+    "lint": "eslint src"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yangtianxia/txjs.git"
+  },
+  "keywords": [
+    "txjs",
+    "@txjs/bem",
+    "css-modules",
+    "javascript",
+    "typescript"
+  ],
+  "author": "yangtianxia",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/yangtianxia/txjs/issues"
+  },
+  "homepage": "https://github.com/yangtianxia/txjs#readme",
+  "dependencies": {
+    "@txjs/bool": "^0.0.1",
+    "extend": "^3.0.2"
+  },
+  "devDependencies": {
+    "@types/extend": "^3.0.1"
+  }
+}

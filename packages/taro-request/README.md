@@ -1,4 +1,4 @@
-# @txjs/taro-request [![npm version](https://badge.fury.io/js/miniprogram-request.svg)](https://npmjs.com/package/@txjs/taro-request)
+# @txjs/taro-request [![npm version](https://badge.fury.io/js/@txjs%2Ftaro-request.svg)](https://badge.fury.io/js/@txjs%2Ftaro-request)
 
 ## 写在前面
 

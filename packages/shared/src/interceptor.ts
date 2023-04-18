@@ -39,7 +39,7 @@ export const callInterceptor = (
 	}
 ) => {
 	if (interceptor) {
-		const returnVal = interceptor.call(null, args)
+		const returnVal = interceptor.apply(null, args)
 
 		if (isPromise(returnVal)) {
 			returnVal
@@ -85,7 +85,8 @@ export const callInterceptor = (
  * ```
  */
 export const interceptorAll = (
-	interceptors: Interceptor[]
+	interceptors: Interceptor[],
+	...args: any[]
 ) => {
 	return new Promise<boolean>((resolve) => {
 		Promise.all(
@@ -94,6 +95,7 @@ export const interceptorAll = (
 					tasks.push(
 						new Promise<boolean>((resolve) => {
 							callInterceptor(interceptor, {
+								args,
 								done() {
 									resolve(true)
 								},

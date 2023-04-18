@@ -60,3 +60,59 @@ export const callInterceptor = (
 		done()
 	}
 }
+
+/**
+ * interceptorAll
+ *
+ * @example
+ * ```ts
+ * const prom = new Promise((resolve) => {
+ * 	resolve(true)
+ * })
+ *
+ * const fn = function () {
+ * 	return false
+ * }
+ *
+ * interceptorAll([prom, fn])
+ * 	.then((confirm) => {
+ * 		if (confirm) {
+ * 			// => done
+ * 		} else {
+ * 			// => canceled
+ * 		}
+ * 	})
+ * ```
+ */
+export const interceptorAll = (
+	interceptors: Interceptor[]
+) => {
+	return new Promise<boolean>((resolve) => {
+		Promise.all(
+			interceptors.reduce(
+				(tasks, interceptor) => {
+					tasks.push(
+						new Promise<boolean>((resolve) => {
+							callInterceptor(interceptor, {
+								done() {
+									resolve(true)
+								},
+								canceled() {
+									resolve(false)
+								}
+							})
+						})
+					)
+					return tasks
+				}, [] as Promise<boolean>[]
+			)
+		)
+			.then((confirm) => {
+				if (confirm.includes(false)) {
+					resolve(false)
+				} else {
+					resolve(true)
+				}
+			})
+	})
+}

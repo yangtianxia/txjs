@@ -11,7 +11,6 @@ npm i @txjs/shared
 ## 支持方法
 
 - callInterceptor
-- interceptorAll
 - noop
 - omit
 - padStr

@@ -1,4 +1,4 @@
-import { isPromise } from '@txjs/bool'
+import { isPromise, isNil } from '@txjs/bool'
 import { noop } from './noop'
 
 export declare interface Interceptor {
@@ -84,16 +84,13 @@ export const callInterceptor = (
  * 	})
  * ```
  */
-export const interceptorAll = (
-	interceptors: Interceptor[],
-	...args: any[]
-) => {
+export const interceptorAll = ([interceptors, ...args]: [Interceptor[], any]) => {
 	return new Promise<boolean>((resolve) => {
 		Promise.all(
 			interceptors.reduce(
 				(tasks, interceptor) => {
 					tasks.push(
-						new Promise<boolean>((resolve) => {
+						isNil(interceptor) ? Promise.resolve(true) : new Promise<boolean>((resolve) => {
 							callInterceptor(interceptor, {
 								args,
 								done() {

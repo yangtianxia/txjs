@@ -66,25 +66,31 @@ export const callInterceptor = (
  *
  * @example
  * ```ts
- * const prom = new Promise((resolve) => {
- * 	resolve(true)
- * })
+ * const a = '1'
+ * const b = '2'
+ *
+ * const prom = function(a, b) {
+ * 	return new Promise((resolve) => {
+ * 		// a = 1
+ * 		// b = 2
+ * 		resolve(true)
+ * 	})
+ * }
  *
  * const fn = function () {
+ * 	// a = 1
+ * 	// b = 2
  * 	return false
  * }
  *
- * interceptorAll([prom, fn])
- * 	.then((confirm) => {
- * 		if (confirm) {
- * 			// => done
- * 		} else {
- * 			// => canceled
- * 		}
- * 	})
+ * callInterceptor(interceptorAll, {
+ * 	args: [[prom, fn], a, b],
+ * 	done: () => {},
+ * 	canceled: () => {}
+ * })
  * ```
  */
-export const interceptorAll = ([interceptors, ...args]: [Interceptor[], any]) => {
+export const interceptorAll = (interceptors: Interceptor[], ...args: any[]) => {
 	return new Promise<boolean>((resolve) => {
 		Promise.all(
 			interceptors.reduce(

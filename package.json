@@ -1,6 +1,7 @@
 {
   "private": true,
   "scripts": {
+    "clean": "lerna clean",
     "bootstrap": "lerna bootstrap",
     "build": "lerna run build",
     "lint": "lerna run lint",

@@ -7,10 +7,10 @@ export type Numeric = number | string
  *
  * @example
  * ```ts
- * isNumberic(3) // true
- * isNumberic('3.1415926') // true
+ * isNumeric(3) // true
+ * isNumeric('3.1415926') // true
  * ```
  */
-export function isNumberic(value: Numeric): value is number {
+export function isNumeric(value: Numeric): value is number {
 	return isNumber(value) || /^(\d|-\d)+(\.\d+)?$/.test(value)
 }

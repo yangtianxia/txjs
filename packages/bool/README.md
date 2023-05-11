@@ -18,7 +18,7 @@ npm i @txjs/bool
 - isNil
 - isNull
 - isNumber
-- isNumberic
+- isNumeric
 - isPhoneNumber
 - isPlainObject
 - isPromise

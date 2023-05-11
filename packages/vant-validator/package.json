@@ -1,6 +1,6 @@
 {
   "name": "@txjs/vant-validator",
-  "version": "0.0.3",
+  "version": "0.0.5",
   "description": "vant组件form表单数据验证",
   "main": "./dist/index.cjs.js",
   "module": "./dist/index.esm.mjs",

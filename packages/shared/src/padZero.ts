@@ -1,5 +1,3 @@
-const reg = /^[0-9]$/
-
 /**
  * 数值 `value` 小于 `10`, 则前置补充 `0` 字符
  *
@@ -11,14 +9,16 @@ const reg = /^[0-9]$/
  * // => 05
  * padZero(10)
  * // => 10
+ * padZero(1, 3)
+ * // => 001
  * ```
  */
-export function padZero(value: number | string) {
+export function padZero(value: number | string, len = 2) {
 	value = value.toString()
 
-	if (reg.test(value)) {
-		return `0${value}`
-	}
+  while (value.length < len) {
+    value = '0' + value
+  }
 
-	return value
+  return value
 }

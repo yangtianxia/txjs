@@ -18,6 +18,7 @@ export type {
 	DefaultsValidatorRules,
 	CustomValidatorRules,
 	Rule,
+	BaseTrigger,
 	ValidatorRules,
 	ValidatorRule,
 	CustomValidatorFunction

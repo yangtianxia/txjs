@@ -22,9 +22,6 @@ export function padStr(target: string, value: string, index: number) {
 		.slice(0, index)
 		.concat(value)
 		.concat(
-			target.slice(
-				index,
-				target.length
-			)
+			target.slice(index, target.length)
 		)
 }

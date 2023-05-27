@@ -1,4 +1,6 @@
-const reg = /\s+/g
+import { is } from './is'
+
+const SpaceRegExp = /\s+/g
 
 /**
  * 检查 `value` 是否是手机号码，支持虚拟号段
@@ -12,12 +14,12 @@ const reg = /\s+/g
  * ```
  */
 export function isPhoneNumber(value: any): value is string {
-	if (typeof value !== 'string') {
+	if (is(value, 'string')) {
 		return false
 	}
 
-	if (reg.test(value)) {
-		value = value.replace(reg, '')
+	if (SpaceRegExp.test(value)) {
+		value = value.replace(SpaceRegExp, '')
 	}
 
   return /^1[3-9]\d{9}$/.test(value)

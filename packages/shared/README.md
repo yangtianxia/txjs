@@ -10,6 +10,7 @@ npm i @txjs/shared
 
 ## 支持方法
 
+- camelize
 - callInterceptor
 - interceptorAll
 - noop

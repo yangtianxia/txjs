@@ -1,6 +1,6 @@
 {
   "name": "@txjs/bem",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "css命名方法，支持css-modules绑定使用",
   "main": "./dist/index.cjs.js",
   "module": "./dist/index.esm.mjs",

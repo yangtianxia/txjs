@@ -110,7 +110,7 @@ function Bem(name: string, cls?: Cls) {
 	return [name, bem]
 }
 
-Bem.updateConfig = function (config: Partial<ConfigOption>) {
+Bem.config = function (config: Partial<ConfigOption>) {
 	if (isPlainObject(config)) {
 		extend(true, $$$config, config)
 	}

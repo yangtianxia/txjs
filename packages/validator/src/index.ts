@@ -1,8 +1,5 @@
-import {
-	Validator,
-	type ValidatorRules,
-	type BaseTrigger,
-} from './validator'
+import { Validator, type ValidatorRules, type BaseTrigger } from './validator'
+import { extend } from './shared/extend'
 
 const instance = new Validator<BaseTrigger, string>()
 
@@ -10,6 +7,8 @@ const validator = Object.assign(
 	(options: ValidatorRules<BaseTrigger>) => instance.init(options),
 	instance
 )
+
+extend(validator, instance, Validator.prototype)
 
 export type {
 	ValidatorConfigObject,

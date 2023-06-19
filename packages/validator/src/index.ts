@@ -24,6 +24,7 @@ export type {
 } from './validator'
 
 export * from './shared/formatTpl'
+export * from './shared/extend'
 
 export { validator }
 export default Validator

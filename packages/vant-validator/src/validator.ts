@@ -1,11 +1,4 @@
-import BaseValidator, {
-	formatTpl,
-	type ValidatorConfigObject,
-	type Rule,
-	type ValidatorRule,
-	type ValidatorConfig,
-	type CustomValidatorFunction
-} from '@txjs/validator'
+import BaseValidator, { formatTpl, type ValidatorConfigObject, type Rule, type ValidatorRule, type ValidatorConfig, type CustomValidatorFunction } from '@txjs/validator'
 import { ref, type Ref } from 'vue'
 import { toArray } from '@txjs/shared'
 import { isNil, isValidString, isFunction, isArray, isPlainObject } from '@txjs/bool'

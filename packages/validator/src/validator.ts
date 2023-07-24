@@ -22,7 +22,7 @@ interface BaseValidatorConfig<Trigger> {
 	/** 预设方法 */
 	preset: BaseValidatorFunc | BaseValidatorFunc[]
 	/** 提示文案 */
-	tpl: Tpl
+	tpl: string | Tpl
 }
 
 export interface ValidatorConfig<Trigger> extends BaseValidatorConfig<Trigger> {

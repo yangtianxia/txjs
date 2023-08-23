@@ -14,14 +14,10 @@ js常用方法
 
 css命名方法，支持css-modules绑定使用
 
-### [@txjs/validator](https://github.com/yangtianxia/txjs/tree/master/packages/validator)
+### [@txjs/math](https://github.com/yangtianxia/txjs/tree/master/packages/math)
 
-validator数据验证
+加减乘除计算
 
-### [@txjs/vant-validator](https://github.com/yangtianxia/txjs/tree/master/packages/vant-validator)
+### [@txjs/async](https://github.com/yangtianxia/txjs/tree/master/packages/async)
 
-vant组件form表单数据验证
-
-### [@txjs/taro-request](https://github.com/yangtianxia/txjs/tree/master/packages/taro-request)
-
-tarojs请求方法封装
+解决异步方法try-catch问题

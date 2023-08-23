@@ -1,0 +1,41 @@
+{
+  "name": "@txjs/async",
+  "version": "0.0.1-alpha-0",
+  "description": "解决异步方法try-catch问题",
+  "main": "./dist/index.cjs.js",
+  "module": "./dist/index.esm.mjs",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "require": "./dist/index.cjs.js",
+      "import": "./dist/index.esm.mjs",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "node ../../build.js",
+    "dev": "npm run build --watch",
+    "lint": "eslint src"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yangtianxia/txjs.git"
+  },
+  "keywords": [
+    "txjs",
+    "async",
+    "await",
+    "@txjs/async",
+    "javascript",
+    "typescript"
+  ],
+  "author": "yangtianxia",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/yangtianxia/txjs/issues"
+  },
+  "homepage": "https://github.com/yangtianxia/txjs#readme"
+}

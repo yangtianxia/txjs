@@ -1,9 +1,5 @@
-import { is } from './is'
-
-const SpaceRegExp = /\s+/g
-
 /**
- * 检查 `value` 是否是手机号码，支持虚拟号段
+ * 检查 `value` 是否是手机号码，包含虚拟号段
  *
  * @example
  * ```ts
@@ -14,12 +10,8 @@ const SpaceRegExp = /\s+/g
  * ```
  */
 export function isPhoneNumber(value: any): value is string {
-	if (is(value, 'string')) {
+	if (typeof value !== 'string') {
 		return false
-	}
-
-	if (SpaceRegExp.test(value)) {
-		value = value.replace(SpaceRegExp, '')
 	}
 
   return /^1[3-9]\d{9}$/.test(value)

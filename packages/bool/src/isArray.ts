@@ -14,5 +14,5 @@ import { is } from './is'
  * ```
  */
 export function isArray<T>(value: T): value is T extends Array<any> ? T : never {
-	return is(value, 'Array')
+	return 'isArray' in Array ? Array.isArray(value) : is(value, 'Array')
 }

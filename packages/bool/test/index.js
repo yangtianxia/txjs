@@ -1,5 +1,7 @@
 const bool = require('../dist/index.cjs')
 
+console.log(bool.isArray([]))
+
 console.log(bool.isEqual(12, 1))
 console.log(bool.isEqual(false, true))
 console.log(bool.isEqual([], []))

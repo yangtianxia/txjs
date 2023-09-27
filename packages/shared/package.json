@@ -1,6 +1,6 @@
 {
   "name": "@txjs/shared",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "description": "js常用方法",
   "main": "./dist/index.cjs.js",
   "module": "./dist/index.esm.mjs",
@@ -37,6 +37,6 @@
   },
   "homepage": "https://github.com/yangtianxia/txjs#readme",
   "dependencies": {
-    "@txjs/bool": "^0.0.6"
+    "@txjs/bool": "^0.0.7"
   }
 }

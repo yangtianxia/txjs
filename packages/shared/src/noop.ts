@@ -1,4 +1,4 @@
 /**
- * `noop` empty function
+ * empty function
  */
 export function noop() {}

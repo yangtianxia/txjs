@@ -3,7 +3,7 @@ import * as Implement from './base'
 
 type ImplementType = keyof typeof Implement
 
-const isNumberic = (value: any): value is number => (typeof value === 'number' && !isNaN(value)) || /^\d+(\.\d+)?$/.test(value)
+const isNumberic = (value: any): value is number => (typeof value === 'number' && !Number.isNaN(value)) || /^\d+(\.\d+)?$/.test(value)
 
 export class Chain {
   private value = 0

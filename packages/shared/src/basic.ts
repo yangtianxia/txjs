@@ -1,0 +1,1 @@
+export const ø = Object.create(Object.prototype)

@@ -1,6 +1,6 @@
 {
   "name": "@txjs/bool",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "js常用数据类型校验方法",
   "main": "./dist/index.cjs.js",
   "module": "./dist/index.esm.mjs",

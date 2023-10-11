@@ -1,3 +1,1 @@
-import { ø } from './basic'
-
-export const extend = ø.assign
+export const extend = Object.assign

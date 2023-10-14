@@ -61,7 +61,7 @@ function moduleCls(cls: Cls, bem: ReturnType<typeof bemCls>) {
 			.split(' ')
 			.map((item) => $$$config.debugger ? cls[item] || item : cls[item])
 			.join(' ')
-		return modules || (isString(el) ? cls[el] : str)
+		return modules || (isString(el) ? cls[el] : $$$config.debugger ? str : '')
 	}
 }
 

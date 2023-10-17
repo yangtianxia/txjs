@@ -3,7 +3,7 @@ import { notNil, isFunction, isPlainObject, isArray } from '@txjs/bool'
 
 type InstanceClone<T> = true | ((value: T) => T)
 
-function cloneDeep<T>(value: T, instanceClone?: InstanceClone<T>) {
+function cloneDeep<T>(value: T, instanceClone?: InstanceClone<T>): T {
 	if (isPlainObject(value)) {
 		return cloneObjectDeep(value, instanceClone)
 	}

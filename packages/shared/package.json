@@ -1,6 +1,6 @@
 {
   "name": "@txjs/shared",
-  "version": "0.0.11",
+  "version": "0.0.12",
   "description": "js常用方法",
   "main": "./dist/index.cjs.js",
   "module": "./dist/index.esm.mjs",
@@ -16,6 +16,7 @@
     "dist"
   ],
   "scripts": {
+    "test": "node test/index.js",
     "build": "node ../../build.js",
     "dev": "npm run build --watch",
     "lint": "eslint src"
@@ -37,6 +38,10 @@
   },
   "homepage": "https://github.com/yangtianxia/txjs#readme",
   "dependencies": {
-    "@txjs/bool": "^0.0.7"
+    "@txjs/bool": "^0.0.7",
+    "shallow-clone": "^3.0.1"
+  },
+  "devDependencies": {
+    "@types/shallow-clone": "^3.0.0"
   }
 }

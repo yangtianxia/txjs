@@ -1,0 +1,40 @@
+{
+  "name": "@txjs/make",
+  "version": "0.0.1",
+  "description": "ts类型声明函数",
+  "main": "./dist/index.cjs.js",
+  "module": "./dist/index.esm.mjs",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "require": "./dist/index.cjs.js",
+      "import": "./dist/index.esm.mjs",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "test": "node test/index.js",
+    "build": "node ../../build.js",
+    "dev": "npm run build --watch",
+    "lint": "eslint src"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yangtianxia/txjs.git"
+  },
+  "keywords": [
+    "txjs",
+    "@txjs/make",
+    "javascript",
+    "typescript"
+  ],
+  "author": "yangtianxia",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/yangtianxia/txjs/issues"
+  },
+  "homepage": "https://github.com/yangtianxia/txjs#readme"
+}

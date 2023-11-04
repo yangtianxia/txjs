@@ -1,5 +1,5 @@
 /**
- * 检查 `value` 是否是正整数，正则 `/^\d+$/`
+ * 检查 `value` 是否是正整数，包含 `0`
  *
  * @example
  * ```ts
@@ -12,5 +12,5 @@
  * ```
  */
 export function isInteger(value: any): value is number {
-  return /^\d+$/.test(value)
+  return /^(?:0|(?:[1-9]\d*))$/.test(value)
 }

@@ -1,5 +1,3 @@
-import { is } from './is'
-
 /**
  * 检查 `value` 是否是 `symbol` 类型
  *
@@ -15,5 +13,5 @@ import { is } from './is'
  * ```
  */
 export function isSymbol(value: unknown): value is symbol {
-	return is(value, 'Symbol')
+	return typeof value === 'symbol'
 }

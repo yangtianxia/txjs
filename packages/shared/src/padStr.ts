@@ -1,5 +1,3 @@
-import { isValidString } from '@txjs/bool'
-
 /**
  * 字符串填充
  *
@@ -14,14 +12,11 @@ import { isValidString } from '@txjs/bool'
  * ```
  */
 export function padStr(target: string, value: string, index: number) {
-	if (!isValidString(value)) {
+	if (!value) {
 		return target
 	}
 
-	return target
-		.slice(0, index)
-		.concat(value)
-		.concat(
-			target.slice(index, target.length)
-		)
+	return target.slice(0, index).concat(value).concat(
+		target.slice(index, target.length)
+	)
 }

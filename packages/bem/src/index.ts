@@ -1,6 +1,3 @@
-import { isNil, isString, isArray, notNil, isPlainObject } from '@txjs/bool'
-import extend from 'extend'
-
 type Base = string | Record<string, any>
 type Mods = Base | Base[]
 type Cls = Record<string, string>
@@ -12,13 +9,33 @@ type ConfigOption = {
 	}
 }
 
-const $$$config = {
+const config = {
 	debugger: false,
 	prefixer: {
 		comp: undefined,
 		page: undefined
 	}
 } as ConfigOption
+
+function isNil(value: unknown): value is null | undefined {
+	return value == null
+}
+
+function isString(value: unknown): value is string {
+	return typeof value === 'string'
+}
+
+function notNil<T extends unknown>(value: T): value is T extends null | undefined ? never : T {
+	return value != null
+}
+
+function isArray<T>(value: T): value is T extends Array<any> ? T : never {
+	return Array.isArray(value)
+}
+
+function isObject<T extends unknown>(value: T): value is T extends object ? T : never {
+	return notNil(value) && typeof value === 'object'
+}
 
 function rootCls(name: string, mods?: Mods): string {
 	if (isNil(mods)) {
@@ -31,14 +48,14 @@ function rootCls(name: string, mods?: Mods): string {
 
 	if (isArray(mods)) {
 		return mods.reduce<string>(
-			(ret, curr) => ret + rootCls(name, curr), ''
+			(ret, cur) => ret + rootCls(name, cur), ''
 		)
 	}
 
 	return Object
 		.keys(mods)
 		.reduce(
-			(ret, curr) => ret + (mods[curr] ? rootCls(name, curr) : ''), ''
+			(ret, cur) => ret + (mods[cur] ? rootCls(name, cur) : ''), ''
 		)
 }
 
@@ -59,9 +76,9 @@ function moduleCls(cls: Cls, bem: ReturnType<typeof bemCls>) {
 		const str = bem(el, mods)
 		const modules = str
 			.split(' ')
-			.map((item) => $$$config.debugger ? cls[item] || item : cls[item])
+			.map((item) => config.debugger ? cls[item] || item : cls[item])
 			.join(' ')
-		return modules || (isString(el) ? cls[el] : $$$config.debugger ? str : '')
+		return modules || (isString(el) ? cls[el] : config.debugger ? str : '')
 	}
 }
 
@@ -92,7 +109,7 @@ function Bem(name: string): [string, ReturnType<typeof bemCls>]
 function Bem(name: string, cls: Cls): [string, ReturnType<typeof bemCls>]
 function Bem(name: string, cls?: Cls): [string, ReturnType<typeof bemCls>]
 function Bem(name: string, cls?: Cls) {
-	const { comp, page } = $$$config?.prefixer || {}
+	const { comp, page } = config?.prefixer || {}
 
 	if (isNil(cls) && comp) {
 		name = `${comp}-${name}`
@@ -100,7 +117,7 @@ function Bem(name: string, cls?: Cls) {
 
 	const bem = bemCls(name)
 
-	if (isPlainObject(cls)) {
+	if (isObject(cls)) {
 		if (page) {
 			name = `${page}-${name}`
 		}
@@ -110,9 +127,12 @@ function Bem(name: string, cls?: Cls) {
 	return [name, bem]
 }
 
-Bem.config = function (config: Partial<ConfigOption>) {
-	if (isPlainObject(config)) {
-		extend(true, $$$config, config)
+Bem.config = function (partial: Partial<ConfigOption>) {
+	if (isObject(partial)) {
+		if (notNil(partial['debugger'])) {
+			config.debugger = partial.debugger
+		}
+		Object.assign(config.prefixer, partial.prefixer || {})
 	}
 }
 

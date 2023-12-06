@@ -1,1 +1,1 @@
-export const shallowMerge = Object.assign
+export const shallowMerge = Object.assign;

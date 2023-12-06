@@ -10,8 +10,9 @@ npm i @txjs/shared
 
 ## 支持方法
 
-- extend
 - camelize
+- clamp
+- cloneDeep
 - callInterceptor
 - interceptorAll
 - noop
@@ -19,4 +20,6 @@ npm i @txjs/shared
 - padStr
 - padZero
 - pick
+- shallowMerge
 - toArray
+- toFixed

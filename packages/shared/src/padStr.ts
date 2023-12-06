@@ -1,5 +1,5 @@
 /**
- * 字符串填充
+ * padStr - 字符串拼接
  *
  * @example
  * ```ts
@@ -11,12 +11,10 @@
  * // => ab-c
  * ```
  */
-export function padStr(target: string, value: string, index: number) {
-	if (!value) {
-		return target
+export function padStr(text: string, value: string, index = 0) {
+	if (index === 0) {
+		return `${value}${text}`
 	}
 
-	return target.slice(0, index).concat(value).concat(
-		target.slice(index, target.length)
-	)
+	return `${text.slice(0, index)}${value}${text.slice(index)}`
 }

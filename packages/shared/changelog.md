@@ -1,4 +1,8 @@
-# @txjs/shared
+## @txjs/shared
+
+### 2023/12/06
+
+- 新增 `toFixed` 方法
 
 ### 2023/11/06
 

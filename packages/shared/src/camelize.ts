@@ -1,5 +1,5 @@
 /**
- * 字符串驼峰式
+ * camelize
  *
  * @example
  * ```ts

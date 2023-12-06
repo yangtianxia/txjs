@@ -1,7 +1,7 @@
 import { isArray } from '@txjs/bool'
 
 /**
- * 转为数组
+ * toArray
  *
  * @example
  * ```ts

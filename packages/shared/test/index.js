@@ -16,3 +16,9 @@ arr[1].b[0].c = 5
 
 console.log(JSON.stringify(arr))
 console.log(JSON.stringify(arr1))
+
+console.log(shared.padStr('abc', '-', 1))
+console.log(shared.padStr('abc', '-', 2))
+console.log(shared.padStr('abc', '-', 3))
+console.log(shared.padStr('abc', '-', 0))
+console.log(shared.padStr('abc', '-', -1))

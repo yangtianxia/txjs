@@ -72,7 +72,7 @@ export function isEqual(value: any, other: any, seen = new WeakMap()) {
 	}
 
 	for (const key in valueKeys) {
-		if (!other.hasOwnProperty(key) || !isEqual(value[key], other[value], seen)) {
+		if (!Object.prototype.hasOwnProperty.call(other, key) || !isEqual(value[key], other[value], seen)) {
 			return false
 		}
 	}

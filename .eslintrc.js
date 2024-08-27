@@ -11,24 +11,29 @@ module.exports = {
 		'plugin:import/typescript'
 	],
   parserOptions: {
-    ecmaVersion: 2018,
-		sourceType: 'module'
+    ecmaVersion: 2020,
+		sourceType: 'module',
+    ecmaFeatures: {
+      jsx: true,
+      experimentalObjectRestSpread: true
+    }
   },
   parser: '@typescript-eslint/parser',
   plugins: ['@typescript-eslint'],
   rules: {
-    'camelcase': 0,
-    'eol-last': 0,
-    'no-unused-vars': 0,
+    'camelcase': 'off',
+    'eol-last': 'error',
+    'no-unused-vars': 'off',
     'no-console': 'off',
     'no-debugger': 'off',
-    'quote-props': [0, 'always'],
-    'space-before-function-paren': 0,
+    'quote-props': ['off', 'always'],
+    'space-before-function-paren': 'off',
     'no-unused-expressions': 'off',
-    '@typescript-eslint/no-var-requires': 0,
+    '@typescript-eslint/no-var-requires': 'error',
     '@typescript-eslint/no-empty-function': 'off',
     '@typescript-eslint/no-explicit-any': 'off',
     '@typescript-eslint/no-non-null-assertion': 'off',
-    '@typescript-eslint/explicit-module-boundary-types': 'off'
+    '@typescript-eslint/explicit-module-boundary-types': 'off',
+    '@typescript-eslint/no-empty-interface': 'off'
   }
 }

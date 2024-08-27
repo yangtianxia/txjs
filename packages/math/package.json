@@ -1,39 +1,48 @@
 {
   "name": "@txjs/math",
-  "version": "0.0.1",
-  "description": "js加减乘除计算",
+  "version": "0.0.2",
+  "description": "加减乘除计算",
   "main": "./dist/index.cjs.js",
   "module": "./dist/index.esm.mjs",
   "types": "./dist/index.d.ts",
   "exports": {
     ".": {
-      "require": "./dist/index.cjs.js",
+      "types": "./dist/index.d.ts",
       "import": "./dist/index.esm.mjs",
-      "types": "./dist/index.d.ts"
+      "require": "./dist/index.cjs.js"
     }
   },
   "files": [
     "dist"
   ],
   "scripts": {
-    "build": "node ../../build.js",
-    "dev": "npm run build --watch",
-    "lint": "eslint src"
+    "lint": "eslint src --ext .ts",
+    "clean": "rimraf ./dist",
+    "dev": "node ./build.js -w",
+    "build:types": "tsc -p ./tsconfig.json --emitDeclarationOnly",
+    "build:bundle": "node ./build.js",
+    "build": "npm run clean && npm run lint && npm run build:bundle && npm run build:types"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/yangtianxia/txjs.git"
+    "url": "git+https://github.com/yangtianxia/txjs.git",
+    "directory": "packages/math"
   },
   "keywords": [
     "txjs",
-    "@txjs/math",
-    "javascript",
-    "typescript"
+    "@txjs/math"
   ],
   "author": "yangtianxia",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/yangtianxia/txjs/issues"
   },
-  "homepage": "https://github.com/yangtianxia/txjs#readme"
+  "homepage": "https://github.com/yangtianxia/txjs#readme",
+  "devDependencies": {
+    "esbuild": "^0.23.1"
+  }
 }

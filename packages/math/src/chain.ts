@@ -1,7 +1,7 @@
 import type { ValueType } from './types'
-import * as Implement from './base'
+import * as methods from './base'
 
-type ImplementType = keyof typeof Implement
+type MethodType = keyof typeof methods
 
 const isNumberic = (value: any): value is number => (typeof value === 'number' && !Number.isNaN(value)) || /^\d+(\.\d+)?$/.test(value)
 
@@ -10,24 +10,24 @@ export class Chain {
 
   constructor (
     args?: ValueType | ValueType[],
-    type?: ImplementType
+    type?: MethodType
   ) {
     this.value = this.__init(args, type)
   }
 
   private __exec(
     args: ValueType[],
-    type: ImplementType
+    type: MethodType
   ) {
     return args.reduce((ret, value) => {
-      ret = Implement[type](ret, value)
+      ret = (methods as any)[type](ret, value)
       return ret
     }, this.value)
   }
 
   private __init(
     args?: ValueType | ValueType[],
-    type?: ImplementType
+    type?: MethodType
   ) {
     if (typeof args === 'undefined') {
       args = [0]
@@ -38,22 +38,22 @@ export class Chain {
   }
 
   multiply(multiplicand: ValueType) {
-    this.value = Implement.multiply(this.value, multiplicand)
+    this.value = methods.multiply(this.value, multiplicand)
     return this
   }
 
   subtract(subtrahend: ValueType) {
-    this.value = Implement.subtract(this.value, subtrahend)
+    this.value = methods.subtract(this.value, subtrahend)
     return this
   }
 
   addition(addend: ValueType) {
-    this.value = Implement.addition(this.value, addend)
+    this.value = methods.addition(this.value, addend)
     return this
   }
 
   divide(divisor: ValueType) {
-    this.value = Implement.divide(this.value, divisor)
+    this.value = methods.divide(this.value, divisor)
     return this
   }
 

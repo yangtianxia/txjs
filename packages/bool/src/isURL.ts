@@ -1,6 +1,6 @@
 import { isNil } from './isNil'
 
-const reg = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()!@:%_\+.~#?&\/\/=]*)/
+const urlPattern = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()!@:%_+.~#?&//=]*)/
 
 /**
  * 检查 `value` 是否是网址URL
@@ -18,5 +18,5 @@ export function isURL(value: any): value is string {
 		return false
 	}
 
-	return reg.test(value)
+	return urlPattern.test(value)
 }

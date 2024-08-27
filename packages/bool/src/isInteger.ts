@@ -1,3 +1,5 @@
+const integerPattern = /^(?:0|(?:[1-9]\d*))$/
+
 /**
  * 检查 `value` 是否是正整数，包含 `0`
  *
@@ -12,5 +14,5 @@
  * ```
  */
 export function isInteger(value: any): value is number {
-  return /^(?:0|(?:[1-9]\d*))$/.test(value)
+  return integerPattern.test(value)
 }

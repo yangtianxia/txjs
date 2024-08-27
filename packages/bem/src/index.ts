@@ -1,6 +1,11 @@
+import { isNil, isString, notNil, isArray, isPlainObject } from '@txjs/bool'
+
 type Base = string | Record<string, any>
+
 type Mods = Base | Base[]
+
 type Cls = Record<string, string>
+
 type ConfigOption = {
 	debugger: boolean
 	prefixer: {
@@ -16,26 +21,6 @@ const config = {
 		page: undefined
 	}
 } as ConfigOption
-
-function isNil(value: unknown): value is null | undefined {
-	return value == null
-}
-
-function isString(value: unknown): value is string {
-	return typeof value === 'string'
-}
-
-function notNil<T extends unknown>(value: T): value is T extends null | undefined ? never : T {
-	return value != null
-}
-
-function isArray<T>(value: T): value is T extends Array<any> ? T : never {
-	return Array.isArray(value)
-}
-
-function isObject<T extends unknown>(value: T): value is T extends object ? T : never {
-	return notNil(value) && typeof value === 'object'
-}
 
 function rootCls(name: string, mods?: Mods): string {
 	if (isNil(mods)) {
@@ -117,7 +102,7 @@ function Bem(name: string, cls?: Cls) {
 
 	const bem = bemCls(name)
 
-	if (isObject(cls)) {
+	if (isPlainObject(cls)) {
 		if (page) {
 			name = `${page}-${name}`
 		}
@@ -128,7 +113,7 @@ function Bem(name: string, cls?: Cls) {
 }
 
 Bem.config = function (partial: Partial<ConfigOption>) {
-	if (isObject(partial)) {
+	if (isPlainObject(partial)) {
 		if (notNil(partial['debugger'])) {
 			config.debugger = partial.debugger
 		}

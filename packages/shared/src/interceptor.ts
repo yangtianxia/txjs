@@ -39,7 +39,7 @@ export const callInterceptor = (
 	}
 ) => {
 	if (interceptor) {
-		const returnVal = interceptor.apply(null, args)
+		const returnVal = interceptor(...args)
 
 		if (isPromise(returnVal)) {
 			returnVal

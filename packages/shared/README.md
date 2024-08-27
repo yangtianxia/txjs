@@ -1,6 +1,6 @@
 # @txjs/shared
 
-> js常用方法
+> JS常用方法
 
 ## npm安装
 

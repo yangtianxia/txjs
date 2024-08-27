@@ -19,7 +19,7 @@ function cloneObjectDeep<T>(value: any, instanceClone?: InstanceClone<T>) {
 	}
 	if (instanceClone || isPlainObject(value)) {
 		const shallowCopy = notNil(value.constructor) ? new value.constructor() : Object.create(null)
-		for (let key in value) {
+		for (const key in value) {
 			shallowCopy[key] = cloneDeep(value[key], instanceClone)
 		}
 		return shallowCopy

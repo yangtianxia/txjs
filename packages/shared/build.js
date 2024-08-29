@@ -12,15 +12,15 @@ async function bundle(format) {
   if (shell.test('-e', filePath)) {
     const temp = shell.cat(filePath)
     try {
-      const pkg = JSON.parse(temp)
-      if (pkg.dependencies) {
-        external.push(...Object.keys(pkg.dependencies))
+      const { dependencies, peerDependencies } = JSON.parse(temp)
+      if (dependencies) {
+        external.push(...Object.keys(dependencies))
       }
-      if (pkg.peerDependencies) {
-        external.push(...Object.keys(pkg.peerDependencies))
+      if (peerDependencies) {
+        external.push(...Object.keys(peerDependencies))
       }
     } catch (err) {
-      console.log('Build error:', pkg, err)
+      console.log('Build error:', err)
     }
   }
 

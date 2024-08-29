@@ -3,8 +3,8 @@
   "scripts": {
     "clean": "lerna clean",
     "bootstrap": "lerna bootstrap",
-    "build": "lerna build",
-    "lint": "lerna lint",
+    "build": "lerna run build",
+    "lint": "lerna run lint",
     "publish": "lerna publish"
   },
   "devDependencies": {

@@ -1,23 +1,14 @@
 # txjs
 
+这是一些常用的js开发库，有TS类型定义、数据验证、常用方法、数据定义、css类命名（BEM）、修复版数学（加、减、乘、除）计算等。
+
 ## packages
 
-### [@txjs/bool](https://github.com/yangtianxia/txjs/tree/master/packages/bool)
-
-js常用数据类型校验方法
-
-### [@txjs/shared](https://github.com/yangtianxia/txjs/tree/master/packages/shared)
-
-js常用方法
-
-### [@txjs/bem](https://github.com/yangtianxia/txjs/tree/master/packages/bem)
-
-css命名方法，支持css-modules绑定使用
-
-### [@txjs/math](https://github.com/yangtianxia/txjs/tree/master/packages/math)
-
-加减乘除计算
-
-### [@txjs/async](https://github.com/yangtianxia/txjs/tree/master/packages/async)
-
-解决异步方法try-catch问题
+|包名|描述|
+|:-----|:-----|
+|[@txjs/bool](https://github.com/yangtianxia/txjs/tree/master/packages/bool)|数据类型校验库|
+|[@txjs/shared](https://github.com/yangtianxia/txjs/tree/master/packages/shared)|常用方法库|
+|[@txjs/bem](https://github.com/yangtianxia/txjs/tree/master/packages/bem)|css类命名(BEM)库|
+|[@txjs/math](https://github.com/yangtianxia/txjs/tree/master/packages/math)|修复版数学(加、减、乘、除)计算库|
+|[@txjs/async](https://github.com/yangtianxia/txjs/tree/master/packages/async)|异步方法库|
+|[@txjs/types](https://github.com/yangtianxia/txjs/tree/master/packages/types)|TS类型库|

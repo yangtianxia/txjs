@@ -1,4 +1,4 @@
-const bool = require('../dist/index.cjs')
+const bool = require('../dist/index.cjs.js')
 
 console.log(bool.isArray([]))
 

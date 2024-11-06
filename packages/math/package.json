@@ -1,7 +1,7 @@
 {
   "name": "@txjs/math",
   "version": "0.1.0",
-  "description": "加减乘除计算",
+  "description": "修正版加减乘除计算方法.",
   "main": "./dist/index.cjs.js",
   "module": "./dist/index.esm.mjs",
   "types": "./dist/index.d.ts",
@@ -17,11 +17,10 @@
   ],
   "scripts": {
     "lint": "eslint src --ext .ts",
-    "clean": "rimraf ./dist",
-    "dev": "node ./build.js -w",
     "build:types": "tsc -p ./tsconfig.json --emitDeclarationOnly",
     "build:bundle": "node ./build.js",
-    "build": "npm run clean && npm run lint && npm run build:bundle && npm run build:types"
+    "build": "pnpm lint && pnpm build:bundle && pnpm build:types",
+    "dev": "pnpm build:bundle -w"
   },
   "publishConfig": {
     "access": "public",
@@ -36,13 +35,10 @@
     "txjs",
     "@txjs/math"
   ],
-  "author": "yangtianxia",
   "license": "MIT",
+  "author": "yangtianxia <1304082170@qq.com>",
   "bugs": {
     "url": "https://github.com/yangtianxia/txjs/issues"
   },
-  "homepage": "https://github.com/yangtianxia/txjs#readme",
-  "devDependencies": {
-    "esbuild": "^0.23.1"
-  }
+  "homepage": "https://github.com/yangtianxia/txjs#readme"
 }

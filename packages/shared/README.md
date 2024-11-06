@@ -23,3 +23,4 @@ npm i @txjs/shared
 - shallowMerge
 - toArray
 - toFixed
+- chunk

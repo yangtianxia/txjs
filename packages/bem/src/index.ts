@@ -1,4 +1,12 @@
-import { isNil, isString, notNil, isArray, isPlainObject } from '@txjs/bool'
+import {
+	isNil,
+	isString,
+	notNil,
+	isArray,
+	isPlainObject
+} from '@txjs/bool'
+
+type ModeType = 'match' | 'always'
 
 type Base = string | Record<string, any>
 
@@ -7,20 +15,14 @@ type Mods = Base | Base[]
 type Cls = Record<string, string>
 
 type ConfigOption = {
-	debugger: boolean
-	prefixer: {
-		page?: string
-		comp?: string
-	}
+	mode: ModeType
+	prefix?: string
 }
 
-const config = {
-	debugger: false,
-	prefixer: {
-		comp: undefined,
-		page: undefined
-	}
-} as ConfigOption
+const config: ConfigOption = {
+	mode: 'match',
+	prefix: undefined
+}
 
 function rootCls(name: string, mods?: Mods): string {
 	if (isNil(mods)) {
@@ -58,12 +60,13 @@ function bemCls(name: string) {
 
 function moduleCls(cls: Cls, bem: ReturnType<typeof bemCls>) {
 	return (el?: Mods, mods?: Mods) => {
+		const isAlways = config.mode === 'always'
 		const str = bem(el, mods)
 		const modules = str
 			.split(' ')
-			.map((item) => config.debugger ? cls[item] || item : cls[item])
+			.map((item) => isAlways ? cls[item] || item : cls[item])
 			.join(' ')
-		return modules || (isString(el) ? cls[el] : config.debugger ? str : '')
+		return modules || (isString(el) ? cls[el] : isAlways ? str : '')
 	}
 }
 
@@ -94,18 +97,16 @@ function Bem(name: string): [string, ReturnType<typeof bemCls>]
 function Bem(name: string, cls: Cls): [string, ReturnType<typeof bemCls>]
 function Bem(name: string, cls?: Cls): [string, ReturnType<typeof bemCls>]
 function Bem(name: string, cls?: Cls) {
-	const { comp, page } = config?.prefixer || {}
+	const { prefix } = config
 
-	if (isNil(cls) && comp) {
-		name = `${comp}-${name}`
+	if (isNil(cls) && prefix) {
+		name = `${prefix}-${name}`
 	}
 
 	const bem = bemCls(name)
 
 	if (isPlainObject(cls)) {
-		if (page) {
-			name = `${page}-${name}`
-		}
+		name = `${prefix}-page-${name}`
 		return [name, moduleCls(cls, bem)]
 	}
 
@@ -114,10 +115,7 @@ function Bem(name: string, cls?: Cls) {
 
 Bem.config = function (partial: Partial<ConfigOption>) {
 	if (isPlainObject(partial)) {
-		if (notNil(partial['debugger'])) {
-			config.debugger = partial.debugger
-		}
-		Object.assign(config.prefixer, partial.prefixer || {})
+		Object.assign(config, partial || {})
 	}
 }
 

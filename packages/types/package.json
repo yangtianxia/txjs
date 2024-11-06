@@ -1,0 +1,28 @@
+{
+  "name": "@txjs/types",
+  "version": "0.1.0",
+  "description": "常用ts类型定义.",
+  "main": "./index.d.ts",
+  "files": [
+    "index.d.ts"
+  ],
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yangtianxia/txjs.git",
+    "directory": "packages/types"
+  },
+  "keywords": [
+    "txjs",
+    "@txjs/types"
+  ],
+  "license": "MIT",
+  "author": "yangtianxia <1304082170@qq.com>",
+  "bugs": {
+    "url": "https://github.com/yangtianxia/txjs/issues"
+  },
+  "homepage": "https://github.com/yangtianxia/txjs#readme"
+}

@@ -1,5 +1,7 @@
 import { isNumber } from './isNumber'
 
+const PATTERN = /^(\d|-\d)+(\.\d+)?$/
+
 /**
  * 检查 `value` 是否是 `number` 类型，支持字符串校验
  *
@@ -10,5 +12,5 @@ import { isNumber } from './isNumber'
  * ```
  */
 export function isNumeric(value: any): value is number {
-	return isNumber(value) || /^(\d|-\d)+(\.\d+)?$/.test(value)
+	return isNumber(value) || PATTERN.test(value)
 }

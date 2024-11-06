@@ -1,3 +1,5 @@
+const PATTERN = /^1[3-9]\d{9}$/
+
 /**
  * 检查 `value` 是否是手机号码，包含虚拟号段
  *
@@ -14,5 +16,5 @@ export function isPhoneNumber(value: any): value is string {
 		return false
 	}
 
-  return /^1[3-9]\d{9}$/.test(value)
+  return PATTERN.test(value)
 }

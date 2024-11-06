@@ -1,5 +1,6 @@
 /**
  * clamp - 约束数值的范围
+ *
  * @example
  * ```ts
  * clamp(2, 10, 99)

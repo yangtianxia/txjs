@@ -1,1 +1,1 @@
-require('../shared/build')
+require('../../scripts/build')

@@ -1,6 +1,6 @@
 {
   "name": "@txjs/shared",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "js,ts开发常用方法.",
   "main": "./dist/index.cjs.js",
   "module": "./dist/index.esm.mjs",

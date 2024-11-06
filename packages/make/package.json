@@ -1,6 +1,6 @@
 {
   "name": "@txjs/make",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "ts类型声明函数",
   "main": "./dist/index.cjs.js",
   "module": "./dist/index.esm.mjs",

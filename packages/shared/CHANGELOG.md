@@ -1,5 +1,11 @@
 # @txjs/shared
 
+## 1.0.1
+
+### Patch Changes
+
+- feat(shared) 新增 camelToKebab 方法#54
+
 ## 1.0.0
 
 ### Major Changes

@@ -22,3 +22,6 @@ console.log(shared.padStr('abc', '-', 2))
 console.log(shared.padStr('abc', '-', 3))
 console.log(shared.padStr('abc', '-', 0))
 console.log(shared.padStr('abc', '-', -1))
+
+console.log(shared.camelToKebab('TxJs'))
+console.log(shared.camelToKebab('HelloWorld'))

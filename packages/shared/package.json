@@ -20,7 +20,8 @@
     "build:types": "tsc -p ./tsconfig.json --emitDeclarationOnly",
     "build:bundle": "node ./build.js",
     "build": "pnpm lint && pnpm build:bundle && pnpm build:types",
-    "dev": "pnpm build:bundle -w"
+    "dev": "pnpm build:bundle -w",
+    "test": "jest"
   },
   "publishConfig": {
     "access": "public",

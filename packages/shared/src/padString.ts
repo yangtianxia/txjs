@@ -1,13 +1,11 @@
 /**
  *
- * padStr
- *
- * @deprecated since version 1.1.1
+ * padString
  *
  * @example
  * ```ts
- * padStr('abc', '-', 1)
- * // => a-bc
+ * padStr('txjs', '-', 2)
+ * // => tx-js
  * padStr('abc', '-', 0)
  * // => -abc
  * padStr('abc', '-', -1)

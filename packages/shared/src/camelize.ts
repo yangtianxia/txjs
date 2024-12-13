@@ -3,12 +3,12 @@
  *
  * @example
  * ```ts
- * camelize('-a-b-c')
- * // => ABC
- * camelize('a-b')
- * // => aB
+ * camelize('tx-js')
+ * // => txJs
+ * camelize('Hello-World')
+ * // => HelloWorld
  * ```
  */
-export function camelize(value = '') {
+export default function camelize(value = '') {
   return value.replace(/-(\w)/g, (_, c) => c.toUpperCase())
 }

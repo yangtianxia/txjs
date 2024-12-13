@@ -1,5 +1,5 @@
 /**
- * clamp - 约束数值的范围
+ * clamp
  *
  * @example
  * ```ts
@@ -9,6 +9,6 @@
  * // => 99
  * ```
  */
-export function clamp(num: number, min: number, max: number) {
+export default function clamp(num: number, min: number, max: number) {
 	return Math.min(Math.max(num, min), max)
 }

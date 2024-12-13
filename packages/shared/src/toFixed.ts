@@ -13,7 +13,7 @@
  * // => 3.14
  * ```
  */
-export function toFixed(num: number, precision = 0) {
+export default function toFixed(num: number, precision = 0) {
 	const multiplier = Math.pow(10, precision)
 	const wholeNum = Math.floor(num * multiplier)
 	return wholeNum / multiplier

@@ -3,16 +3,6 @@ import { notNil, isFunction, isPlainObject, isArray } from '@txjs/bool'
 
 type InstanceClone<T> = true | ((value: T) => T)
 
-function cloneDeep<T>(value: T, instanceClone?: InstanceClone<T>): T {
-	if (isPlainObject(value)) {
-		return cloneObjectDeep(value, instanceClone)
-	}
-	if (isArray(value)) {
-		return cloneArrayDeep(value, instanceClone)
-	}
-	return clone(value)
-}
-
 function cloneObjectDeep<T>(value: any, instanceClone?: InstanceClone<T>) {
 	if (isFunction(instanceClone)) {
 		return instanceClone(value)
@@ -35,4 +25,23 @@ function cloneArrayDeep<T>(value: any, instanceClone?: InstanceClone<T>) {
 	return shallowCopy
 }
 
-export { cloneDeep }
+/**
+ * cloneDeep
+ *
+ * @example
+ * ```ts
+ * cloneDeep([1, 2])
+ * => [1, 2]
+ * cloneDeep({a: 1, b: 2})
+ * => {a: 1, b: 2}
+ * ```
+ */
+export default function cloneDeep<T>(value: T, instanceClone?: InstanceClone<T>): T {
+	if (isPlainObject(value)) {
+		return cloneObjectDeep(value, instanceClone)
+	}
+	if (isArray(value)) {
+		return cloneArrayDeep(value, instanceClone)
+	}
+	return clone(value)
+}

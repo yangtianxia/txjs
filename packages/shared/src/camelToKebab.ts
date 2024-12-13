@@ -5,10 +5,10 @@
  * ```ts
  * camelToKebab('TxJs')
  * // => tx-js
- * camelToKebab('HelloWorld')
+ * camelToKebab('helloWorld')
  * // => hello-world
  * ```
  */
-export function camelToKebab(input = '') {
+export default function camelToKebab(input = '') {
 	return input.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase()
 }

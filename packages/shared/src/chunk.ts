@@ -1,5 +1,5 @@
 /**
- * chunk - 数组数量切片
+ * chunk
  *
  * @example
  * ```ts
@@ -11,7 +11,7 @@
  * // => [[1,2,3,4], [5,6]]
  * ```
  */
-export const chunk = <T,>(data: T[] = [], size: number) => {
+export default function chunk<T>(data: T[] = [], size: number) {
   const result = [] as T[][]
   for (let i = 0; i < data.length; i += size) {
     result.push(data.slice(i, i + size))

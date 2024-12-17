@@ -1,7 +1,9 @@
-const PATTERN = /^1[3-9]\d{9}$/
+const PHONE_NUMBER_REGEX = /^1[3-9]\d{9}$/
 
 /**
- * 检查 `value` 是否是手机号码，包含虚拟号段
+ * 检查 `value` 是否是手机号码（包含虚拟号段）
+ *
+ * @deprecated since version 1.1.0
  *
  * @example
  * ```ts
@@ -11,10 +13,6 @@ const PATTERN = /^1[3-9]\d{9}$/
  * // => false
  * ```
  */
-export function isPhoneNumber(value: any): value is string {
-	if (typeof value !== 'string') {
-		return false
-	}
-
-  return PATTERN.test(value)
+export function isPhoneNumber(value: unknown): value is string {
+  return typeof value === 'string' && PHONE_NUMBER_REGEX.test(value)
 }

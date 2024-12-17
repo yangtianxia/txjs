@@ -1,5 +1,18 @@
 # @txjs/shared
 
+## 1.0.3
+
+### Patch Changes
+
+- Updated dependencies
+  - @txjs/bool@1.0.1
+
+## 1.0.2
+
+### Patch Changes
+
+- chore(shared) 支持单独导入方法
+
 ## 1.0.1
 
 ### Patch Changes

@@ -1,6 +1,24 @@
 # @txjs/make
 
-> 方法仅用于typescript定义字段
+方法仅用于typescript定义字段
+
+## 使用 npm
+
+```javascript
+npm i @txjs/make
+```
+
+## 使用 pnpm
+
+```javascript
+pnpm add @txjs/make
+```
+
+## 使用 yarn
+
+```javascript
+yarn add @txjs/make
+```
 
 ## 支持方法
 

@@ -1,5 +1,5 @@
-const callInterceptor = require('../dist/interceptor').default
-const interceptorAll = require('../dist/interceptorAll').default
+const { callInterceptor } = require('../dist/interceptor')
+const { interceptorAll } = require('../dist/interceptorAll')
 
 describe('interceptor test', () => {
   test('callInterceptor canceled', async () => {

@@ -1,4 +1,4 @@
-const chunk = require('../dist/chunk').default
+const { chunk } = require('../dist/chunk')
 
 describe('chunk test', () => {
   test('chunk([1,2], 1)', () => {

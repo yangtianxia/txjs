@@ -1,4 +1,4 @@
-const clamp = require('../dist/clamp').default
+const { clamp } = require('../dist/clamp')
 
 describe('clamp test', () => {
   test('clamp(2, 10, 99)', () => {

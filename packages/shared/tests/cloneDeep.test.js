@@ -1,4 +1,4 @@
-const cloneDeep = require('../dist/cloneDeep').default
+const { cloneDeep } = require('../dist/cloneDeep')
 
 describe('cloneDeep test', () => {
   test('cloneDeep([1,2])', () => {

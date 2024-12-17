@@ -5,7 +5,7 @@
  * ```ts
  * camelToKebab('TxJs')
  * // => tx-js
- * camelToKebab('HelloWorld')
+ * camelToKebab('helloWorld')
  * // => hello-world
  * ```
  */

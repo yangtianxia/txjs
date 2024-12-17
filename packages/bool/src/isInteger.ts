@@ -1,4 +1,4 @@
-const PATTERN = /^(?:0|(?:[1-9]\d*))$/
+const INTEGER_REGEX = /^(?:0|(?:[1-9]\d*))$/
 
 /**
  * 检查 `value` 是否是正整数，包含 `0`
@@ -7,7 +7,7 @@ const PATTERN = /^(?:0|(?:[1-9]\d*))$/
  * ```ts
  * isInteger(10)
  * // => true
- * * isInteger('122')
+ * isInteger('122')
  * // => true
  * isInteger(3.1415926)
  * // => false
@@ -15,6 +15,12 @@ const PATTERN = /^(?:0|(?:[1-9]\d*))$/
  * // => false
  * ```
  */
-export function isInteger(value: any): value is number {
-  return PATTERN.test(value)
+export function isInteger(value: unknown): value is number {
+	if (typeof value === 'number' && Number.isInteger(value) && value >= 0) {
+		return true
+	}
+	if (typeof value === 'string' && INTEGER_REGEX.test(value)) {
+		return true
+	}
+  return false
 }

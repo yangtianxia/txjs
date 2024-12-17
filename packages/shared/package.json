@@ -1,7 +1,7 @@
 {
   "name": "@txjs/shared",
   "version": "1.0.1",
-  "description": "js,ts开发常用方法.",
+  "description": "常用的函数库，包括字符串操作、数据结构处理、数组和对象的深度克隆、拦截器管理等",
   "main": "./dist/index.cjs.js",
   "module": "./dist/index.esm.mjs",
   "types": "./dist/index.d.ts",
@@ -20,7 +20,8 @@
     "build:types": "tsc -p ./tsconfig.json --emitDeclarationOnly",
     "build:bundle": "node ./build.js",
     "build": "pnpm lint && pnpm build:bundle && pnpm build:types",
-    "dev": "pnpm build:bundle -w"
+    "dev": "pnpm build:bundle -w",
+    "test": "jest"
   },
   "publishConfig": {
     "access": "public",

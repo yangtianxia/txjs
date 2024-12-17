@@ -1,7 +1,7 @@
 {
   "name": "@txjs/bem",
   "version": "1.0.0",
-  "description": "css命名方法",
+  "description": "CSS命名函数",
   "main": "./dist/index.cjs.js",
   "module": "./dist/index.esm.mjs",
   "types": "./dist/index.d.ts",
@@ -21,7 +21,7 @@
     "build:bundle": "node ./build.js",
     "build": "pnpm lint && pnpm build:bundle && pnpm build:types",
     "dev": "pnpm build:bundle -w",
-    "test": "node ./tests/index.js"
+    "test": "jest"
   },
   "publishConfig": {
     "access": "public",

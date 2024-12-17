@@ -2,10 +2,22 @@
 
 > 加减乘除计算
 
-## npm安装
+## 使用 npm
 
 ```javascript
 npm i @txjs/math
+```
+
+## 使用 pnpm
+
+```javascript
+pnpm add @txjs/math
+```
+
+## 使用 yarn
+
+```javascript
+yarn add @txjs/math
 ```
 
 ## 支持方法

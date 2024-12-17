@@ -1,4 +1,4 @@
-import { isPromise, isNil } from '@txjs/bool'
+import { isPromise } from '@txjs/bool'
 import { noop } from './noop'
 
 export declare interface Interceptor {
@@ -26,7 +26,7 @@ export declare interface Interceptor {
  * })
  * ```
  */
-export const callInterceptor = (
+export function callInterceptor(
 	interceptor: Interceptor | undefined,
 	{
 		args = [],
@@ -37,7 +37,7 @@ export const callInterceptor = (
 		done: () => void
 		canceled?: () => void
 	}
-) => {
+) {
 	if (interceptor) {
 		const returnVal = interceptor(...args)
 
@@ -59,65 +59,4 @@ export const callInterceptor = (
 	} else {
 		done()
 	}
-}
-
-/**
- * interceptorAll
- *
- * @example
- * ```ts
- * const a = '1'
- * const b = '2'
- *
- * const prom = function(a, b) {
- * 	return new Promise((resolve) => {
- * 		// a = 1
- * 		// b = 2
- * 		resolve(true)
- * 	})
- * }
- *
- * const fn = function () {
- * 	// a = 1
- * 	// b = 2
- * 	return false
- * }
- *
- * callInterceptor(interceptorAll, {
- * 	args: [[prom, fn], a, b],
- * 	done: () => {},
- * 	canceled: () => {}
- * })
- * ```
- */
-export const interceptorAll = (interceptors: Interceptor[], ...args: any[]) => {
-	return new Promise<boolean>((resolve) => {
-		Promise.all(
-			interceptors.reduce(
-				(tasks, interceptor) => {
-					tasks.push(
-						isNil(interceptor) ? Promise.resolve(true) : new Promise<boolean>((resolve) => {
-							callInterceptor(interceptor, {
-								args,
-								done() {
-									resolve(true)
-								},
-								canceled() {
-									resolve(false)
-								}
-							})
-						})
-					)
-					return tasks
-				}, [] as Promise<boolean>[]
-			)
-		)
-			.then((confirm) => {
-				if (confirm.includes(false)) {
-					resolve(false)
-				} else {
-					resolve(true)
-				}
-			})
-	})
 }

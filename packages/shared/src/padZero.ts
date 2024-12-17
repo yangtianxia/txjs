@@ -1,5 +1,5 @@
 /**
- * 数值 `value` 小于 `10`, 则前置补充 `0` 字符
+ * padZero
  *
  * @example
  * ```ts
@@ -15,10 +15,8 @@
  */
 export function padZero(value: number | string, len = 2) {
 	value = value.toString()
-
   while (value.length < len) {
     value = '0' + value
   }
-
   return value
 }

@@ -71,7 +71,7 @@ function moduleCls(cls: Cls, bem: ReturnType<typeof bemCls>) {
 }
 
 /**
- * Bem
+ * CSS命名函数
  *
  * @example
  * ```ts
@@ -106,7 +106,10 @@ function Bem(name: string, cls?: Cls) {
 	const bem = bemCls(name)
 
 	if (isPlainObject(cls)) {
-		name = `${prefix}-page-${name}`
+		name = `page-${name}`
+		if (prefix) {
+			name = `${prefix}-${name}`
+		}
 		return [name, moduleCls(cls, bem)]
 	}
 

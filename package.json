@@ -6,7 +6,8 @@
     "clean:node_modules": "rimraf packages/**/node_modules node_modules",
     "clean": "pnpm clean:dist && pnpm clean:node_modules",
     "build": "pnpm clean:dist && pnpm -r run build",
-    "lint": "pnpm -r run lint"
+    "lint": "pnpm -r run lint",
+    "test": "pnpm -r run test"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [
@@ -31,6 +32,7 @@
     "esbuild": "^0.23.1",
     "eslint": "^8.57.0",
     "eslint-plugin-import": "^2.30.0",
+    "jest": "^29.7.0",
     "minimist": "^1.2.8",
     "rimraf": "^6.0.1",
     "shelljs": "^0.8.5",

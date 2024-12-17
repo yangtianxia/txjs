@@ -13,6 +13,6 @@ import { isArray } from '@txjs/bool'
  * // => [{}]
  * ```
  */
-export function toArray<T,>(item: T | T[]): T[] {
+export function toArray<T>(item: T | T[]): T[] {
   return isArray(item) ? item : [item]
 }

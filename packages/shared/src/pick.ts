@@ -9,10 +9,10 @@ type Writeable<T> = {
  *
  * @example
  * ```ts
- * const object = { a: 1, b: 2, c: 3 }
+ * const object = {a: 1, b: 2, c: 3}
  *
  * pick(object, ['a', 'c'])
- * // => { a: 1, c: 3 }
+ * // => {a: 1, c: 3}
  * ```
  */
 export function pick<T, K extends keyof T>(target: T, keys: ReadonlyArray<K>, ignore?: boolean) {

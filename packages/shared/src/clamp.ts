@@ -1,5 +1,5 @@
 /**
- * clamp - 约束数值的范围
+ * clamp
  *
  * @example
  * ```ts

@@ -1,19 +1,42 @@
 # @txjs/bem
 
-> css命名方法，支持css-modules绑定使用
+CSS命名函数，支持CSS modules模式
 
-## npm安装
+## 使用 npm
 
 ```javascript
 npm i @txjs/bem
 ```
 
+## 使用 pnpm
+
+```javascript
+pnpm add @txjs/bem
+```
+
+## 使用 yarn
+
+```javascript
+yarn add @txjs/bem
+```
+
+## 导入方式
+```javascript
+import BEM from '@txjs/bem'
+```
+
+## 参数
+- `mode` (类型：`match` | `always`，默认值：`match`)  
+  - match：样式类名匹配不存在时，则显示为空
+  - always：样式类名匹配不存在时，则显示原始值
+- `prefix` (类型：`string`，可选)
+
 ## 常规使用
 
 ```ts
-import Bem from '@txjs/bem'
+import BEM from '@txjs/bem'
 
-const [name, bem] = Bem('home')
+const [name, bem] = BEM('home')
 
 name
 // => home
@@ -37,7 +60,7 @@ bem('body', { safearea: true })
 // => home__body home__body--safearea
 ```
 
-## css-modules使用
+## CSS modules使用
 
 ```ts
 // css-modules config
@@ -50,17 +73,17 @@ bem('body', { safearea: true })
   }
 }
 
-import Bem from '@txjs/bem'
+import BEM from '@txjs/bem'
 import css from './index.module.less'
 
-const [name, bem] = Bem('index', css)
+const [name, bem] = BEM('index', css)
 
 name
-// => index
+// => page-index
 
 bem()
 // => index
 
 bem('list')
-// => index__sdguKKAS 
+// => index_sdguKKAS 
 ```

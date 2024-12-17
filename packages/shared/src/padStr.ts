@@ -1,5 +1,7 @@
 /**
- * padStr - 字符串拼接
+ * padStr
+ *
+ * @deprecated since version 1.1.1
  *
  * @example
  * ```ts
@@ -15,6 +17,5 @@ export function padStr(text: string, value: string, index = 0) {
 	if (index === 0) {
 		return `${value}${text}`
 	}
-
 	return `${text.slice(0, index)}${value}${text.slice(index)}`
 }

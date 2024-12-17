@@ -7,7 +7,7 @@ import { isArray } from './isArray'
  * ```ts
  * isEqual(true, false)
  * // => false
- *  isEqual(false, false)
+ * isEqual(false, false)
  * // => true
  * isEqual('0', '1')
  * // => false

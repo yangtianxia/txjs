@@ -1,7 +1,7 @@
 import { is } from './is'
 
 /**
- * 检查 `value` 是否是 `array`
+ * 检查 `value` 是否是 `array` 类型
  *
  * @example
  * ```ts

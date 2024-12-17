@@ -1,5 +1,5 @@
 /**
- * 检查 `value` 不是 `nil` 类型，该方法为 `isNil` 取反
+ * 检查 `value` 不是 `null` 或 `undefined` 类型
  *
  * @example
  * ```ts

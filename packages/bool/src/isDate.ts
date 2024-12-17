@@ -1,7 +1,7 @@
 import { is } from './is'
 
 /**
- * 检查 `value` 是否是日期
+ * 检查 `value` 是否是 `Date` 类型
  *
  * @example
  * ```ts
@@ -11,6 +11,6 @@ import { is } from './is'
  * // => false
  * ```
  */
-export function isDate(value: any): value is Date {
+export function isDate(value: unknown): value is Date {
 	return is<Date>(value, 'Date') && !Number.isNaN(value.getTime())
 }

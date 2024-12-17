@@ -1,4 +1,4 @@
-import callInterceptor, { type Interceptor } from './interceptor'
+import { callInterceptor, type Interceptor } from './interceptor'
 
 /**
  * interceptorAll
@@ -29,7 +29,7 @@ import callInterceptor, { type Interceptor } from './interceptor'
  * })
  * ```
  */
-export default function interceptorAll(interceptors: Interceptor[], ...args: any[]) {
+export function interceptorAll(interceptors: Interceptor[], ...args: any[]) {
 	return new Promise<boolean>((resolve) => {
 		let state = true
 		interceptors

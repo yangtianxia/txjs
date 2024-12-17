@@ -13,7 +13,7 @@
  * // => 001
  * ```
  */
-export default function padZero(value: number | string, len = 2) {
+export function padZero(value: number | string, len = 2) {
 	value = value.toString()
   while (value.length < len) {
     value = '0' + value

@@ -1,4 +1,4 @@
-import shallowMerge from './shallowMerge'
+import { shallowMerge } from './shallowMerge'
 
 /**
  * omit
@@ -11,7 +11,7 @@ import shallowMerge from './shallowMerge'
  * // => {b: 2}
  * ```
  */
-export default function omit<T, K extends keyof T>(target: T, keys: ReadonlyArray<K>) {
+export function omit<T, K extends keyof T>(target: T, keys: ReadonlyArray<K>) {
   const shallowCopy = shallowMerge({}, target)
   let i = keys.length
   while (i--) {

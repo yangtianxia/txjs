@@ -1,5 +1,4 @@
 /**
- *
  * padStr
  *
  * @deprecated since version 1.1.1
@@ -14,7 +13,7 @@
  * // => ab-c
  * ```
  */
-export default function padStr(text: string, value: string, index = 0) {
+export function padStr(text: string, value: string, index = 0) {
 	if (index === 0) {
 		return `${value}${text}`
 	}

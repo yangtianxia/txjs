@@ -15,7 +15,7 @@ type Writeable<T> = {
  * // => {a: 1, c: 3}
  * ```
  */
-export default function pick<T, K extends keyof T>(target: T, keys: ReadonlyArray<K>, ignore?: boolean) {
+export function pick<T, K extends keyof T>(target: T, keys: ReadonlyArray<K>, ignore?: boolean) {
 	return keys.reduce(
 		(ret, key) => {
 			if (!ignore || notNil(target[key])) {

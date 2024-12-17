@@ -1,1 +1,1 @@
-export default Object.assign
+export const shallowMerge = Object.assign

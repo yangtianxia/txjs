@@ -36,7 +36,7 @@ function cloneArrayDeep<T>(value: any, instanceClone?: InstanceClone<T>) {
  * => {a: 1, b: 2}
  * ```
  */
-export default function cloneDeep<T>(value: T, instanceClone?: InstanceClone<T>): T {
+export function cloneDeep<T>(value: T, instanceClone?: InstanceClone<T>): T {
 	if (isPlainObject(value)) {
 		return cloneObjectDeep(value, instanceClone)
 	}

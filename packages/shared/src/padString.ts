@@ -1,18 +1,17 @@
 /**
- *
  * padString
  *
  * @example
  * ```ts
- * padStr('txjs', '-', 2)
+ * padString('txjs', '-', 2)
  * // => tx-js
- * padStr('abc', '-', 0)
+ * padString('abc', '-', 0)
  * // => -abc
- * padStr('abc', '-', -1)
+ * padString('abc', '-', -1)
  * // => ab-c
  * ```
  */
-export default function padStr(text: string, value: string, index = 0) {
+export function padString(text: string, value: string, index = 0) {
 	if (index === 0) {
 		return `${value}${text}`
 	}

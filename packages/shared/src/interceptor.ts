@@ -1,5 +1,5 @@
 import { isPromise } from '@txjs/bool'
-import noop from './noop'
+import { noop } from './noop'
 
 export declare interface Interceptor {
 	(...args: any[]): Promise<boolean> | boolean | undefined | void
@@ -26,7 +26,7 @@ export declare interface Interceptor {
  * })
  * ```
  */
-export default function callInterceptor(
+export function callInterceptor(
 	interceptor: Interceptor | undefined,
 	{
 		args = [],

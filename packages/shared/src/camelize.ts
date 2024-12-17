@@ -9,6 +9,6 @@
  * // => HelloWorld
  * ```
  */
-export default function camelize(value = '') {
-  return value.replace(/-(\w)/g, (_, c) => c.toUpperCase())
+export function camelize(value = '') {
+  return value.replace(/[-_](\w)/g, (_, c) => c.toUpperCase())
 }

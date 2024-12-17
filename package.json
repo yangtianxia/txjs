@@ -6,7 +6,8 @@
     "clean:node_modules": "rimraf packages/**/node_modules node_modules",
     "clean": "pnpm clean:dist && pnpm clean:node_modules",
     "build": "pnpm clean:dist && pnpm -r run build",
-    "lint": "pnpm -r run lint"
+    "lint": "pnpm -r run lint",
+    "test": "pnpm -r run test"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [

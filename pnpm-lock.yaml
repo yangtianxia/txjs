@@ -74,6 +74,22 @@ importers:
 
   packages/types: {}
 
+  packages/validator:
+    dependencies:
+      '@txjs/bool':
+        specifier: workspace:*
+        version: link:../bool
+      '@txjs/shared':
+        specifier: workspace:*
+        version: link:../shared
+      extend:
+        specifier: ^3.0.2
+        version: 3.0.2
+    devDependencies:
+      '@types/extend':
+        specifier: ^3.0.4
+        version: 3.0.4
+
 packages:
 
   '@ampproject/remapping@2.3.0':
@@ -612,6 +628,9 @@ packages:
 
   '@types/babel__traverse@7.20.6':
     resolution: {integrity: sha512-r1bzfrm0tomOI8g1SzvCaQHo6Lcv6zu0EA+W2kHrt8dyrHQxGzBBL4kdkzIS+jBMV+EYcMAEAqXqYaLJq5rOZg==}
+
+  '@types/extend@3.0.4':
+    resolution: {integrity: sha512-ArMouDUTJEz1SQRpFsT2rIw7DeqICFv5aaVzLSIYMYQSLcwcGOfT3VyglQs/p7K3F7fT4zxr0NWxYZIdifD6dA==}
 
   '@types/graceful-fs@4.1.9':
     resolution: {integrity: sha512-olP3sd1qOEe5dXTSaFvQG+02VdRXcdytWLAZsAq1PecU8uqQAhkrnbli7DagjtXKW/Bl7YJbUsa8MPcuc8LHEQ==}
@@ -1157,6 +1176,9 @@ packages:
   expect@29.7.0:
     resolution: {integrity: sha512-2Zks0hf1VLFYI1kbh0I5jP3KHHyCHpkfyHBzsSXRFgl/Bg9mWYfMW8oD+PdMPlEwy5HNsR9JutYy6pMeOh61nw==}
     engines: {node: ^14.15.0 || ^16.10.0 || >=18.0.0}
+
+  extend@3.0.2:
+    resolution: {integrity: sha512-fjquC59cD7CyW6urNXK0FBufkZcoiGG80wTuPujX590cB5Ttln20E2UB4S/WARVqhXffZl2LNgS+gQdPIIim/g==}
 
   extendable-error@0.1.7:
     resolution: {integrity: sha512-UOiS2in6/Q0FK0R0q6UY9vYpQ21mr/Qn1KOnte7vsACuNJf514WvCCUHSRCPcgjPT2bAhNIJdlE6bVap1GKmeg==}
@@ -3010,6 +3032,8 @@ snapshots:
     dependencies:
       '@babel/types': 7.26.3
 
+  '@types/extend@3.0.4': {}
+
   '@types/graceful-fs@4.1.9':
     dependencies:
       '@types/node': 12.20.55
@@ -3723,6 +3747,8 @@ snapshots:
       jest-matcher-utils: 29.7.0
       jest-message-util: 29.7.0
       jest-util: 29.7.0
+
+  extend@3.0.2: {}
 
   extendable-error@0.1.7: {}
 

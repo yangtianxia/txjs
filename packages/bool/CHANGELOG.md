@@ -1,5 +1,11 @@
 # @txjs/bool
 
+## 1.0.2
+
+### Patch Changes
+
+- 新增 isEmail、isLandline、containsHTML 方法
+
 ## 1.0.1
 
 ### Patch Changes

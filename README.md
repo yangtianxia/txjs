@@ -12,3 +12,4 @@
 |[@txjs/math](https://github.com/yangtianxia/txjs/tree/master/packages/math)|修复版数学(加、减、乘、除)计算库|
 |[@txjs/async](https://github.com/yangtianxia/txjs/tree/master/packages/async)|异步方法库|
 |[@txjs/types](https://github.com/yangtianxia/txjs/tree/master/packages/types)|TS类型库|
+|[@txjs/validator](https://github.com/yangtianxia/txjs/tree/master/packages/validator)|表单数据验证库|

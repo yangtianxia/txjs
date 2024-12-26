@@ -1,3 +1,5 @@
+import { isString } from './isString'
+
 const PHONE_REGEX = /^1[3-9]\d{9}$/
 
 /**
@@ -12,5 +14,5 @@ const PHONE_REGEX = /^1[3-9]\d{9}$/
  * ```
  */
 export function isPhone(value: unknown): value is string {
-  return typeof value === 'string' && PHONE_REGEX.test(value)
+  return isString(value) && PHONE_REGEX.test(value)
 }

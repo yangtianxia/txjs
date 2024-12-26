@@ -1,3 +1,5 @@
+import { isNumber } from './isNumber'
+
 const INTEGER_REGEX = /^(?:0|(?:[1-9]\d*))$/
 
 /**
@@ -16,7 +18,7 @@ const INTEGER_REGEX = /^(?:0|(?:[1-9]\d*))$/
  * ```
  */
 export function isInteger(value: unknown): value is number {
-	if (typeof value === 'number' && Number.isInteger(value) && value >= 0) {
+	if (isNumber(value) && Number.isInteger(value) && value >= 0) {
 		return true
 	}
 	if (typeof value === 'string' && INTEGER_REGEX.test(value)) {

@@ -1,3 +1,5 @@
+import { isString } from './isString'
+
 const PHONE_REGEX = /^1(3[0-9]|4[5-9]|5[0-3,5-9]|6[5-9]|7[0-6]|8[0-9]|9[1-9])\d{8}$/
 
 const VIRTUAL_PHONE_REGEX = /^(170|171|177|178|190)\d{8}$/
@@ -20,7 +22,7 @@ const VIRTUAL_PHONE_REGEX = /^(170|171|177|178|190)\d{8}$/
  * ```
  */
 export function isNonVirtualPhone(value: unknown): value is string {
-	if (typeof value !== 'string') {
+	if (!isString(value)) {
 		return false
 	}
 	if (VIRTUAL_PHONE_REGEX.test(value)) {

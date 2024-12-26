@@ -1,3 +1,5 @@
+import { isString } from './isString'
+
 const URL_REGEX = /^(https?:\/\/(?:www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()!@:%_+.~#?&//=]*))$/
 
 /**
@@ -14,5 +16,5 @@ const URL_REGEX = /^(https?:\/\/(?:www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0
  * ```
  */
 export function isURL(value: unknown): value is string {
-	return typeof value === 'string' && URL_REGEX.test(value)
+	return isString(value) && URL_REGEX.test(value)
 }

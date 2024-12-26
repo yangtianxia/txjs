@@ -1,3 +1,5 @@
+import { isString } from './isString'
+
 /**
  * 检查 `value` 是否是 `string` 类型，且不能是 `''` 文本
  *
@@ -14,5 +16,5 @@
  * ```
  */
 export function isValidString(value: unknown): value is string {
-  return typeof value === 'string' && value.trim().length > 0
+  return isString(value) && value.trim().length > 0
 }

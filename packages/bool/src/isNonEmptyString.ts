@@ -1,16 +1,18 @@
+import { isString } from './isString'
+
 /**
  * 检查 `value` 是否是长度不为0 `string` 类型
  *
  * @example
  * ```ts
- * isNoEmptyString(null)
+ * isNonEmptyString(null)
  * // => false
- * isNoEmptyString('')
+ * isNonEmptyString('')
  * // => false
- * isNoEmptyString('hello world')
+ * isNonEmptyString('hello world')
  * // => true
  * ```
  */
-export function isNoEmptyString(value: unknown): value is string {
-  return typeof value === 'string' && value.trim().length > 0
+export function isNonEmptyString(value: unknown): value is string {
+  return isString(value) && value.trim().length > 0
 }

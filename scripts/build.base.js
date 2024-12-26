@@ -4,7 +4,7 @@ const { build, context } = require('esbuild')
 
 const ciArgs = minimist(process.argv.slice(2), {
   string: ['target', 'platform'],
-  boolean: ['w']
+  boolean: ['w', 't']
 })
 
 const filePath = `${process.cwd()}/package.json`
@@ -27,15 +27,14 @@ async function bundle(format, options = {}) {
     if (options.root) finish2(outfile)
   }
 
-  if (options.external) {
+  if (!ciArgs.t && options.external) {
     external.push(...options.external)
   }
 
-  if (shell.test('-e', filePath)) {
+  if (!ciArgs.t && shell.test('-e', filePath)) {
     const temp = shell.cat(filePath)
     const { dependencies, peerDependencies } = JSON.parse(temp)
     const ignoreDependencies = Object.assign({}, dependencies, peerDependencies)
-
     if (ignoreDependencies) {
       external.push(...Object.keys(ignoreDependencies))
     }

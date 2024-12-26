@@ -1,5 +1,12 @@
 # @txjs/shared
 
+## 1.0.4
+
+### Patch Changes
+
+- Updated dependencies
+  - @txjs/bool@1.0.2
+
 ## 1.0.3
 
 ### Patch Changes

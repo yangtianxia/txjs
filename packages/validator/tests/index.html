@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="https://fastly.jsdelivr.net/npm/ant-design-vue@4.2.6/dist/reset.css">
+  <script src="https://fastly.jsdelivr.net/npm/vue@3"></script>
+  <script src="https://unpkg.com/dayjs/dayjs.min.js"></script>
+  <script src="https://unpkg.com/dayjs/plugin/customParseFormat.js"></script>
+  <script src="https://unpkg.com/dayjs/plugin/weekday.js"></script>
+  <script src="https://unpkg.com/dayjs/plugin/localeData.js"></script>
+  <script src="https://unpkg.com/dayjs/plugin/weekOfYear.js"></script>
+  <script src="https://unpkg.com/dayjs/plugin/weekYear.js"></script>
+  <script src="https://unpkg.com/dayjs/plugin/advancedFormat.js"></script>
+  <script src="https://unpkg.com/dayjs/plugin/quarterOfYear.js"></script>
+  <script src="https://fastly.jsdelivr.net/npm/ant-design-vue@4.2.6/dist/antd.js"></script>
+  <style>
+    .wrapper {
+      padding: 16px;
+      max-width: 720px;
+      margin: 24px auto 0;
+    }
+    .action {
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div id="app"></div>
+  <script type="module">
+    import { Validator, ValidationSchema, MessageSchema } from '../dist/index.esm.mjs'
+
+    // 自定义验证
+    const customValidation = new ValidationSchema({
+      name: {
+        type: Boolean,
+        validator: (value) => {
+          return value.length >= 2 && value.length <= 5
+        }
+      }
+    })
+    const validation = ValidationSchema.merged(Validator.validation, customValidation)
+
+    // 自定义消息
+    const customMessage = new MessageSchema({
+      zhCN: {
+        name: {
+          default: '[0]长度必须大于等于2，且小于等于5'
+        }
+      }
+    }, 'zhCN')
+    const message = MessageSchema.merged(Validator.message, customMessage)
+
+    const validator = new Validator({ validation, message })
+
+    console.dir(validator)
+
+    const rules = validator.schema({
+      name: {
+        label: '用户名',
+        required: true,
+        name: true
+      },
+      phone: {
+        label: '手机号',
+        required: true,
+        telephone: true
+      },
+      sex: {
+        label: '性别',
+        required: {
+          tpl: 'select'
+        }
+      }
+    })
+
+    const app = Vue.createApp({
+      data() {
+        return {
+          rules,
+          model: {
+            name: undefined,
+            phone: undefined,
+            sex: undefined
+          },
+          currentLocale: validator.currentLocale
+        }
+      },
+      methods: {
+        switchLocale() {
+          if (validator.currentLocale === 'zhCN') {
+            validator.setLocale('enUS')
+          } else {
+            validator.setLocale('zhCN')
+          }
+          this.currentLocale = validator.currentLocale
+        },
+        clearValidate() {
+          this.$refs.formRef.clearValidate()
+        }
+      },
+      template: `
+      <section class="wrapper">
+        <div class="action">
+          <a-space>
+            <a-button type="primary" @click="switchLocale">切换语言{{currentLocale}}</a-button>
+            <a-button type="primary" @click="clearValidate">重置验证</a-button>
+          </a-space>
+        </div>
+        <a-form scrollToFirstError ref="formRef" :model="model" :rules="rules" :labelCol="{span: 6}" :wrapperCol="{span: 12}">
+          <a-form-item required validateFirst label="姓名" name="name">
+            <a-input v-model:value="model.name" placeholder="请输入姓名" />
+          </a-form-item>
+          <a-form-item required validateFirst label="手机号" name="phone">
+            <a-input v-model:value="model.phone" placeholder="请输入手机号" />
+          </a-form-item>
+          <a-form-item required validateFirst label="性别" name="sex">
+            <a-select v-model:value="model.sex" placeholder="请输入性别" allowClear>
+              <a-select-option :key="0" value="0">保密</a-select-option>
+              <a-select-option :key="1" value="1">男</a-select-option>
+              <a-select-option :key="2" value="2">女</a-select-option>
+            </a-select>
+          </a-form-item>
+          <a-form-item :wrapperCol="{offset: 6}">
+            <a-button type="primary" htmlType="submit">提交</a-button>
+          </a-form-item>
+        </a-form>
+      </section>`
+    })
+
+    app.use(antd)
+    app.mount('#app')
+  </script>
+</body>
+</html>

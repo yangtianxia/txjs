@@ -82,5 +82,14 @@ bundleMultiple([
   },
   {
     filename: 'isEqual'
+  },
+  {
+    filename: 'isEmail'
+  },
+  {
+    filename: 'isLandline'
+  },
+  {
+    filename: 'containsHTML'
   }
 ])

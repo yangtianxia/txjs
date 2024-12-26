@@ -28,27 +28,30 @@ import { isNil } from '@txjs/bool/dist/isNil'
 ```
 
 ## 函数列表
-+   [toString](#toString)
-+   [is](#is)
-+   [isArray](#isArray)
-+   [isBoolean](#isBoolean)
-+   [isFunction](#isFunction)
-+   [isAsyncFunction](#isAsyncFunction)
-+   [isInteger](#isInteger)
-+   [isNil](#isNil)
-+   [isNull](#isNull)
-+   [isNumber](#isNumber)
-+   [isNumeric](#isNumeric)
-+   [isPhone](#isPhone)
-+   [isNonVirtualPhone](#isNonVirtualPhone)
-+   [isPlainObject](#isPlainObject)
-+   [isPromise](#isPromise)
-+   [isString](#isString)
-+   [isSymbol](#isSymbol)
-+   [isUndefined](#isUndefined)
-+   [isHttpUrl](#isHttpUrl)
-+   [isAbsoluteUrl](#isAbsoluteUrl)
-+   [isEqual](#isEqual)
++ [toString](#toString)
++ [is](#is)
++ [isArray](#isArray)
++ [isBoolean](#isBoolean)
++ [isFunction](#isFunction)
++ [isAsyncFunction](#isAsyncFunction)
++ [isInteger](#isInteger)
++ [isNil](#isNil)
++ [isNull](#isNull)
++ [isNumber](#isNumber)
++ [isNumeric](#isNumeric)
++ [isPhone](#isPhone)
++ [isNonVirtualPhone](#isNonVirtualPhone)
++ [isPlainObject](#isPlainObject)
++ [isPromise](#isPromise)
++ [isString](#isString)
++ [isSymbol](#isSymbol)
++ [isUndefined](#isUndefined)
++ [isHttpUrl](#isHttpUrl)
++ [isAbsoluteUrl](#isAbsoluteUrl)
++ [isEqual](#isEqual)
++ [isEmail](#isEmail)
++ [isLandline](#isLandline)
++ [containsHTML](#containsHTML)
 
 ## toString
 
@@ -367,4 +370,52 @@ function isEqual(value: any, other: any, seen?: WeakMap): boolean;
 isEqual({a: 1}, {a: 1}); // true
 isEqual([1, 2], [1, 2]); // true
 isEqual(1, '1'); // false
+```
+
+## isEmail
+
+检查 `value` 是否是 `email` 格式
+
+```ts
+export declare function isEmail(value: unknown): boolean;
+```
+
+示例:
+
+```ts
+isEmail('example@gmail.com'); // true
+isEmail('example.com'); // false
+```
+
+## isLandline
+
+检查 `value` 是否是座机号码
+
+```ts
+export declare function isLandline(value: unknown): value is string;
+```
+
+示例:
+
+```ts
+isLandline('13215666'); // false
+isLandline('0592-5966633'); // true
+isLandline('0592-5966633-123'); // true
+```
+
+## containsHTML
+
+检查 `value` 是否是包含 `HTML`
+
+```ts
+export declare function containsHTML(value: unknown): value is string;
+```
+
+示例:
+
+```ts
+containsHTML('<div>Test</div>'); // true
+containsHTML('<img src='image.jpg' />'); // true
+containsHTML('</>'); // false
+containsHTML('1 < 2 && 3 > 4'); // false
 ```

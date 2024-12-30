@@ -17,4 +17,3 @@ export type FieldType =
 	| 'url'
 	| 'hex'
 	| 'email'
-	| 'any'

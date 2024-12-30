@@ -1,5 +1,11 @@
 # @txjs/validator
 
+## 1.0.1
+
+### Patch Changes
+
+- 修复 ts 类型错误
+
 ## 1.0.0
 
 ### Major Changes

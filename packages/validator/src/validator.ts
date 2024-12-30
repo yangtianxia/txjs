@@ -1,11 +1,11 @@
-import { isPlainObject, isNil, isNonEmptyString, isFunction, isArray, notNil, isPromise } from '@txjs/bool'
+import { isPlainObject, isNil, isNonEmptyString, isFunction, notNil, isPromise } from '@txjs/bool'
 import { omit, toArray } from '@txjs/shared'
 import { MessageSchema, ValidationSchema, type MessageLocaleObject, type ValidationObject, type ValidationRule } from './schema'
 import { throwError, printWarn, formatTpl, formatTplByValue } from './utils'
 import type { BaseTrigger, FieldType } from './types'
 
-import defaultMessage from './message'
-import defaultValidation from './validation'
+import messageSchema from './message'
+import validationSchema from './validation'
 
 type ExtractProp<T, K> = K extends keyof T ? T[K] : never
 
@@ -40,11 +40,11 @@ type ValidatorRuleValue<T> =
 		? { value?: T }
 		: { value: T }
 
-type ValidatorRuleOption<Value, Tpl, Trigger> = ValidatorRuleValue<Value> & {
-	/** 消息类型 */
-	tpl?: Tpl
+type ValidatorRuleOption<Value, Template, Trigger> = ValidatorRuleValue<Value> & {
 	/** 触发事件 */
 	trigger?: Trigger
+	/** 消息模版 */
+	template?: Template
 	/** 消息文本 */
 	message?: string
 }
@@ -68,7 +68,7 @@ type ValidatorRule<Trigger, Custom, VO, MO> = Partial<ExtractValidatorRules<Trig
 		| CustomValidatorRule<Trigger, Custom>[]
 }
 
-type ValidatorRules<U, Trigger, Custom, VO, MO> = Partial<Record<keyof U, ValidatorRule<Trigger, Custom, VO, MO>>>
+type ValidatorRules<T, Trigger, Custom, VO, MO> = Partial<Record<keyof T, ValidatorRule<Trigger, Custom, VO, MO>>>
 
 type ReturnRuleType<Trigger, Custom, MessageType> = {
 	type?: FieldType
@@ -85,60 +85,60 @@ export class Validator<
 	VO extends ValidationObject<Trigger>,
 	MO extends MessageLocaleObject
 > {
-	#validation: ValidationSchema<VO>
-	#message: MessageSchema<MO>
-	#trigger: Trigger
+	#validationSchema: ValidationSchema<VO>
+	#messageSchema: MessageSchema<MO>
+	#defaultTrigger: Trigger
 
 	constructor (config: {
 		/** 全局默认触发事件 */
 		trigger?: Trigger
 		/** 验证器配置 */
-		validation: ValidationSchema<VO>
+		validationSchema: ValidationSchema<VO>
 		/** 消息配置 */
-		message: MessageSchema<MO>
+		messageSchema: MessageSchema<MO>
 		/** 语言 */
 		locale?: keyof MO
 	}) {
 		const {
-			validation,
-			message,
+			messageSchema,
+			validationSchema,
 			locale,
 			trigger = 'blur' as Trigger,
 		} = config
 		if (locale) {
-			message.setLocale(locale)
+			messageSchema.setLocale(locale)
 		}
-		this.#trigger = trigger
-		this.#validation = validation
-		this.#message = message
+		this.#defaultTrigger = trigger
+		this.#messageSchema = messageSchema
+		this.#validationSchema = validationSchema
 	}
 
-	static message = defaultMessage
+	static messageSchema = messageSchema
 
-	static validation = defaultValidation
+	static validationSchema = validationSchema
 
 	get currentLocale() {
-		return this.#message.locale
+		return this.#messageSchema.locale
 	}
 
 	hasValidator(name: string) {
-		return !!this.#validation.getItem(name)
+		return !!this.#validationSchema.getItem(name)
 	}
 
 	hasMessage(name: string) {
-		return !!this.#message.getMessage(name)
+		return !!this.#messageSchema.getMessage(name)
 	}
 
 	setTrigger(value: Trigger) {
-		this.#trigger = value
+		this.#defaultTrigger = value
 	}
 
 	setLocale(locale: keyof MO) {
-		this.#message.setLocale(locale)
+		this.#messageSchema.setLocale(locale)
 	}
 
-	schema<U extends object>(config: ValidatorRules<U, Trigger, Custom, VO, MO>) {
-		const rules = {} as Record<keyof U, ReturnRuleType<Trigger, Custom, MessageType>[]>
+	schema<T extends object>(config: ValidatorRules<T, Trigger, Custom, VO, MO>) {
+		const rules = {} as Record<keyof T, ReturnRuleType<Trigger, Custom, MessageType>[]>
 		for (const key in config) {
 			rules[key] = this.#generate(key, config[key] || {})
 		}
@@ -150,44 +150,37 @@ export class Validator<
 			throwError(`"${key}" the value of a must be an object.`)
 		}
 
-		// 转换结果
 		const ruleList = [] as ReturnRuleType<Trigger, Custom, MessageType>[]
-		// 其余配置
-		const rest = omit(rule, ['type', 'label', 'trigger', 'custom'])
+		const rest = omit(rule, [
+			'type',
+			'label',
+			'trigger',
+			'custom'
+		])
 
-		const {
-			custom,
-			label = '',
-			type = 'string'
-		} = rule
+		const { custom, label = '', type = 'string' as const } = rule
 
-		// 转换配置
 		for (const name in rest) {
-			// ❌ 验证规则是否存在
 			if (!this.hasValidator(name)) {
 				printWarn(`"${name}" rule does not exist. Will be skipped.`)
 				continue
 			}
 
-			// 验证规则
-			const validation = this.#validation.getItem(name)
-			// 当前规则配置
+			const validation = this.#validationSchema.getItem(name)
 			const ruleOption = rest[name as keyof typeof rest]
-			// 当前配置
 			const option = {
 				param: ruleOption,
 				trigger: rule.trigger || validation.trigger,
-				tpl: 'default',
+				template: 'default',
 				message: ''
 			}
 
-			// 🔧 规则配置应用
 			if (isPlainObject(ruleOption)) {
 				const {
 					value,
 					trigger,
+					template,
 					message,
-					tpl,
 				} = ruleOption
 
 				if (trigger) {
@@ -204,8 +197,8 @@ export class Validator<
 
 				if (isNonEmptyString(message)) {
 					option.message = message
-				} else if (tpl) {
-					option.tpl = tpl
+				} else if (template) {
+					option.template = template
 				}
 			}
 
@@ -249,7 +242,7 @@ export class Validator<
 			label?: string
 			param: any
 			trigger?: Trigger
-			tpl: string
+			template: string
 			message: string
 		}
 	): ReturnRuleType<Trigger, Custom, MessageType> {
@@ -258,34 +251,23 @@ export class Validator<
 			label,
 			param,
 			trigger,
-			tpl
+			template
 		} = other
+		const validators = toArray(validation.validator)
 		return {
 			type,
 			rule: name,
-			trigger: trigger || this.#trigger,
+			trigger: trigger || this.#defaultTrigger,
 			validator: ((_, value) => {
 				return new Promise<void>((resolve, reject) => {
-					if (
-						// ✅ 不是必填项，且需要验证的值无效，则直接通过
-						(isNil(rule.required) && !isNonEmptyString(value)) ||
-						// ✅ 规则关闭，直接通过
-						param === false
-					) {
+					if ((isNil(rule.required) && !isNonEmptyString(value)) || param === false) {
 						resolve()
-					} else if (
-						// ❌ 方法验证结果
-						(isFunction(validation.validator) && !validation.validator(value, param, type)) ||
-						// ❌ 多个方法验证结果
-						(isArray(validation.validator) && !validation.validator.every((fn) => fn(value, param, type)))
-					) {
+					} else if (!validators.every((validator) => validator(value, param, type))) {
 						let message = other.message
-						// 🔧 消息格式化
 						if (isNonEmptyString(message)) {
 							message = formatTpl({ label, message, param })
-						} else if (tpl) {
-							// 消息配置
-							const messages = toArray(this.#message.getMessage(name)[tpl])
+						} else if (template) {
+							const messages = toArray(this.#messageSchema.getMessage(name)[template])
 							if (label) {
 								messages.splice(1, 1, label)
 							}
@@ -297,7 +279,6 @@ export class Validator<
 						} else {
 							printWarn(`"${name}" rule 'tpl' value does not exist.`)
 						}
-
 						reject(new Error(formatTplByValue(message, value)))
 					} else {
 						resolve()
@@ -324,10 +305,9 @@ export class Validator<
 		return {
 			type,
 			rule: name,
-			trigger: trigger || this.#trigger,
+			trigger: trigger || this.#defaultTrigger,
 			validator: ((_, value) => {
 				return new Promise<void>((resolve, reject) => {
-					// ✅ 不是必填项，且需要验证的值无效，则直接通过
 					if (isNil(rule.required) && !isNonEmptyString(value)) {
 						resolve()
 					} else {

@@ -1,5 +1,14 @@
 # @txjs/validator
 
+## 1.1.1
+
+### Patch Changes
+
+- 修复无法导出配置文件的问题
+- Updated dependencies
+  - @txjs/shared@1.0.5
+  - @txjs/bool@1.0.3
+
 ## 1.1.0
 
 ### Minor Changes

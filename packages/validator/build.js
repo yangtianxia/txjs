@@ -6,9 +6,6 @@ bundleMultiple([
     root: true
   },
   {
-    filename: 'instance'
-  },
-  {
     filename: 'defaults'
   },
   {

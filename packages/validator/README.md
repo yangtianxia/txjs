@@ -47,31 +47,7 @@ yarn add @txjs/validator
 - required
 - telephone
 
-## 基础示例
-
-```ts
-import validator from '@txjs/validator/instance'
-
-const rules = validator.schema({
-  name: {
-    label: '用户名',
-    required: true
-  },
-  phone: {
-    label: '手机号',
-    required: true,
-    telephone: true
-  },
-  sex: {
-    label: '性别',
-    required: {
-      tpl: 'select'
-    }
-  }
-})
-```
-
-## 自定义
+## 使用示例
 
 ```ts
 import { Validator, createValidation, createMessage } from '@txjs/validator'
@@ -106,19 +82,23 @@ const validator = new Validator({
 })
 
 const rules = validator.schema({
-  name: {
+  username: {
     label: '用户名',
-    required: true,
-    name: true
+    required: true
   },
-  phone: {
-    label: '手机号',
+  password: {
+    label: '登录密码',
+    required: true
+  },
+  telephone: {
+    label: '手机号码',
     required: true,
     telephone: true
   },
-  sex: {
-    label: '性别',
-    required: 'select'
+  code: {
+    label: '短信验证码',
+    required: true,
+    maxlength: 6
   }
 })
 ```

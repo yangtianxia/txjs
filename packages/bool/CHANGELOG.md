@@ -1,5 +1,11 @@
 # @txjs/bool
 
+## 1.0.3
+
+### Patch Changes
+
+- 添加导出文件配置
+
 ## 1.0.2
 
 ### Patch Changes

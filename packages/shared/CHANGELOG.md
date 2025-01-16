@@ -1,5 +1,13 @@
 # @txjs/shared
 
+## 1.0.5
+
+### Patch Changes
+
+- 添加导出文件配置
+- Updated dependencies
+  - @txjs/bool@1.0.3
+
 ## 1.0.4
 
 ### Patch Changes

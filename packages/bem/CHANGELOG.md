@@ -1,5 +1,12 @@
 # @txjs/bem
 
+## 1.0.3
+
+### Patch Changes
+
+- Updated dependencies
+  - @txjs/bool@1.0.3
+
 ## 1.0.2
 
 ### Patch Changes

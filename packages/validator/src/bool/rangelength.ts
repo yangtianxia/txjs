@@ -1,4 +1,4 @@
-import type { ValidationRuleFunc } from '../schema'
+import type { ValidationRuleFunc } from '../validation'
 import { minlength } from './minlength'
 import { maxlength } from './maxlength'
 

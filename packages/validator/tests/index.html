@@ -29,32 +29,37 @@
 <body>
   <div id="app"></div>
   <script type="module">
-    import { Validator, ValidationSchema, MessageSchema } from '../dist/index.esm.mjs'
+    import { Validator, createValidation, createMessage } from '../dist/index.esm.mjs'
+    import defaults from '../dist/defaults.mjs'
+    import zhCN from '../dist/locale/zhCN.mjs'
+    import enUS from '../dist/locale/enUS.mjs'
 
-    // 自定义验证
-    const customValidation = new ValidationSchema({
-      name: {
-        type: Boolean,
-        validator: (value) => {
-          return value.length >= 2 && value.length <= 5
+    const locale = localStorage.getItem('locale') || 'zhCN'
+
+    const validator = new Validator({
+      locale,
+      errorPhase: 'sync',
+      validation: createValidation(defaults, {
+        name: {
+          type: Boolean,
+          validator: (value) => {
+            return value.length >= 2 && value.length <= 5
+          }
         }
+      }),
+      messages: {
+        zhCN: createMessage(zhCN, {
+          name: {
+            default: '[0]长度必须大于等于2，且小于等于5'
+          }
+        }),
+        enUS: createMessage(enUS, {
+          name: {
+            default: '[0] The length must be greater than or equal to 2 and less than or equal to 5'
+          }
+        })
       }
     })
-    const validation = ValidationSchema.merged(Validator.validation, customValidation)
-
-    // 自定义消息
-    const customMessage = new MessageSchema({
-      zhCN: {
-        name: {
-          default: '[0]长度必须大于等于2，且小于等于5'
-        }
-      }
-    }, 'zhCN')
-    const message = MessageSchema.merged(Validator.message, customMessage)
-
-    const validator = new Validator({ validation, message })
-
-    console.dir(validator)
 
     const rules = validator.schema({
       name: {
@@ -69,9 +74,7 @@
       },
       sex: {
         label: '性别',
-        required: {
-          tpl: 'select'
-        }
+        required: 'select'
       }
     })
 
@@ -79,22 +82,23 @@
       data() {
         return {
           rules,
+          locale,
           model: {
             name: undefined,
             phone: undefined,
             sex: undefined
-          },
-          currentLocale: validator.currentLocale
+          }
         }
       },
       methods: {
         switchLocale() {
-          if (validator.currentLocale === 'zhCN') {
+          if (validator.locale === 'zhCN') {
             validator.setLocale('enUS')
           } else {
             validator.setLocale('zhCN')
           }
-          this.currentLocale = validator.currentLocale
+          this.locale = validator.locale
+          localStorage.setItem('locale', validator.locale)
         },
         clearValidate() {
           this.$refs.formRef.clearValidate()
@@ -104,7 +108,7 @@
       <section class="wrapper">
         <div class="action">
           <a-space>
-            <a-button type="primary" @click="switchLocale">切换语言{{currentLocale}}</a-button>
+            <a-button type="primary" @click="switchLocale">切换语言({{locale}})</a-button>
             <a-button type="primary" @click="clearValidate">重置验证</a-button>
           </a-space>
         </div>

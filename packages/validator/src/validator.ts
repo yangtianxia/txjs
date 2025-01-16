@@ -1,28 +1,39 @@
-import { isPlainObject, isNil, isNonEmptyString, isFunction, notNil, isPromise } from '@txjs/bool'
 import { omit, toArray } from '@txjs/shared'
-import { MessageSchema, ValidationSchema, type MessageLocaleObject, type ValidationObject, type ValidationRule } from './schema'
-import { throwError, printWarn, formatTpl, formatTplByValue } from './utils'
-import type { BaseTrigger, FieldType } from './types'
+import {
+	isPlainObject,
+	isNil,
+	isNonEmptyString,
+	isString,
+	isFunction,
+	notNil,
+	isPromise
+} from '@txjs/bool'
 
-import messageSchema from './message'
-import validationSchema from './validation'
+import { Message, type MessageObject } from './message'
+import {
+	Validation,
+	type ValidationObject,
+	type ValidationRule
+} from './validation'
+import {
+	throwError,
+	printWarn,
+	formatTpl,
+	formatTplByValue
+} from './utils'
+import type {
+	ExtractProp,
+	ExtractPropOf,
+	InferPropType,
+	BaseTrigger,
+	FieldType
+} from './types'
 
-type ExtractProp<T, K> = K extends keyof T ? T[K] : never
+type ErrorPhase = 'pre' | 'sync'
 
-type PropConstructor<T = any> =
-	| { new (...args: any[]): T & object }
-	| { (): T }
-
-export type PropType<T> = PropConstructor<T> | PropConstructor<T>[]
-
-type Prop<T = any> = PropType<T>
-
-type InferPropType<P> =
-	P extends Prop<infer T>
-		? unknown extends T
-			? any
-			: T
-		: any
+export interface CustomValidatorFn {
+	(value: any, rule: any): Promise<void> | void
+}
 
 interface CustomValidatorRule<Trigger, Custom> {
 	/** 触发事件 */
@@ -31,16 +42,12 @@ interface CustomValidatorRule<Trigger, Custom> {
 	validator: Custom
 }
 
-export interface CustomValidatorFunc {
-	(value: any, rule: any): Promise<void> | void
-}
+type ValidatorRuleValue<Value, Template> =
+	Value extends boolean
+		? Template | { value?: Value }
+		: { value: Value }
 
-type ValidatorRuleValue<T> =
-	T extends boolean
-		? { value?: T }
-		: { value: T }
-
-type ValidatorRuleOption<Value, Template, Trigger> = ValidatorRuleValue<Value> & {
+type ValidatorRuleOption<Value, Template, Trigger> = ValidatorRuleValue<Value, Template> | {
 	/** 触发事件 */
 	trigger?: Trigger
 	/** 消息模版 */
@@ -52,7 +59,7 @@ type ValidatorRuleOption<Value, Template, Trigger> = ValidatorRuleValue<Value> &
 type ExtractValidatorRules<Trigger, VO, MO> = {
 	[K in keyof VO]:
 		| InferPropType<ExtractProp<VO[K], 'type'>>
-		| ValidatorRuleOption<InferPropType<ExtractProp<VO[K], 'type'>>, keyof ExtractProp<MO, K>, Trigger>
+		| ValidatorRuleOption<InferPropType<ExtractProp<VO[K], 'type'>>, ExtractPropOf<MO, K>, Trigger>
 }
 
 type ValidatorRule<Trigger, Custom, VO, MO> = Partial<ExtractValidatorRules<Trigger, VO, MO>> & {
@@ -70,144 +77,182 @@ type ValidatorRule<Trigger, Custom, VO, MO> = Partial<ExtractValidatorRules<Trig
 
 type ValidatorRules<T, Trigger, Custom, VO, MO> = Partial<Record<keyof T, ValidatorRule<Trigger, Custom, VO, MO>>>
 
-type ReturnRuleType<Trigger, Custom, MessageType> = {
+type ReturnRuleType<Trigger, Custom, MsgType> = {
 	type?: FieldType
 	trigger?: Trigger
 	rule?: string
-	message?: MessageType
+	message?: MsgType
 	validator: Custom
 }
 
 export class Validator<
 	Trigger extends BaseTrigger,
-	Custom extends CustomValidatorFunc,
-	MessageType extends string,
+	CustomFn extends CustomValidatorFn,
+	MsgType extends string,
 	VO extends ValidationObject<Trigger>,
-	MO extends MessageLocaleObject
+	MO extends MessageObject
 > {
-	#validationSchema: ValidationSchema<VO>
-	#messageSchema: MessageSchema<MO>
-	#defaultTrigger: Trigger
+	#trigger = 'blur'as Trigger
+	#errorPhase = 'pre' as ErrorPhase
+	#locale: string
+	#validation: Validation<VO>
+	#messages: Record<string, Message<MO>>
 
 	constructor (config: {
 		/** 全局默认触发事件 */
 		trigger?: Trigger
+		/** 错误生成阶段 */
+		errorPhase?: ErrorPhase
+		/** 默认语言配置 */
+		locale: string
 		/** 验证器配置 */
-		validationSchema: ValidationSchema<VO>
+		validation: Validation<VO>
 		/** 消息配置 */
-		messageSchema: MessageSchema<MO>
-		/** 语言 */
-		locale?: keyof MO
+		messages: Record<string, Message<MO>>
 	}) {
-		const {
-			messageSchema,
-			validationSchema,
-			locale,
-			trigger = 'blur' as Trigger,
-		} = config
-		if (locale) {
-			messageSchema.setLocale(locale)
+		if (config.trigger) {
+			this.#trigger = config.trigger
 		}
-		this.#defaultTrigger = trigger
-		this.#messageSchema = messageSchema
-		this.#validationSchema = validationSchema
+		if (config.errorPhase) {
+			this.#errorPhase = config.errorPhase
+		}
+		this.#locale = config.locale
+		this.#validation = config.validation
+		this.#messages = config.messages
 	}
 
-	static messageSchema = messageSchema
-
-	static validationSchema = validationSchema
-
-	get currentLocale() {
-		return this.#messageSchema.locale
+	get trigger() {
+		return this.#trigger
 	}
 
-	hasValidator(name: string) {
-		return !!this.#validationSchema.getItem(name)
+	get errorPhase() {
+		return this.#errorPhase
 	}
 
-	hasMessage(name: string) {
-		return !!this.#messageSchema.getMessage(name)
+	get locale() {
+		return this.#locale
+	}
+
+	get validation() {
+		return this.#validation
+	}
+
+	get messages() {
+		return this.#messages
+	}
+
+	get message() {
+		return this.messages[this.locale] || {}
 	}
 
 	setTrigger(value: Trigger) {
-		this.#defaultTrigger = value
+		this.#trigger = value
 	}
 
-	setLocale(locale: keyof MO) {
-		this.#messageSchema.setLocale(locale)
+	setLocale(locale: string) {
+		if (locale in this.messages) {
+			this.#locale = locale
+		} else {
+			printWarn(`"${locale}" locale does not exist.`)
+		}
 	}
 
-	schema<T extends object>(config: ValidatorRules<T, Trigger, Custom, VO, MO>) {
-		const rules = {} as Record<keyof T, ReturnRuleType<Trigger, Custom, MessageType>[]>
+	schema<T extends object>(config: ValidatorRules<T, Trigger, CustomFn, VO, MO>) {
+		const rules = {} as Record<keyof T, ReturnRuleType<Trigger, CustomFn, MsgType>[]>
 		for (const key in config) {
 			rules[key] = this.#generate(key, config[key] || {})
 		}
 		return rules
 	}
 
-	#generate<K>(key: K, rule: ValidatorRule<Trigger, Custom, VO, MO>) {
+	#generate<K>(key: K, rule: ValidatorRule<Trigger, CustomFn, VO, MO>) {
 		if (!isPlainObject(rule)) {
 			throwError(`"${key}" the value of a must be an object.`)
 		}
 
-		const ruleList = [] as ReturnRuleType<Trigger, Custom, MessageType>[]
+		const rules = [] as ReturnRuleType<Trigger, CustomFn, MsgType>[]
 		const rest = omit(rule, [
 			'type',
 			'label',
 			'trigger',
 			'custom'
 		])
-
-		const { custom, label = '', type = 'string' as const } = rule
+		const {
+			custom,
+			label = '',
+			type = 'string' as const
+		} = rule
 
 		for (const name in rest) {
-			if (!this.hasValidator(name)) {
+			if (!this.validation.hasItem(name)) {
 				printWarn(`"${name}" rule does not exist. Will be skipped.`)
 				continue
 			}
 
-			const validation = this.#validationSchema.getItem(name)
-			const ruleOption = rest[name as keyof typeof rest]
-			const option = {
-				param: ruleOption,
-				trigger: rule.trigger || validation.trigger,
-				template: 'default',
-				message: ''
-			}
+			const validation = this.#validation.getItem(name)
+			const params = rest[name as keyof typeof rest]
+			const isBoolType = validation.type === Boolean
 
-			if (isPlainObject(ruleOption)) {
+			let value = undefined as any
+			let message = ''
+			let template = 'default'
+			let trigger = rule.trigger || validation.trigger
+
+			if (isBoolType && isString(params)) {
+				value = true
+				template = params
+			} else if (isPlainObject(params)) {
 				const {
-					value,
-					trigger,
-					template,
-					message,
-				} = ruleOption
+					value: optValue,
+					message: optMessage,
+					trigger: optTrigger,
+					template: optTpl,
+				} = params
 
-				if (trigger) {
-					option.trigger = trigger
+				if (optTrigger) {
+					trigger = optTrigger
 				}
 
-				if (notNil(value)) {
-					option.param = value
-				} else if (validation.type === Boolean) {
-					option.param = true as any
+				if (notNil(optValue)) {
+					value = optValue
+				} else if (isBoolType) {
+					value = true
 				} else {
 					throwError(`"${name}" rule 'value' cannot be empty.`)
 				}
 
-				if (isNonEmptyString(message)) {
-					option.message = message
-				} else if (template) {
-					option.template = template
+				if (isNonEmptyString(optMessage)) {
+					message = optMessage
+				} else if (optTpl) {
+					template = optTpl
 				}
+			} else {
+				value = params
 			}
 
-			ruleList.push(
-				this.convert(
+			const messageCallback = () => {
+				return this.#formatMessage({
+					name,
+					label,
+					template,
+					message,
+					param: value
+				})
+			}
+
+			rules.push(
+				this.#convert(
 					name,
 					rule,
 					validation,
-					{ type, label, ...option }
+					{
+						type,
+						trigger,
+						param: value,
+						message: this.errorPhase === 'pre'
+							? messageCallback()
+							: messageCallback
+					}
 				)
 			)
 		}
@@ -219,93 +264,105 @@ export class Validator<
 				if (!isFunction(validator)) {
 					throwError(`"${key}" 'custom${[i]}.validator' value must be a function.`)
 				}
-				ruleList.push(
-					this.convertCustom(
+				rules.push(
+					this.#convertCustom(
 						`${key}-i`,
 						rule,
 						validator,
-						{ type, label, trigger }
+						{
+							type,
+							label,
+							trigger
+						}
 					)
 				)
 			}
 		}
 
-		return ruleList
+		return rules
 	}
 
-	convert(
-		name: string,
-		rule: Omit<ValidatorRule<Trigger, Custom, VO, MO>, 'type' | 'label' | 'trigger' | 'custom'>,
-		validation: ValidationRule<Trigger>,
-		other: {
-			type?: FieldType
-			label?: string
-			param: any
-			trigger?: Trigger
-			template: string
-			message: string
-		}
-	): ReturnRuleType<Trigger, Custom, MessageType> {
+	#formatMessage(options: {
+		name: string
+		param: any
+		label: string
+		message: string
+		template: string
+	}) {
 		const {
-			type,
-			label,
+			name,
 			param,
-			trigger,
+			label,
+			message,
 			template
-		} = other
+		} = options
+		if (isNonEmptyString(message)) {
+			return formatTpl({ label, message, param })
+		} else if (template) {
+			const messages = toArray(this.message.getItem(name, template))
+			if (label) {
+				messages.splice(1, 1, label)
+			}
+			return formatTpl({
+				param,
+				message: messages[0],
+				label: messages[1]
+			})
+		} else {
+			printWarn(`"${name}" rule 'template' value does not exist.`)
+		}
+		return ''
+	}
+
+	#convert(
+		name: string,
+		rule: Omit<ValidatorRule<Trigger, CustomFn, VO, MO>, 'type' | 'label' | 'trigger' | 'custom'>,
+		validation: ValidationRule<Trigger>,
+		partial: {
+			param: any
+			type?: FieldType
+			trigger?: Trigger
+			message: string | (() => string)
+		}
+	): ReturnRuleType<Trigger, CustomFn, MsgType> {
+		const {
+			param,
+			type,
+			message
+		} = partial
 		const validators = toArray(validation.validator)
 		return {
 			type,
 			rule: name,
-			trigger: trigger || this.#defaultTrigger,
+			trigger: partial.trigger || this.trigger,
 			validator: ((_, value) => {
 				return new Promise<void>((resolve, reject) => {
 					if ((isNil(rule.required) && !isNonEmptyString(value)) || param === false) {
 						resolve()
 					} else if (!validators.every((validator) => validator(value, param, type))) {
-						let message = other.message
-						if (isNonEmptyString(message)) {
-							message = formatTpl({ label, message, param })
-						} else if (template) {
-							const messages = toArray(this.#messageSchema.getMessage(name)[template])
-							if (label) {
-								messages.splice(1, 1, label)
-							}
-							message = formatTpl({
-								param,
-								message: messages[0],
-								label: messages[1]
-							})
-						} else {
-							printWarn(`"${name}" rule 'tpl' value does not exist.`)
-						}
-						reject(new Error(formatTplByValue(message, value)))
+						reject(new Error(formatTplByValue(isFunction(message) ? message() : message, value)))
 					} else {
 						resolve()
 					}
 				})
-			}) as Custom
+			}) as CustomFn
 		}
 	}
 
-	convertCustom(
+	#convertCustom(
 		name: string,
-		rule: Omit<ValidatorRule<Trigger, Custom, VO, MO>, 'type' | 'label' | 'trigger' | 'custom'>,
-		validator: Custom,
-		{
-			type,
-			label,
-			trigger
-		}: {
+		rule: Omit<ValidatorRule<Trigger, CustomFn, VO, MO>, 'type' | 'label' | 'trigger' | 'custom'>,
+		validator: CustomFn,
+		partial: {
 			type?: FieldType
 			label: string
 			trigger?: Trigger
 		}
-	): ReturnRuleType<Trigger, Custom, MessageType>  {
+	): ReturnRuleType<Trigger, CustomFn, MsgType>  {
 		return {
-			type,
 			rule: name,
-			trigger: trigger || this.#defaultTrigger,
+			type: partial.type,
+			trigger: partial.trigger || this.trigger,
 			validator: ((_, value) => {
 				return new Promise<void>((resolve, reject) => {
 					if (isNil(rule.required) && !isNonEmptyString(value)) {
@@ -317,7 +374,7 @@ export class Validator<
 								.then(resolve)
 								.catch((error: Error) => {
 									const message = formatTpl({
-										label,
+										label: partial.label,
 										message: error.message
 									})
 									reject(new Error(formatTplByValue(message, value)))
@@ -327,7 +384,7 @@ export class Validator<
 						}
 					}
 				})
-			}) as Custom
+			}) as CustomFn
 		}
 	}
 }

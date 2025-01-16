@@ -1,5 +1,5 @@
 import { isArray, notNil, isString } from '@txjs/bool'
-import type { ValidationRuleFunc } from '../schema'
+import type { ValidationRuleFunc } from '../validation'
 
 export const required: ValidationRuleFunc = (value, param, type) => {
 	if (type === 'array') {

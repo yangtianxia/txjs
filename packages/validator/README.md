@@ -26,7 +26,7 @@ yarn add @txjs/validator
 - errorPhase: 错误生成阶段
 - locale: 默认语言配置
 - validation： 验证器配置，使用 `createValidation` 初始化
-- messages： 验证器配置，使用 `createValidation` 初始化
+- messages： 错误提示配置，使用 `createMessage` 初始化
 
 ## 内置验证方法
 

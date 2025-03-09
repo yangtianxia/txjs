@@ -75,6 +75,20 @@
       sex: {
         label: '性别',
         required: 'select'
+      },
+      tags: {
+        type: 'array',
+        label: '兴趣爱好',
+        custom: [
+          {
+            trigger: ['blur', 'change'],
+            validator(_, value) {
+              if (!value || value.length < 1) {
+                throw new Error('请选择一个兴趣爱好')
+              }
+            }
+          }
+        ]
       }
     })
 
@@ -86,7 +100,8 @@
           model: {
             name: undefined,
             phone: undefined,
-            sex: undefined
+            sex: undefined,
+            tags: []
           }
         }
       },
@@ -125,6 +140,13 @@
               <a-select-option :key="1" value="1">男</a-select-option>
               <a-select-option :key="2" value="2">女</a-select-option>
             </a-select>
+          </a-form-item>
+          <a-form-item validateFirst label="兴趣爱好" name="tags">
+            <a-checkbox-group v-model:value="model.tags">
+              <a-checkbox :value="1">唱歌</a-checkbox>
+              <a-checkbox :value="2">跳舞</a-checkbox>
+              <a-checkbox :value="3">书法</a-checkbox>
+            </a-checkbox-group>
           </a-form-item>
           <a-form-item :wrapperCol="{offset: 6}">
             <a-button type="primary" htmlType="submit">提交</a-button>

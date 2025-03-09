@@ -55,6 +55,8 @@ import defaults from '@txjs/validator/defaults'
 import zhCN from '@txjs/validator/locale/zhCN'
 import enUS from '@txjs/validator/locale/enUS'
 
+const locale = localStorage.getItem('locale') || 'zhCN'
+
 // 自定义验证
 const validator = new Validator({
   locale,

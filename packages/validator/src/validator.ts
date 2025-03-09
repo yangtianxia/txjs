@@ -337,7 +337,7 @@ export class Validator<
 			trigger: partial.trigger || this.trigger,
 			validator: ((_, value) => {
 				return new Promise<void>((resolve, reject) => {
-					if ((isNil(rule.required) && !isNonEmptyString(value)) || param === false) {
+					if ((isNil(rule.required) && isNil(value)) || param === false) {
 						resolve()
 					} else if (!validators.every((validator) => validator(value, param, type))) {
 						reject(new Error(formatTplByValue(isFunction(message) ? message() : message, value)))
@@ -359,28 +359,35 @@ export class Validator<
 			trigger?: Trigger
 		}
 	): ReturnRuleType<Trigger, CustomFn, MsgType>  {
+		const formatMessage = (value: any, error: any) => {
+			const message = formatTpl({
+				label: partial.label,
+				message: error.message
+			})
+			return new Error(formatTplByValue(message, value))
+		}
 		return {
 			rule: name,
 			type: partial.type,
 			trigger: partial.trigger || this.trigger,
 			validator: ((_, value) => {
 				return new Promise<void>((resolve, reject) => {
-					if (isNil(rule.required) && !isNonEmptyString(value)) {
+					if (isNil(rule.required) && isNil(value)) {
 						resolve()
 					} else {
-						const promify = validator(_, value)
-						if (isPromise(promify)) {
-							promify
-								.then(resolve)
-								.catch((error: Error) => {
-									const message = formatTpl({
-										label: partial.label,
-										message: error.message
+						try {
+							const promify = validator(_, value)
+							if (isPromise(promify)) {
+								promify
+									.then(resolve)
+									.catch((error: Error) => {
+										reject(formatMessage(value, error))
 									})
-									reject(new Error(formatTplByValue(message, value)))
-								})
-						} else {
-							resolve()
+							} else {
+								resolve()
+							}
+						} catch (error: any) {
+							reject(formatMessage(value, error))
 						}
 					}
 				})

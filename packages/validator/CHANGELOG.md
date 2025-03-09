@@ -1,5 +1,11 @@
 # @txjs/validator
 
+## 1.1.2
+
+###  Patch Changes
+
+- fix(validator) 修复必填项类型验证错误 #68
+
 ## 1.1.1
 
 ### Patch Changes

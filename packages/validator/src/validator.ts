@@ -75,14 +75,26 @@ type ValidatorRule<Trigger, Custom, VO, MO> = Partial<ExtractValidatorRules<Trig
 		| CustomValidatorRule<Trigger, Custom>[]
 }
 
-type ValidatorRules<T, Trigger, Custom, VO, MO> = Partial<Record<keyof T, ValidatorRule<Trigger, Custom, VO, MO>>>
+type HasDeep<T> = 'deep' extends keyof T ? true : false
 
-type ReturnRuleType<Trigger, Custom, MsgType> = {
+type UnwrapDeepSchema<T, Trigger, Custom, VO, MO> = {
+	[K in keyof T]?: HasDeep<T[K]> extends true
+		? UnwrapDeepSchema<Omit<T[K], 'deep'>, Trigger, Custom, VO, MO>
+		: ValidatorRule<Trigger, Custom, VO, MO>
+}
+
+type Rule<Trigger, Custom, MsgType> = {
 	type?: FieldType
 	trigger?: Trigger
 	rule?: string
 	message?: MsgType
 	validator: Custom
+}
+
+type RuleObject<T, Trigger, Custom, MsgType> = {
+	[K in keyof T]?: HasDeep<T[K]> extends true
+		?	RuleObject<Omit<T[K], 'deep'>, Trigger, Custom, MsgType>
+		: Rule<Trigger, Custom, MsgType>[]
 }
 
 export class Validator<
@@ -157,10 +169,15 @@ export class Validator<
 		}
 	}
 
-	schema<T extends object>(config: ValidatorRules<T, Trigger, CustomFn, VO, MO>) {
-		const rules = {} as Record<keyof T, ReturnRuleType<Trigger, CustomFn, MsgType>[]>
+	schema<T extends object>(config: UnwrapDeepSchema<T, Trigger, CustomFn, VO, MO>) {
+		const rules = {} as RuleObject<T, Trigger, CustomFn, MsgType>
 		for (const key in config) {
-			rules[key] = this.#generate(key, config[key] || {})
+			const item = config[key] || {}
+			if ('deep' in item) {
+				rules[key] = this.schema(omit(item, ['deep'])) as typeof rules[typeof key]
+			} else {
+				rules[key] = this.#generate(key, item) as typeof rules[typeof key]
+			}
 		}
 		return rules
 	}
@@ -170,7 +187,7 @@ export class Validator<
 			throwError(`"${key}" the value of a must be an object.`)
 		}
 
-		const rules = [] as ReturnRuleType<Trigger, CustomFn, MsgType>[]
+		const rules = [] as Rule<Trigger, CustomFn, MsgType>[]
 		const rest = omit(rule, [
 			'type',
 			'label',
@@ -266,7 +283,7 @@ export class Validator<
 				}
 				rules.push(
 					this.#convertCustom(
-						`${key}-i`,
+						`${key}-${i}`,
 						rule,
 						validator,
 						{
@@ -324,7 +341,7 @@ export class Validator<
 			trigger?: Trigger
 			message: string | (() => string)
 		}
-	): ReturnRuleType<Trigger, CustomFn, MsgType> {
+	): Rule<Trigger, CustomFn, MsgType> {
 		const {
 			param,
 			type,
@@ -358,7 +375,7 @@ export class Validator<
 			label: string
 			trigger?: Trigger
 		}
-	): ReturnRuleType<Trigger, CustomFn, MsgType>  {
+	): Rule<Trigger, CustomFn, MsgType>  {
 		const formatMessage = (value: any, error: any) => {
 			const message = formatTpl({
 				label: partial.label,

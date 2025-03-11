@@ -1,8 +1,14 @@
 # @txjs/validator
 
+## 1.1.3
+
+### Patch Changes
+
+- feat 支持多层级规则生成(兼容 antd 规则)
+
 ## 1.1.2
 
-###  Patch Changes
+### Patch Changes
 
 - fix(validator) 修复必填项类型验证错误 #68
 

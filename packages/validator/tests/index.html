@@ -76,6 +76,21 @@
         label: '性别',
         required: 'select'
       },
+      subInfo: {
+        deep: true,
+        nick: {
+          label: '昵称',
+          required: true,
+          name: {
+            value: true,
+            message: '昵称格式不正确'
+          }
+        },
+        address: {
+          label: '地址',
+          required: true
+        }
+      },
       tags: {
         type: 'array',
         label: '兴趣爱好',
@@ -89,8 +104,10 @@
             }
           }
         ]
-      }
+      },
     })
+
+    console.log(rules)
 
     const app = Vue.createApp({
       data() {
@@ -101,6 +118,10 @@
             name: undefined,
             phone: undefined,
             sex: undefined,
+            subInfo: {
+              nick: undefined,
+              address: undefined
+            },
             tags: []
           }
         }
@@ -140,6 +161,12 @@
               <a-select-option :key="1" value="1">男</a-select-option>
               <a-select-option :key="2" value="2">女</a-select-option>
             </a-select>
+          </a-form-item>
+          <a-form-item required validateFirst label="昵称" :name="['subInfo', 'nick']">
+            <a-input v-model:value="model.subInfo.nick" placeholder="请输入昵称" />
+          </a-form-item>
+          <a-form-item required validateFirst label="地址" :name="['subInfo', 'address']">
+            <a-input v-model:value="model.subInfo.address" placeholder="请输入地址" />
           </a-form-item>
           <a-form-item validateFirst label="兴趣爱好" name="tags">
             <a-checkbox-group v-model:value="model.tags">

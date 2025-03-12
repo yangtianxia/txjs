@@ -1,5 +1,11 @@
 # @txjs/validator
 
+## 1.1.4
+
+### Patch Changes
+
+- patch 移除多层级规则生成
+
 ## 1.1.3
 
 ### Patch Changes

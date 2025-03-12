@@ -35,18 +35,18 @@ export default {
 		default: '不允许包含HTML标签'
 	},
 	email: {
-		default: ['输入的[0]格式无效', '邮箱']
+		default: ['[0]格式无效', '邮箱']
 	},
 	telephone: {
-		default: ['输入的[0]格式无效', '手机号码']
+		default: ['[0]格式无效', '手机号码']
 	},
 	landline: {
-		default: ['输入的[0]格式无效', '座机号码']
+		default: ['[0]格式无效', '座机号码']
 	},
 	httpUrl: {
-		default: ['输入的[0]格式无效', 'HTTP网址']
+		default: ['[0]格式无效', 'HTTP网址']
 	},
 	absoluteUrl: {
-		default: ['输入的[0]格式无效', '网址']
+		default: ['[0]格式无效', '网址']
 	}
 }

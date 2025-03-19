@@ -18,6 +18,7 @@ import {
 import {
 	throwError,
 	printWarn,
+	isEmptyFieldValue,
 	formatTpl,
 	formatTplByValue
 } from './utils'
@@ -313,7 +314,7 @@ export class Validator<
 		validation: ValidationRule<Trigger>,
 		partial: {
 			param: any
-			type?: FieldType
+			type: FieldType
 			trigger?: Trigger
 			message: string | (() => string)
 		}
@@ -330,7 +331,7 @@ export class Validator<
 			trigger: partial.trigger || this.trigger,
 			validator: ((_, value) => {
 				return new Promise<void>((resolve, reject) => {
-					if ((isNil(rule.required) && isNil(value)) || param === false) {
+					if ((isNil(rule.required) && isEmptyFieldValue(type, value)) || param === false) {
 						resolve()
 					} else if (!validators.every((validator) => validator(value, param, type))) {
 						reject(new Error(formatTplByValue(isFunction(message) ? message() : message, value)))
@@ -347,7 +348,7 @@ export class Validator<
 		rule: Omit<ValidatorRule<Trigger, Custom, VO, MO>, 'type' | 'label' | 'trigger' | 'custom'>,
 		validator: Custom,
 		partial: {
-			type?: FieldType
+			type: FieldType
 			label: string
 			trigger?: Trigger
 		}
@@ -365,7 +366,7 @@ export class Validator<
 			trigger: partial.trigger || this.trigger,
 			validator: ((_, value) => {
 				return new Promise<void>((resolve, reject) => {
-					if (isNil(rule.required) && isNil(value)) {
+					if (isNil(rule.required) && isEmptyFieldValue(partial.type, value)) {
 						resolve()
 					} else {
 						try {

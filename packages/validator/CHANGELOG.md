@@ -1,5 +1,11 @@
 # @txjs/validator
 
+## 1.1.5
+
+### Patch Changes
+
+- patch 非必填项字段值验证非空
+
 ## 1.1.4
 
 ### Patch Changes

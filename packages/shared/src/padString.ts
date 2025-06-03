@@ -12,8 +12,7 @@
  * ```
  */
 export function padString(text: string, value: string, index = 0) {
-	if (index === 0) {
-		return `${value}${text}`
-	}
-	return `${text.slice(0, index)}${value}${text.slice(index)}`
+  return index === 0
+    ? `${value}${text}`
+    : `${text.slice(0, index)}${value}${text.slice(index)}`
 }

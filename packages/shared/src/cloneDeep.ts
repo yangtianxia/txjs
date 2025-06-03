@@ -4,25 +4,27 @@ import { notNil, isFunction, isPlainObject, isArray } from '@txjs/bool'
 type InstanceClone<T> = true | ((value: T) => T)
 
 function cloneObjectDeep<T>(value: any, instanceClone?: InstanceClone<T>) {
-	if (isFunction(instanceClone)) {
-		return instanceClone(value)
-	}
-	if (instanceClone || isPlainObject(value)) {
-		const shallowCopy = notNil(value.constructor) ? new value.constructor() : Object.create(null)
-		for (const key in value) {
-			shallowCopy[key] = cloneDeep(value[key], instanceClone)
-		}
-		return shallowCopy
-	}
-	return value
+  if (isFunction(instanceClone)) {
+    return instanceClone(value)
+  }
+  if (instanceClone || isPlainObject(value)) {
+    const shallowCopy = notNil(value.constructor)
+      ? new value.constructor()
+      : Object.create(null)
+    for (const key in value) {
+      shallowCopy[key] = cloneDeep(value[key], instanceClone)
+    }
+    return shallowCopy
+  }
+  return value
 }
 
 function cloneArrayDeep<T>(value: any, instanceClone?: InstanceClone<T>) {
-	const shallowCopy = new value.constructor(value.length)
-	for (let i = 0, len = value.length; i < len; i++) {
-		shallowCopy[i] = cloneDeep(value[i], instanceClone)
-	}
-	return shallowCopy
+  const shallowCopy = new value.constructor(value.length)
+  for (let i = 0, len = value.length; i < len; i++) {
+    shallowCopy[i] = cloneDeep(value[i], instanceClone)
+  }
+  return shallowCopy
 }
 
 /**
@@ -37,11 +39,11 @@ function cloneArrayDeep<T>(value: any, instanceClone?: InstanceClone<T>) {
  * ```
  */
 export function cloneDeep<T>(value: T, instanceClone?: InstanceClone<T>): T {
-	if (isPlainObject(value)) {
-		return cloneObjectDeep(value, instanceClone)
-	}
-	if (isArray(value)) {
-		return cloneArrayDeep(value, instanceClone)
-	}
-	return clone(value)
+  if (isPlainObject(value)) {
+    return cloneObjectDeep(value, instanceClone)
+  }
+  if (isArray(value)) {
+    return cloneArrayDeep(value, instanceClone)
+  }
+  return clone(value)
 }

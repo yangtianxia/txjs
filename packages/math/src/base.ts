@@ -1,10 +1,7 @@
 import type { ValueType } from './types'
 
 /** 乘法 */
-export const multiply = (
-  multiplier: ValueType,
-  multiplicand: ValueType
-) => {
+export const multiply = (multiplier: ValueType, multiplicand: ValueType) => {
   let cardinality = 0
   const _multiplier = multiplier.toString()
   const _multiplicand = multiplicand.toString()
@@ -21,14 +18,15 @@ export const multiply = (
     /** ignore */
   }
 
-  return Number(_multiplier.replace('.', '')) * Number(_multiplicand.replace('.', '')) / Math.pow(10, cardinality)
+  return (
+    (Number(_multiplier.replace('.', '')) *
+      Number(_multiplicand.replace('.', ''))) /
+    Math.pow(10, cardinality)
+  )
 }
 
 /** 减法 */
-export const subtract = (
-  minuend: ValueType,
-  subtrahend: ValueType
-) => {
+export const subtract = (minuend: ValueType, subtrahend: ValueType) => {
   let _minuend = 0
   let _subtrahend = 0
 
@@ -46,14 +44,14 @@ export const subtract = (
 
   const cardinality = Math.pow(10, Math.max(_minuend, _subtrahend))
 
-  return (multiply(minuend, cardinality) - multiply(subtrahend, cardinality)) / cardinality
+  return (
+    (multiply(minuend, cardinality) - multiply(subtrahend, cardinality)) /
+    cardinality
+  )
 }
 
 /** 加法 */
-export const addition = (
-  augend: ValueType,
-  addend: ValueType
-) => {
+export const addition = (augend: ValueType, addend: ValueType) => {
   let _augend = 0
   let _addend = 0
 
@@ -71,14 +69,14 @@ export const addition = (
 
   const cardinality = Math.pow(10, Math.max(_augend, _addend))
 
-  return (multiply(augend, cardinality) + multiply(addend, cardinality)) / cardinality
+  return (
+    (multiply(augend, cardinality) + multiply(addend, cardinality)) /
+    cardinality
+  )
 }
 
 /** 除法 */
-export const divide = (
-  dividend: ValueType,
-  divisor: ValueType
-) => {
+export const divide = (dividend: ValueType, divisor: ValueType) => {
   let _dividend = 0
   let _divisor = 0
   const __dividend = dividend.toString()

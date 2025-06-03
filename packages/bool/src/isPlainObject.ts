@@ -13,6 +13,8 @@ import { is } from './is'
  * // => true
  * ```
  */
-export function isPlainObject<T>(value: T): value is T extends Record<any, any> ? T : never {
-	return value !== null && is(value, 'Object')
+export function isPlainObject<T>(
+  value: T
+): value is T extends Record<any, any> ? T : never {
+  return value !== null && is(value, 'Object')
 }

@@ -12,5 +12,5 @@ import { is } from './is'
  * ```
  */
 export function isDate(value: unknown): value is Date {
-	return is<Date>(value, 'Date') && !Number.isNaN(value.getTime())
+  return is<Date>(value, 'Date') && !Number.isNaN(value.getTime())
 }

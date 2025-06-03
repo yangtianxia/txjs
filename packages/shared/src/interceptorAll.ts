@@ -30,31 +30,31 @@ import { callInterceptor, type Interceptor } from './interceptor'
  * ```
  */
 export function interceptorAll(interceptors: Interceptor[], ...args: any[]) {
-	return new Promise<boolean>((resolve) => {
-		let state = true
-		interceptors
-			.reduce(
-				(promise, interceptor) =>
-					promise.then(() => {
-						if (state && interceptor) {
-							return new Promise((childResolve) => {
-								callInterceptor(interceptor, {
-									args,
-									done() {
-										childResolve()
-									},
-									canceled() {
-										state = false
-										childResolve()
-									}
-								})
-							})
-						}
-					}),
-				Promise.resolve()
-			)
-			.then(() => {
-				resolve(state)
-			})
-	})
+  return new Promise<boolean>((resolve) => {
+    let state = true
+    interceptors
+      .reduce(
+        (promise, interceptor) =>
+          promise.then(() => {
+            if (state && interceptor) {
+              return new Promise((childResolve) => {
+                callInterceptor(interceptor, {
+                  args,
+                  done() {
+                    childResolve()
+                  },
+                  canceled() {
+                    state = false
+                    childResolve()
+                  },
+                })
+              })
+            }
+          }),
+        Promise.resolve()
+      )
+      .then(() => {
+        resolve(state)
+      })
+  })
 }

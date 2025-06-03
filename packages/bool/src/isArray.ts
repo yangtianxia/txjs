@@ -13,6 +13,8 @@ import { is } from './is'
  * // => false
  * ```
  */
-export function isArray<T>(value: T): value is T extends Array<any> ? T : never {
-	return 'isArray' in Array ? Array.isArray(value) : is(value, 'Array')
+export function isArray<T>(
+  value: T
+): value is T extends Array<any> ? T : never {
+  return 'isArray' in Array ? Array.isArray(value) : is(value, 'Array')
 }

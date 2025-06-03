@@ -2,7 +2,7 @@ import { isPromise } from '@txjs/bool'
 import { noop } from './noop'
 
 export declare interface Interceptor {
-	(...args: any[]): Promise<boolean> | boolean | undefined | void
+  (...args: any[]): Promise<boolean> | boolean | undefined | void
 }
 
 /**
@@ -27,36 +27,36 @@ export declare interface Interceptor {
  * ```
  */
 export function callInterceptor(
-	interceptor: Interceptor | undefined,
-	{
-		args = [],
-		done,
-		canceled
-	}: {
-		args?: any[]
-		done: () => void
-		canceled?: () => void
-	}
+  interceptor: Interceptor | undefined,
+  {
+    args = [],
+    done,
+    canceled,
+  }: {
+    args?: any[]
+    done: () => void
+    canceled?: () => void
+  }
 ) {
-	if (interceptor) {
-		const returnVal = interceptor(...args)
+  if (interceptor) {
+    const returnVal = interceptor(...args)
 
-		if (isPromise(returnVal)) {
-			returnVal
-				.then((confirm) => {
-					if (confirm) {
-						done()
-					} else if (canceled) {
-						canceled()
-					}
-				})
-				.catch(noop)
-		} else if (returnVal) {
-			done()
-		} else if (canceled) {
-			canceled()
-		}
-	} else {
-		done()
-	}
+    if (isPromise(returnVal)) {
+      returnVal
+        .then((confirm) => {
+          if (confirm) {
+            done()
+          } else if (canceled) {
+            canceled()
+          }
+        })
+        .catch(noop)
+    } else if (returnVal) {
+      done()
+    } else if (canceled) {
+      canceled()
+    }
+  } else {
+    done()
+  }
 }

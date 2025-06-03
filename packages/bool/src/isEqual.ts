@@ -28,54 +28,57 @@ import { isArray } from './isArray'
  * ```
  */
 export function isEqual(value: any, other: any, seen = new WeakMap()) {
-	if (value === other) {
-		return true
-	}
+  if (value === other) {
+    return true
+  }
 
-	if (typeof value !== 'object' || typeof other !== 'object') {
-		return false
-	}
+  if (typeof value !== 'object' || typeof other !== 'object') {
+    return false
+  }
 
-	if (value instanceof Date && other instanceof Date) {
-		return value.getTime() === other.getTime()
-	}
+  if (value instanceof Date && other instanceof Date) {
+    return value.getTime() === other.getTime()
+  }
 
-	if (value instanceof RegExp && other instanceof RegExp) {
-		return value.toString() === other.toString()
-	}
+  if (value instanceof RegExp && other instanceof RegExp) {
+    return value.toString() === other.toString()
+  }
 
-	if (seen.has(value)) {
-		return seen.get(value) === other
-	}
+  if (seen.has(value)) {
+    return seen.get(value) === other
+  }
 
-	seen.set(value, other)
+  seen.set(value, other)
 
-	if (isArray(value) && isArray(other)) {
-		if (value.length !== other.length) {
-			return false
-		}
+  if (isArray(value) && isArray(other)) {
+    if (value.length !== other.length) {
+      return false
+    }
 
-		for (let i = 0, len = value.length; i < len; i++) {
-			if (!isEqual(value[i], other[i], seen)) {
-				return false
-			}
-		}
+    for (let i = 0, len = value.length; i < len; i++) {
+      if (!isEqual(value[i], other[i], seen)) {
+        return false
+      }
+    }
 
-		return true
-	}
+    return true
+  }
 
-	const valueKeys = Object.keys(value)
-	const otherKeys = Object.keys(value)
+  const valueKeys = Object.keys(value)
+  const otherKeys = Object.keys(value)
 
-	if (valueKeys.length !== otherKeys.length) {
-		return false
-	}
+  if (valueKeys.length !== otherKeys.length) {
+    return false
+  }
 
-	for (const key in valueKeys) {
-		if (!Object.prototype.hasOwnProperty.call(other, key) || !isEqual(value[key], other[value], seen)) {
-			return false
-		}
-	}
+  for (const key in valueKeys) {
+    if (
+      !Object.prototype.hasOwnProperty.call(other, key) ||
+      !isEqual(value[key], other[value], seen)
+    ) {
+      return false
+    }
+  }
 
-	return true
+  return true
 }

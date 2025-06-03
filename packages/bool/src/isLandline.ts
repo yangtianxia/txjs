@@ -16,5 +16,5 @@ const LANDLINE_REGEX = /^(([0+]\d{2,3}-)?(0\d{2,3})-)(\d{7,8})(-(\d{3,}))?$/
  * ```
  */
 export function isLandline(value: unknown): value is string {
-	return isString(value) && LANDLINE_REGEX.test(value)
+  return isString(value) && LANDLINE_REGEX.test(value)
 }

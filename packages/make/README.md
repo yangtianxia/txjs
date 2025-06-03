@@ -22,12 +22,18 @@ yarn add @txjs/make
 
 ## 支持方法
 
-- [makeString](#makestring)
-- [makeStringMap](#makestringmap)
-- [makeNumber](#makenumber)
-- [makeNumberMap](#makenumbermap)
-- [makeArray](#makearray)
-- [makeNumeric](#makenumeric)
+- [@txjs/make](#txjsmake)
+  - [使用 npm](#使用-npm)
+  - [使用 pnpm](#使用-pnpm)
+  - [使用 yarn](#使用-yarn)
+  - [支持方法](#支持方法)
+  - [使用示例](#使用示例)
+    - [makeString](#makestring)
+    - [makeStringMap](#makestringmap)
+    - [makeNumber](#makenumber)
+    - [makeNumberMap](#makenumbermap)
+    - [makeArray](#makearray)
+    - [makeNumeric](#makenumeric)
 
 ## 使用示例
 

@@ -3,32 +3,25 @@ import * as methods from './base'
 
 type MethodType = keyof typeof methods
 
-const isNumberic = (value: any): value is number => (typeof value === 'number' && !Number.isNaN(value)) || /^\d+(\.\d+)?$/.test(value)
+const isNumberic = (value: any): value is number =>
+  (typeof value === 'number' && !Number.isNaN(value)) ||
+  /^\d+(\.\d+)?$/.test(value)
 
 export class Chain {
   private value = 0
 
-  constructor (
-    args?: ValueType | ValueType[],
-    type?: MethodType
-  ) {
+  constructor(args?: ValueType | ValueType[], type?: MethodType) {
     this.value = this.__init(args, type)
   }
 
-  private __exec(
-    args: ValueType[],
-    type: MethodType
-  ) {
+  private __exec(args: ValueType[], type: MethodType) {
     return args.reduce((ret, value) => {
       ret = (methods as any)[type](ret, value)
       return ret
     }, this.value)
   }
 
-  private __init(
-    args?: ValueType | ValueType[],
-    type?: MethodType
-  ) {
+  private __init(args?: ValueType | ValueType[], type?: MethodType) {
     if (typeof args === 'undefined') {
       args = [0]
     } else if (isNumberic(args)) {

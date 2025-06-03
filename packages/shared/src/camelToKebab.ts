@@ -10,5 +10,5 @@
  * ```
  */
 export function camelToKebab(input = '') {
-	return input.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase()
+  return input.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase()
 }

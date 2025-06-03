@@ -14,9 +14,9 @@
  * ```
  */
 export function padZero(value: number | string, len = 2) {
-	value = value.toString()
-  while (value.length < len) {
-    value = '0' + value
+  let tempValue = value.toString()
+  while (tempValue.length < len) {
+    tempValue = '0' + tempValue
   }
-  return value
+  return tempValue
 }

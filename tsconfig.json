@@ -4,10 +4,16 @@
     "jsx": "preserve",
     "strict": true,
     "target": "ES2015",
-    "module": "ESNext",
+    "module": "NodeNext",
     "skipLibCheck": true,
     "esModuleInterop": true,
-    "moduleResolution": "Node",
-    "lib": ["esnext", "dom"]
+    "moduleResolution": "nodenext",
+    "lib": [
+      "ES2015",
+      "DOM"
+    ],
+    "types": [
+      "@jest/types"
+    ],
   }
 }

@@ -15,5 +15,5 @@ const NUMERIC_REGEX = /^(\d|-\d)+(\.\d+)?$/
  * ```
  */
 export function isNumeric(value: any): value is number {
-	return isNumber(value) || (isString(value) && NUMERIC_REGEX.test(value))
+  return isNumber(value) || (isString(value) && NUMERIC_REGEX.test(value))
 }

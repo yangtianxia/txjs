@@ -18,11 +18,11 @@ const INTEGER_REGEX = /^(?:0|(?:[1-9]\d*))$/
  * ```
  */
 export function isInteger(value: unknown): value is number {
-	if (isNumber(value) && Number.isInteger(value) && value >= 0) {
-		return true
-	}
-	if (typeof value === 'string' && INTEGER_REGEX.test(value)) {
-		return true
-	}
+  if (isNumber(value) && Number.isInteger(value) && value >= 0) {
+    return true
+  }
+  if (typeof value === 'string' && INTEGER_REGEX.test(value)) {
+    return true
+  }
   return false
 }

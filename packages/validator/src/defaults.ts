@@ -17,75 +17,75 @@ import { rangelength } from './bool/rangelength'
 import { telephone } from './bool/telephone'
 
 export default {
-	absoluteUrl: {
-		type: Boolean,
-		trigger: 'blur' as BaseTrigger,
-		validator: absoluteUrl
-	},
-	contains: {
-		type: null as unknown as PropType<any>,
-		validator: contains
-	},
-	email: {
-		type: Boolean,
-		trigger: 'blur' as BaseTrigger,
-		validator: email
-	},
-	httpUrl: {
-		type: Boolean,
-		trigger: 'blur' as BaseTrigger,
-		validator: httpUrl
-	},
-	integer: {
-		type: Boolean,
-		validator: integer
-	},
-	landline: {
-		type: Boolean,
-		trigger: 'blur' as BaseTrigger,
-		validator: landline
-	},
-	max: {
-		type: Number,
-		validator: max
-	},
-	maxlength: {
-		type: Number,
-		validator: maxlength
-	},
-	min: {
-		type: Number,
-		validator: min
-	},
-	minlength: {
-		type: Number,
-		validator: minlength
-	},
-	noscript: {
-		type: Boolean,
-		trigger: 'blur' as BaseTrigger,
-		validator: noscript
-	},
-	number: {
-		type: Boolean,
-		validator: number
-	},
-	range: {
-		type: Array as PropType<number[]>,
-		validator: range
-	},
-	rangelength: {
-		type: Array as PropType<number[]>,
-		validator: rangelength
-	},
-	required: {
-		type: Boolean,
-		trigger: ['change', 'blur'] as BaseTrigger,
-		validator: required
-	},
-	telephone: {
-		type: Boolean,
-		trigger: 'blur' as BaseTrigger,
-		validator: telephone
-	}
+  absoluteUrl: {
+    type: Boolean,
+    trigger: 'blur' as BaseTrigger,
+    validator: absoluteUrl,
+  },
+  contains: {
+    type: null as unknown as PropType<any>,
+    validator: contains,
+  },
+  email: {
+    type: Boolean,
+    trigger: 'blur' as BaseTrigger,
+    validator: email,
+  },
+  httpUrl: {
+    type: Boolean,
+    trigger: 'blur' as BaseTrigger,
+    validator: httpUrl,
+  },
+  integer: {
+    type: Boolean,
+    validator: integer,
+  },
+  landline: {
+    type: Boolean,
+    trigger: 'blur' as BaseTrigger,
+    validator: landline,
+  },
+  max: {
+    type: Number,
+    validator: max,
+  },
+  maxlength: {
+    type: Number,
+    validator: maxlength,
+  },
+  min: {
+    type: Number,
+    validator: min,
+  },
+  minlength: {
+    type: Number,
+    validator: minlength,
+  },
+  noscript: {
+    type: Boolean,
+    trigger: 'blur' as BaseTrigger,
+    validator: noscript,
+  },
+  number: {
+    type: Boolean,
+    validator: number,
+  },
+  range: {
+    type: Array as PropType<number[]>,
+    validator: range,
+  },
+  rangelength: {
+    type: Array as PropType<number[]>,
+    validator: rangelength,
+  },
+  required: {
+    type: Boolean,
+    trigger: ['change', 'blur'] as BaseTrigger,
+    validator: required,
+  },
+  telephone: {
+    type: Boolean,
+    trigger: 'blur' as BaseTrigger,
+    validator: telephone,
+  },
 }

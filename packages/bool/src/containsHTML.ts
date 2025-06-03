@@ -1,6 +1,7 @@
 import { isString } from './isString'
 
-const HTML_REGEX = /<([a-zA-Z][a-zA-Z0-9]*)(\s+[a-zA-Z-]+(\s*=\s*(".*?"|'.*?'|[^"'<>]+))?)*\s*\/?>|<\/[a-zA-Z][a-zA-Z0-9]*>/
+const HTML_REGEX =
+  /<([a-zA-Z][a-zA-Z0-9]*)(\s+[a-zA-Z-]+(\s*=\s*(".*?"|'.*?'|[^"'<>]+))?)*\s*\/?>|<\/[a-zA-Z][a-zA-Z0-9]*>/
 
 /**
  * 检查 `value` 是否是包含 `HTML`
@@ -18,5 +19,5 @@ const HTML_REGEX = /<([a-zA-Z][a-zA-Z0-9]*)(\s+[a-zA-Z-]+(\s*=\s*(".*?"|'.*?'|[^
  * ```
  */
 export function containsHTML(value: unknown): value is string {
-	return isString(value) && HTML_REGEX.test(value)
+  return isString(value) && HTML_REGEX.test(value)
 }

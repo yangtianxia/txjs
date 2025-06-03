@@ -15,13 +15,18 @@ type Writeable<T> = {
  * // => {a: 1, c: 3}
  * ```
  */
-export function pick<T, K extends keyof T>(target: T, keys: ReadonlyArray<K>, ignore?: boolean) {
-	return keys.reduce(
-		(ret, key) => {
-			if (!ignore || notNil(target[key])) {
-				ret[key] = target[key]
-			}
-			return ret
-		}, {} as Writeable<Pick<T, K>>
-	)
+export function pick<T extends object, K extends keyof T>(
+  target: T,
+  keys: ReadonlyArray<K>,
+  ignore?: boolean
+) {
+  return keys.reduce(
+    (ret, key) => {
+      if (!ignore || notNil(target[key])) {
+        ret[key] = target[key]
+      }
+      return ret
+    },
+    {} as Writeable<Pick<T, K>>
+  )
 }

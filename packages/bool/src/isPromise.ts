@@ -11,6 +11,8 @@ import { is } from './is'
  * // => false
  * ```
  */
-export function isPromise<T>(value: T): value is T extends Promise<any> ? T : never {
+export function isPromise<T>(
+  value: T
+): value is T extends Promise<any> ? T : never {
   return is(value, 'Promise')
 }

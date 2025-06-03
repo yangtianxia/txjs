@@ -1,7 +1,7 @@
 const ø = Object.create(Object.prototype)
 
 export function toString(value: unknown): string {
-	return ø.toString.call(value).slice(8, -1)
+  return ø.toString.call(value).slice(8, -1)
 }
 
 /**

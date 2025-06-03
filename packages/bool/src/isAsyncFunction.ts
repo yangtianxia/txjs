@@ -16,6 +16,8 @@ import { is } from './is'
  * // => false
  * ```
  */
-export function isAsyncFunction(value: unknown): value is (...args: any[]) => any {
+export function isAsyncFunction(
+  value: unknown
+): value is (...args: any[]) => unknown {
   return is(value, 'AsyncFunction')
 }

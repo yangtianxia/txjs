@@ -21,16 +21,30 @@
   },
   "parser": "@typescript-eslint/parser",
   "plugins": [
+    "prettier",
     "@typescript-eslint",
     "import"
   ],
+  "settings": {
+    "import/resolver": {
+      "typescript": {}
+    },
+    "import/parsers": {
+      "@typescript-eslint/parser": [
+        ".ts"
+      ]
+    }
+  },
   "rules": {
     "camelcase": "off",
     "eol-last": "error",
     "no-unused-vars": "off",
     "no-console": "off",
     "no-debugger": "off",
-    "quote-props": ["off", "always"],
+    "quote-props": [
+      "off",
+      "always"
+    ],
     "space-before-function-paren": "off",
     "no-unused-expressions": "off",
     "@typescript-eslint/ban-ts-comment": "off",

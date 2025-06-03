@@ -13,6 +13,8 @@
  * // => true
  * ```
  */
-export function notNil<T>(value: T): value is T extends null | undefined ? never : T {
+export function notNil<T>(
+  value: T
+): value is T extends null | undefined ? never : T {
   return value != null
 }

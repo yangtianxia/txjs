@@ -21,11 +21,11 @@ const WINDOWS_PATH_REGEX = /^[a-zA-Z]:\\/
  * ```
  */
 export function isAbsoluteUrl(value: unknown) {
-	if (!isString(value)) {
-		return false
-	}
-	if (WINDOWS_PATH_REGEX.test(value)) {
-		return false
-	}
-	return ABSOLUTE_URL_REGEX.test(value)
+  if (!isString(value)) {
+    return false
+  }
+  if (WINDOWS_PATH_REGEX.test(value)) {
+    return false
+  }
+  return ABSOLUTE_URL_REGEX.test(value)
 }

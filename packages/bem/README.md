@@ -21,11 +21,13 @@ yarn add @txjs/bem
 ```
 
 ## 导入方式
+
 ```javascript
 import BEM from '@txjs/bem'
 ```
 
 ## 参数
+
 - `mode` (类型：`match` | `always`，默认值：`match`)  
   - match：样式类名匹配不存在时，则显示为空
   - always：样式类名匹配不存在时，则显示原始值

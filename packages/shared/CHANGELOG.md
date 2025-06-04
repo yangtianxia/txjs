@@ -1,5 +1,11 @@
 # @txjs/shared
 
+## 1.0.7
+
+### Patch Changes
+
+- 新增 forEachObject 方法
+
 ## 1.0.6
 
 ### Patch Changes

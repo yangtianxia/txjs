@@ -72,4 +72,8 @@ batchBuilder([
     name: 'camelToKebab',
     filepath: 'noop.ts',
   },
+  {
+    name: 'forEachObject',
+    filepath: 'forEachObject.ts',
+  },
 ])

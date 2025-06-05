@@ -1,9 +1,10 @@
 {
   "name": "@txjs/types",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "常用ts类型定义.",
   "main": "./index.d.ts",
-  "typings": "./index.d.ts",
+  "module": "./index.d.ts",
+  "types": "./index.d.ts",
   "files": [
     "index.d.ts"
   ],

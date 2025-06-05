@@ -1,4 +1,4 @@
-type Numeric = number | string
+import type { Numeric } from '@txjs/types'
 
 export function makeNumeric(): Numeric | undefined
 export function makeNumeric(defaultVal: Numeric): Numeric

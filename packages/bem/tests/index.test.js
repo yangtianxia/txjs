@@ -1,4 +1,4 @@
-const { default: BEM } = require('../dist/index.cjs')
+const { BEM } = require('../dist/index.cjs')
 
 describe('name home test', () => {
   const [name, bem] = BEM('home')
@@ -28,7 +28,9 @@ describe('name home test', () => {
   })
 
   test(`bem('body', { safearea: true })`, () => {
-    expect(bem('body', { safearea: true })).toBe('home__body home__body--safearea')
+    expect(bem('body', { safearea: true })).toBe(
+      'home__body home__body--safearea'
+    )
   })
 })
 
@@ -36,11 +38,11 @@ describe('css modules test', () => {
   const [name, bem] = BEM('home', {
     home: 'home_rBuQtM97',
     home__search: 'home__search_sdguKKAS',
-    home__menu: 'home__menu_odDpsFd1'
+    home__menu: 'home__menu_odDpsFd1',
   })
 
   test('name', () => {
-    expect(name).toBe('page-home')
+    expect(name).toBe('home')
   })
 
   test('bem()', () => {

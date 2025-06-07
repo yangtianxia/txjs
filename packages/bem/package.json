@@ -1,6 +1,6 @@
 {
   "name": "@txjs/bem",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "CSS命名函数",
   "main": "./dist/index.cjs.js",
   "module": "./dist/index.esm.mjs",
@@ -24,7 +24,8 @@
     "build:types": "tsc -p ./tsconfig.json --emitDeclarationOnly",
     "build:bundle": "ts-node ./build.ts",
     "build": "npm run clean && npm run lint && npm run build:types && npm run build:bundle",
-    "dev": "npm run build -- --w"
+    "dev": "npm run build -- --w",
+    "test": "jest"
   },
   "publishConfig": {
     "access": "public",

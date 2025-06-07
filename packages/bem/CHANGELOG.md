@@ -1,5 +1,11 @@
 # @txjs/bem
 
+## 1.0.5
+
+### Patch Changes
+
+- 命名 `BEM` 导出
+
 ## 1.0.4
 
 ### Patch Changes

@@ -64,7 +64,7 @@ function moduleCls(cls: Cls, bem: ReturnType<typeof bemCls>) {
  *
  * @example
  * ```ts
- * const [name, bem] = Bem('home')
+ * const [name, bem] = BEM('home')
  *
  * name
  * // => 'home'
@@ -82,16 +82,16 @@ function moduleCls(cls: Cls, bem: ReturnType<typeof bemCls>) {
  * // => home__button home__button--block
  * ```
  */
-function Bem(name: string): [string, ReturnType<typeof bemCls>]
-function Bem(name: string, cls: Cls): [string, ReturnType<typeof bemCls>]
-function Bem(name: string, cls?: Cls): [string, ReturnType<typeof bemCls>]
-function Bem(name: string, cls?: Cls) {
+function bem(name: string): [string, ReturnType<typeof bemCls>]
+function bem(name: string, cls: Cls): [string, ReturnType<typeof bemCls>]
+function bem(name: string, cls?: Cls): [string, ReturnType<typeof bemCls>]
+function bem(name: string, cls?: Cls) {
   const bem = bemCls(name)
   return isPlainObject(cls) ? [name, moduleCls(cls, bem)] : [name, bem]
 }
 
-Bem.config = function (partial: Partial<ConfigOption>) {
+bem.prototype.config = function (partial: Partial<ConfigOption>) {
   Object.assign(config, partial || {})
 }
 
-export default Bem
+export { bem as BEM }

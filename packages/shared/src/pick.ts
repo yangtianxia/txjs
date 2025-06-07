@@ -1,5 +1,8 @@
 import { notNil } from '@txjs/bool'
-import type { Writeable } from '@txjs/types'
+
+type Writeable<T> = {
+  -readonly [P in keyof T]: T[P]
+}
 
 /**
  * pick

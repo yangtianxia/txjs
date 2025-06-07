@@ -1,6 +1,6 @@
 {
   "name": "@txjs/make",
-  "version": "1.0.1",
+  "version": "1.0.0",
   "description": "ts类型声明函数",
   "main": "./dist/index.cjs.js",
   "module": "./dist/index.esm.mjs",
@@ -42,8 +42,5 @@
   "bugs": {
     "url": "https://github.com/yangtianxia/txjs/issues"
   },
-  "homepage": "https://github.com/yangtianxia/txjs#readme",
-  "dependencies": {
-    "@txjs/types": "workspace:*"
-  }
+  "homepage": "https://github.com/yangtianxia/txjs#readme"
 }

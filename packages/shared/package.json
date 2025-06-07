@@ -1,6 +1,6 @@
 {
   "name": "@txjs/shared",
-  "version": "1.0.8",
+  "version": "1.0.7",
   "description": "常用的函数库，包括字符串操作、数据结构处理、数组和对象的深度克隆、拦截器管理等",
   "main": "./dist/index.cjs.js",
   "module": "./dist/index.esm.mjs",
@@ -52,7 +52,6 @@
   "homepage": "https://github.com/yangtianxia/txjs#readme",
   "dependencies": {
     "@txjs/bool": "workspace:*",
-    "@txjs/types": "workspace:*",
     "shallow-clone": "^3.0.1"
   },
   "devDependencies": {

@@ -70,11 +70,7 @@ importers:
 
   packages/bool: {}
 
-  packages/make:
-    dependencies:
-      '@txjs/types':
-        specifier: workspace:*
-        version: link:../types
+  packages/make: {}
 
   packages/math: {}
 
@@ -83,9 +79,6 @@ importers:
       '@txjs/bool':
         specifier: workspace:*
         version: link:../bool
-      '@txjs/types':
-        specifier: workspace:*
-        version: link:../types
       shallow-clone:
         specifier: ^3.0.1
         version: 3.0.1

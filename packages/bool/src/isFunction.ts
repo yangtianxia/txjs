@@ -1,6 +1,6 @@
 /**
  * 检查 `value` 是否是 `function` 类型
- *
+ *_–
  * @example
  * ```ts
  * const func = () => {}
@@ -11,8 +11,6 @@
  * // => false
  * ```
  */
-export function isFunction(
-  value: unknown
-): value is (...args: any[]) => unknown {
+export function isFunction(value: unknown): value is (...args: any[]) => any {
   return typeof value === 'function'
 }

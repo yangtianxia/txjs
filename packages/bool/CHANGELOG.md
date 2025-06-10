@@ -1,5 +1,11 @@
 # @txjs/bool
 
+## 1.0.5
+
+### Patch Changes
+
+- `isFunction` 兼容类型声明
+
 ## 1.0.4
 
 ### Patch Changes

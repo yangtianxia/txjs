@@ -1,5 +1,13 @@
 # @txjs/validator
 
+## 1.1.8
+
+### Patch Changes
+
+- Updated dependencies
+  - @txjs/bool@1.0.5
+  - @txjs/shared@1.0.8
+
 ## 1.1.7
 
 ### Patch Changes

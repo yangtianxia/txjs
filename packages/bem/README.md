@@ -23,12 +23,12 @@ yarn add @txjs/bem
 ## 导入方式
 
 ```javascript
-import BEM from '@txjs/bem'
+import { BEM } from '@txjs/bem'
 ```
 
 ## 参数
 
-- `mode` (类型：`match` | `always`，默认值：`match`)  
+- `mode` (类型：`match` | `always`，默认值：`match`)
   - match：样式类名匹配不存在时，则显示为空
   - always：样式类名匹配不存在时，则显示原始值
 - `prefix` (类型：`string`，可选)
@@ -36,7 +36,7 @@ import BEM from '@txjs/bem'
 ## 常规使用
 
 ```ts
-import BEM from '@txjs/bem'
+import { BEM } from '@txjs/bem'
 
 const [name, bem] = BEM('home')
 
@@ -75,7 +75,7 @@ bem('body', { safearea: true })
   }
 }
 
-import BEM from '@txjs/bem'
+import { BEM } from '@txjs/bem'
 import css from './index.module.less'
 
 const [name, bem] = BEM('index', css)
@@ -87,5 +87,5 @@ bem()
 // => index
 
 bem('list')
-// => index_sdguKKAS 
+// => index_sdguKKAS
 ```

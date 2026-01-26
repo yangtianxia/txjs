@@ -50,27 +50,27 @@ batchBuilder([
   },
   {
     name: 'clamp',
-    filepath: 'noop.ts',
+    filepath: 'clamp.ts',
   },
   {
     name: 'shallowMerge',
-    filepath: 'noop.ts',
+    filepath: 'shallowMerge.ts',
   },
   {
     name: 'cloneDeep',
-    filepath: 'noop.ts',
+    filepath: 'cloneDeep.ts',
   },
   {
     name: 'toFixed',
-    filepath: 'noop.ts',
+    filepath: 'toFixed.ts',
   },
   {
     name: 'chunk',
-    filepath: 'noop.ts',
+    filepath: 'chunk.ts',
   },
   {
     name: 'camelToKebab',
-    filepath: 'noop.ts',
+    filepath: 'camelToKebab.ts',
   },
   {
     name: 'forEachObject',

@@ -1,5 +1,11 @@
 # @txjs/shared
 
+## 1.0.9
+
+### Patch Changes
+
+- 修复构建配置问题
+
 ## 1.0.8
 
 ### Patch Changes

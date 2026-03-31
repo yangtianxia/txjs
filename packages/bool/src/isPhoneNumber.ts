@@ -5,7 +5,7 @@ const PHONE_NUMBER_REGEX = /^1[3-9]\d{9}$/
 /**
  * 检查 `value` 是否是手机号码（包含虚拟号段）
  *
- * @deprecated since version 1.1.0
+ * @deprecated since version 1.1.1
  *
  * @example
  * ```ts

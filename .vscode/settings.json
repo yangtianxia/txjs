@@ -13,5 +13,13 @@
   },
   "editor.quickSuggestions": {
     "strings": "on"
-  }
+  },
+  "json.schemas": [
+    {
+      "fileMatch": [
+        "**/build.json"
+      ],
+      "url": "./scripts/schema.json"
+    }
+  ]
 }

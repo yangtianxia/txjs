@@ -22,7 +22,7 @@
     "lint": "eslint ./src --ext .ts",
     "format": "prettier ./src --write",
     "build:types": "tsc -p ./tsconfig.json --emitDeclarationOnly",
-    "build:bundle": "ts-node ./build.ts",
+    "build:bundle": "ts-node ../../scripts/build.ts",
     "build": "npm run clean && npm run lint && npm run build:types && npm run build:bundle",
     "dev": "npm run build -- --w",
     "test": "jest"

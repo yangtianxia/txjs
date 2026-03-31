@@ -1,10 +1,12 @@
-import { isArray } from '@txjs/bool'
+import { isNil, isArray } from '@txjs/bool'
 
 /**
  * toArray
  *
  * @example
  * ```ts
+ * toArray()
+ * // => []
  * toArray([0])
  * // => [0]
  * toArray('abc')
@@ -13,6 +15,9 @@ import { isArray } from '@txjs/bool'
  * // => [{}]
  * ```
  */
-export function toArray<T>(item: T | T[]): T[] {
+export function toArray<T>(item?: T | T[]): T[] {
+  if (isNil(item)) {
+    return []
+  }
   return isArray(item) ? item : [item]
 }

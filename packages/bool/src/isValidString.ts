@@ -3,7 +3,7 @@ import { isString } from './isString'
 /**
  * 检查 `value` 是否是 `string` 类型，且不能是 `''` 文本
  *
- * @deprecated since version 1.1.0
+ * @deprecated since version 1.1.1
  *
  * @example
  * ```ts

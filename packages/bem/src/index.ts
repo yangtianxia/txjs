@@ -68,30 +68,35 @@ function moduleCls(cls: Cls, bem: ReturnType<typeof bemCls>) {
  *
  * name
  * // => 'home'
- * bem()
+ * BEM()
  * // => 'home'
- * bem('wrapper')
+ * BEM('wrapper')
  * // => 'home__wrapper'
- * bem(['wrapper'])
+ * BEM(['wrapper'])
  * // => home home--wrapper
- * bem({ wrapper: true })
+ * BEM({ wrapper: true })
  * // => home home--wrapper
- * bem('button', { block: true })
+ * BEM('button', { block: true })
  * // => home__button home__button--block
- * bem('button', ['block'])
+ * BEM('button', ['block'])
  * // => home__button home__button--block
  * ```
  */
-function bem(name: string): [string, ReturnType<typeof bemCls>]
-function bem(name: string, cls: Cls): [string, ReturnType<typeof bemCls>]
-function bem(name: string, cls?: Cls): [string, ReturnType<typeof bemCls>]
-function bem(name: string, cls?: Cls) {
+function BEM(name: string): [string, ReturnType<typeof bemCls>]
+function BEM(name: string, cls: Cls): [string, ReturnType<typeof bemCls>]
+function BEM(name: string, cls?: Cls): [string, ReturnType<typeof bemCls>]
+function BEM(name: string, cls?: Cls) {
   const bem = bemCls(name)
   return isPlainObject(cls) ? [name, moduleCls(cls, bem)] : [name, bem]
 }
 
-bem.prototype.config = function (partial: Partial<ConfigOption>) {
+BEM.config = function (partial: Partial<ConfigOption>) {
   Object.assign(config, partial || {})
 }
 
-export { bem as BEM }
+export { BEM }
+
+/**
+ * @deprecated `import { BEM } from '@txjs/bem'`
+ */
+export default BEM

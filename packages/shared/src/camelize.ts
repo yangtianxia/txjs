@@ -1,3 +1,5 @@
+const RE = /[-_](\w)/g
+
 /**
  * camelize
  *
@@ -10,5 +12,5 @@
  * ```
  */
 export function camelize(value = '') {
-  return value.replace(/[-_](\w)/g, (_, c) => c.toUpperCase())
+  return value.replace(RE, (_, c) => c.toUpperCase())
 }

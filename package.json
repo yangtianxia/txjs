@@ -48,5 +48,9 @@
   },
   "overrides": {
     "esbuild": "^0.23.1"
+  },
+  "engines": {
+    "node": ">=18.12 <21",
+    "pnpm": "9.x"
   }
 }

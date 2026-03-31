@@ -1,7 +1,0 @@
-{
-  "root": true,
-  "name": "index",
-  "filepath": "index.ts",
-  "iife": true,
-  "globalName": "TMath"
-}

@@ -65,16 +65,16 @@ export function isEqual(value: any, other: any, seen = new WeakMap()) {
   }
 
   const valueKeys = Object.keys(value)
-  const otherKeys = Object.keys(value)
+  const otherKeys = Object.keys(other)
 
   if (valueKeys.length !== otherKeys.length) {
     return false
   }
 
-  for (const key in valueKeys) {
+  for (const key of valueKeys) {
     if (
       !Object.prototype.hasOwnProperty.call(other, key) ||
-      !isEqual(value[key], other[value], seen)
+      !isEqual(value[key], other[key], seen)
     ) {
       return false
     }

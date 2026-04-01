@@ -1,0 +1,56 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "oneOf": [
+    {
+      "$ref": "#/definitions/BundleOptions"
+    },
+    {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/BundleOptions"
+      }
+    }
+  ],
+  "definitions": {
+    "BundleOptions": {
+      "type": "object",
+      "properties": {
+        "root": {
+          "type": "boolean",
+          "default": false
+        },
+        "iife": {
+          "type": "boolean",
+          "default": false
+        },
+        "globalName": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "filepath": {
+          "type": "string"
+        },
+        "rootDir": {
+          "type": "string",
+          "default": "src"
+        },
+        "outDir": {
+          "type": "string"
+        },
+        "external": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": []
+        }
+      },
+      "required": [
+        "name",
+        "filepath"
+      ]
+    }
+  }
+}

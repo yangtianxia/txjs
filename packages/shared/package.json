@@ -1,7 +1,8 @@
 {
   "name": "@txjs/shared",
   "version": "1.0.9",
-  "description": "常用的函数库，包括字符串操作、数据结构处理、数组和对象的深度克隆、拦截器管理等",
+  "description": "实用工具集合，包含深拷贝、对象操作、字符串转换、拦截器等",
+  "sideEffects": false,
   "main": "./dist/index.cjs.js",
   "module": "./dist/index.esm.mjs",
   "types": "./dist/index.d.ts",
@@ -12,11 +13,6 @@
       "types": "./dist/index.d.ts",
       "import": "./dist/index.esm.mjs",
       "require": "./dist/index.cjs.js"
-    },
-    "./*": {
-      "types": "./dist/*.d.ts",
-      "import": "./dist/*.mjs",
-      "require": "./dist/*.js"
     }
   },
   "files": [
@@ -27,9 +23,10 @@
     "lint": "eslint ./src --ext .ts",
     "format": "prettier ./src --write",
     "build:types": "tsc -p ./tsconfig.json --emitDeclarationOnly",
-    "build:bundle": "ts-node ./build.ts",
+    "build:bundle": "ts-node ../../scripts/build.ts",
     "build": "npm run clean && npm run lint && npm run build:types && npm run build:bundle",
-    "dev": "npm run build -- --w"
+    "dev": "npm run build -- --w",
+    "test": "jest --config ../../jest.config.ts --testPathPattern=packages/shared"
   },
   "publishConfig": {
     "access": "public",
@@ -42,7 +39,13 @@
   },
   "keywords": [
     "txjs",
-    "@txjs/shared"
+    "shared",
+    "utilities",
+    "utils",
+    "clone",
+    "omit",
+    "pick",
+    "typescript"
   ],
   "license": "MIT",
   "author": "yangtianxia <1304082170@qq.com>",
@@ -50,6 +53,10 @@
     "url": "https://github.com/yangtianxia/txjs/issues"
   },
   "homepage": "https://github.com/yangtianxia/txjs#readme",
+  "funding": {
+    "type": "github",
+    "url": "https://github.com/sponsors/yangtianxia"
+  },
   "dependencies": {
     "@txjs/bool": "workspace:*",
     "shallow-clone": "^3.0.1"

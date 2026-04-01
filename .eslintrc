@@ -27,11 +27,23 @@
   ],
   "settings": {
     "import/resolver": {
+      "node": {
+        "extensions": [
+          ".js",
+          ".jsx",
+          ".ts",
+          ".tsx"
+        ]
+      },
       "typescript": {}
     },
     "import/parsers": {
       "@typescript-eslint/parser": [
-        ".ts"
+        ".js",
+        ".mjs",
+        ".cjs",
+        ".ts",
+        ".tsx"
       ]
     }
   },
@@ -53,6 +65,13 @@
     "@typescript-eslint/no-explicit-any": "off",
     "@typescript-eslint/no-non-null-assertion": "off",
     "@typescript-eslint/explicit-module-boundary-types": "off",
-    "@typescript-eslint/no-empty-interface": "off"
+    "@typescript-eslint/no-empty-interface": "off",
+    "@typescript-eslint/no-empty-object-type": "off",
+    "@typescript-eslint/no-namespace": [
+      "error",
+      {
+        "allowDeclarations": true
+      }
+    ]
   }
 }

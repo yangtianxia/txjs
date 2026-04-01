@@ -20,13 +20,12 @@ export function pick<T extends object, K extends keyof T>(
   keys: ReadonlyArray<K>,
   ignore?: boolean
 ) {
-  return keys.reduce(
-    (ret, key) => {
-      if (!ignore || notNil(target[key])) {
-        ret[key] = target[key]
-      }
-      return ret
-    },
-    {} as Writeable<Pick<T, K>>
-  )
+  const ret = {} as Writeable<Pick<T, K>>
+  for (let i = 0, len = keys.length; i < len; i++) {
+    const key = keys[i]
+    if (!ignore || notNil(target[key])) {
+      ret[key] = target[key]
+    }
+  }
+  return ret
 }

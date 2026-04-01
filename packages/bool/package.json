@@ -1,7 +1,8 @@
 {
   "name": "@txjs/bool",
   "version": "1.0.5",
-  "description": "数据类型校验函数库",
+  "description": "数据类型的校验工具，支持邮箱、手机号、URL、深度相等比较等",
+  "sideEffects": false,
   "main": "./dist/index.cjs.js",
   "module": "./dist/index.esm.mjs",
   "types": "./dist/index.d.ts",
@@ -12,11 +13,6 @@
       "types": "./dist/index.d.ts",
       "import": "./dist/index.esm.mjs",
       "require": "./dist/index.cjs.js"
-    },
-    "./*": {
-      "types": "./dist/*.d.ts",
-      "import": "./dist/*.mjs",
-      "require": "./dist/*.js"
     }
   },
   "files": [
@@ -27,10 +23,10 @@
     "lint": "eslint ./src --ext .ts",
     "format": "prettier ./src --write",
     "build:types": "tsc -p ./tsconfig.json --emitDeclarationOnly",
-    "build:bundle": "ts-node ./build.ts",
+    "build:bundle": "ts-node ../../scripts/build.ts",
     "build": "npm run clean && npm run lint && npm run build:types && npm run build:bundle",
     "dev": "npm run build -- --w",
-    "test": "jest"
+    "test": "jest --config ../../jest.config.ts --testPathPattern=packages/bool"
   },
   "publishConfig": {
     "access": "public",
@@ -43,12 +39,22 @@
   },
   "keywords": [
     "txjs",
-    "@txjs/bool"
+    "bool",
+    "boolean",
+    "validation",
+    "types",
+    "is-type",
+    "type-guard",
+    "typescript"
   ],
   "license": "MIT",
   "author": "yangtianxia <1304082170@qq.com>",
   "bugs": {
     "url": "https://github.com/yangtianxia/txjs/issues"
   },
-  "homepage": "https://github.com/yangtianxia/txjs#readme"
+  "homepage": "https://github.com/yangtianxia/txjs#readme",
+  "funding": {
+    "type": "github",
+    "url": "https://github.com/sponsors/yangtianxia"
+  }
 }

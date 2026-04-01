@@ -11,9 +11,6 @@
     "lib": [
       "ES2015",
       "DOM"
-    ],
-    "types": [
-      "@jest/types"
-    ],
+    ]
   }
 }

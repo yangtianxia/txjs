@@ -1,7 +1,8 @@
 {
   "name": "@txjs/bem",
   "version": "1.1.0",
-  "description": "CSS命名函数",
+  "description": "遵循 BEM 规范的 CSS 类名生成工具，支持 CSS Modules",
+  "sideEffects": false,
   "main": "./dist/index.cjs.js",
   "module": "./dist/index.esm.mjs",
   "types": "./dist/index.d.ts",
@@ -22,10 +23,10 @@
     "lint": "eslint ./src --ext .ts",
     "format": "prettier ./src --write",
     "build:types": "tsc -p ./tsconfig.json --emitDeclarationOnly",
-    "build:bundle": "ts-node ./build.ts",
+    "build:bundle": "ts-node ../../scripts/build.ts",
     "build": "npm run clean && npm run lint && npm run build:types && npm run build:bundle",
     "dev": "npm run build -- --w",
-    "test": "jest"
+    "test": "jest --config ../../jest.config.ts --testPathPattern=packages/bem"
   },
   "publishConfig": {
     "access": "public",
@@ -38,7 +39,12 @@
   },
   "keywords": [
     "txjs",
-    "@txjs/bem"
+    "bem",
+    "css",
+    "css-modules",
+    "classname",
+    "naming",
+    "typescript"
   ],
   "license": "MIT",
   "author": "yangtianxia <1304082170@qq.com>",
@@ -46,6 +52,10 @@
     "url": "https://github.com/yangtianxia/txjs/issues"
   },
   "homepage": "https://github.com/yangtianxia/txjs#readme",
+  "funding": {
+    "type": "github",
+    "url": "https://github.com/sponsors/yangtianxia"
+  },
   "dependencies": {
     "@txjs/bool": "workspace:*"
   }

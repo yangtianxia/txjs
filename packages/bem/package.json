@@ -1,7 +1,8 @@
 {
   "name": "@txjs/bem",
   "version": "1.1.0",
-  "description": "CSS命名函数",
+  "description": "CSS命名函数库，支持 BEM 规范和 CSS Modules 模式",
+  "sideEffects": false,
   "main": "./dist/index.cjs.js",
   "module": "./dist/index.esm.mjs",
   "types": "./dist/index.d.ts",
@@ -25,7 +26,7 @@
     "build:bundle": "ts-node ../../scripts/build.ts",
     "build": "npm run clean && npm run lint && npm run build:types && npm run build:bundle",
     "dev": "npm run build -- --w",
-    "test": "jest"
+    "test": "jest --config ../../jest.config.ts --testPathPattern=packages/bem"
   },
   "publishConfig": {
     "access": "public",
@@ -38,7 +39,12 @@
   },
   "keywords": [
     "txjs",
-    "@txjs/bem"
+    "bem",
+    "css",
+    "css-modules",
+    "classname",
+    "naming",
+    "typescript"
   ],
   "license": "MIT",
   "author": "yangtianxia <1304082170@qq.com>",
@@ -46,6 +52,10 @@
     "url": "https://github.com/yangtianxia/txjs/issues"
   },
   "homepage": "https://github.com/yangtianxia/txjs#readme",
+  "funding": {
+    "type": "github",
+    "url": "https://github.com/sponsors/yangtianxia"
+  },
   "dependencies": {
     "@txjs/bool": "workspace:*"
   }

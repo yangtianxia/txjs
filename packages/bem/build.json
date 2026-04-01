@@ -1,6 +1,0 @@
-{
-  "$schema": "../../scripts/schema.json",
-  "root": true,
-  "name": "index",
-  "filepath": "index.ts"
-}

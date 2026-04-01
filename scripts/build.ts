@@ -150,18 +150,21 @@ function bundle(options: BundleOptions, format: ENUM_FORMAT) {
 async function main() {
   logger.info('Start building...')
 
-  if (!fs.existsSync(buildJson)) {
-    logger.error('Build failed: Missing configuration file.')
-    return
-  }
-
   const entry: BundleOptions[] = []
-  const temp = fs.readJSONSync(buildJson)
 
-  if (Array.isArray(temp)) {
-    entry.push(...temp)
+  if (fs.existsSync(buildJson)) {
+    const temp = fs.readJSONSync(buildJson)
+    if (Array.isArray(temp)) {
+      entry.push(...temp)
+    } else {
+      entry.push(temp)
+    }
   } else {
-    entry.push(temp)
+    entry.push({
+      root: true,
+      name: 'index',
+      filepath: 'index.ts',
+    })
   }
 
   const external = entry.map((el) => `*/${el.name}`)
@@ -205,7 +208,6 @@ async function main() {
   }
 
   logger.summary(entryLog)
-
   logger.success('Finished build.')
 }
 

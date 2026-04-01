@@ -1,6 +1,6 @@
 {
   "name": "@txjs/bem",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "遵循 BEM 规范的 CSS 类名生成工具，支持 CSS Modules",
   "sideEffects": false,
   "main": "./dist/index.cjs.js",

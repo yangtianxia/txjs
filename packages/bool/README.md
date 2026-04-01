@@ -18,11 +18,7 @@ yarn add @txjs/bool
 ## 导入方式
 
 ```ts
-// 导入全部函数
 import { is, isNil, isNumber } from '@txjs/bool'
-
-// 按需导入单个函数（优化打包体积）
-import { isNil } from '@txjs/bool/dist/isNil'
 ```
 
 ## 函数列表

@@ -64,7 +64,7 @@ jobs:
       contents: read
     environment:
       name: production
-      url: https://npmjs.com/package/@txjs/bool
+      url: https://npmjs.com/~yangtianxia
     steps:
       - name: Checkout
         uses: actions/checkout@v4

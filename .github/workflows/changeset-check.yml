@@ -1,0 +1,53 @@
+name: Check Changesets
+
+on:
+  pull_request:
+    branches:
+      - master
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  check-changeset:
+    name: Check Changeset
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Check for changeset
+        id: check
+        run: |
+          if pnpm changeset status --since=origin/master | grep -q "no changes detected"; then
+            echo "changeset_status=none" >> $GITHUB_OUTPUT
+          else
+            echo "changeset_status=found" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Verify Changeset
+        if: steps.check.outputs.changeset_status == 'none'
+        run: |
+          echo "Error: No changeset found. Please add a changeset file."
+          echo ""
+          echo "To create a changeset, run:"
+          echo "  pnpm changeset"
+          echo ""
+          echo "This will create a file in .changeset/ directory."
+          echo "Add and commit it to your PR."
+          exit 1

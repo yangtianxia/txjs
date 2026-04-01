@@ -92,10 +92,9 @@ jobs:
         run: pnpm test
 
       - name: Publish to npm
-        run: |
-          echo "@txjs:registry=https://registry.npmjs.org/" >> .npmrc
-          pnpm changeset publish
+        run: pnpm changeset publish
         env:
+          NPM_CONFIG_REGISTRY: https://registry.npmjs.org
           NPM_CONFIG_TOKEN: ${{ secrets.NPM_TOKEN }}
 
   release:

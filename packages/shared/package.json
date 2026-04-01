@@ -1,6 +1,6 @@
 {
   "name": "@txjs/shared",
-  "version": "1.0.9",
+  "version": "1.0.10",
   "description": "实用工具集合，包含深拷贝、对象操作、字符串转换、拦截器等",
   "sideEffects": false,
   "main": "./dist/index.cjs.js",

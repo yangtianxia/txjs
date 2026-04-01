@@ -1,6 +1,6 @@
 {
   "name": "@txjs/bool",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "数据类型的校验工具，支持邮箱、手机号、URL、深度相等比较等",
   "sideEffects": false,
   "main": "./dist/index.cjs.js",

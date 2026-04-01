@@ -1,5 +1,11 @@
 # @txjs/bool
 
+## 1.0.6
+
+### Patch Changes
+
+- 9bbb642: 完善测试、文档和开源配置
+
 ## 1.0.5
 
 ### Patch Changes

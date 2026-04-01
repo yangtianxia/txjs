@@ -1,5 +1,13 @@
 # @txjs/shared
 
+## 1.0.10
+
+### Patch Changes
+
+- 9bbb642: 完善测试、文档和开源配置
+- Updated dependencies [9bbb642]
+  - @txjs/bool@1.0.6
+
 ## 1.0.9
 
 ### Patch Changes

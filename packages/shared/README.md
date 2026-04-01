@@ -18,11 +18,7 @@ yarn add @txjs/shared
 ## 导入方式
 
 ```ts
-// 导入全部函数
 import { omit, pick, camelize } from '@txjs/shared'
-
-// 按需导入单个函数
-import { omit } from '@txjs/shared/dist/omit'
 ```
 
 ## 函数列表

@@ -2,27 +2,27 @@
   {
     "root": true,
     "iife": true,
-    "globalName": "TValidator",
     "name": "index",
-    "filepath": "index.ts"
+    "filepath": "index.ts",
+    "globalName": "txjs_validator"
   },
   {
-    "name": "defaults",
     "iife": true,
-    "globalName": "TValidatorDefaults",
+    "name": "defaults",
+    "globalName": "txjs_validator_defaults",
     "filepath": "defaults.ts"
   },
   {
     "name": "zhCN",
     "iife": true,
-    "globalName": "TValidatorLocaleZhCN",
+    "globalName": "txjs_validator_locale_zhCN",
     "filepath": "locale/zhCN.ts",
     "outDir": "locale"
   },
   {
     "name": "enUS",
     "iife": true,
-    "globalName": "TValidatorLocaleEnUs",
+    "globalName": "txjs_validator_locale_enUS",
     "filepath": "locale/enUS.ts",
     "outDir": "locale"
   }

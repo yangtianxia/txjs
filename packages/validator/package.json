@@ -51,6 +51,9 @@
     "url": "https://github.com/yangtianxia/txjs/issues"
   },
   "homepage": "https://github.com/yangtianxia/txjs/#readme",
+  "peerDependencies": {
+    "vue": "^3"
+  },
   "dependencies": {
     "@txjs/bool": "workspace:*",
     "@txjs/shared": "workspace:*"

@@ -6,70 +6,135 @@
 txjs/
 ├── packages/
 │   ├── bool/        # 数据类型校验函数库
-│   ├── bem/         # CSS命名函数 (BEM规范)
-│   ├── shared/      # 常用工具函数库
-│   ├── make/        # 数字处理函数
-│   ├── types/       # TypeScript类型定义（仅.d.ts）
-│   └── validator/   # 表单验证（支持antd/vant）
-├── scripts/          # 构建脚本 (build.ts, logger.ts, schema.json)
-└── jest.config.ts   # Jest根配置（各包独立配置）
+│   ├── bem/         # BEM 规范 CSS 类名生成工具
+│   ├── shared/      # 通用工具函数库
+│   ├── types/       # TypeScript 类型定义（仅 .d.ts，无构建）
+│   └── validator/   # 表单验证库（支持 antd / vant）
+├── scripts/         # 构建脚本（build.ts、logger.ts、schema.json）
+├── jest.config.ts   # Jest 根配置（所有包共用）
+└── package.json     # 根工作区配置
 ```
 
-## 包说明
+## 各包说明
 
-### bool
+| 包 | npm 名称 | 说明 |
+|----|---------|------|
+| `bool` | `@txjs/bool` | 类型判断与数据校验（邮箱、手机、URL、深比较等） |
+| `shared` | `@txjs/shared` | 通用工具集（深拷贝、对象操作、字符串转换、拦截器等） |
+| `bem` | `@txjs/bem` | BEM 规范 CSS 类名生成，支持 CSS Modules |
+| `types` | `@txjs/types` | 纯 TypeScript 类型定义，直接发布 `.d.ts`，无构建产物 |
+| `validator` | `@txjs/validator` | 轻量级表单验证，含 `antd.ts` / `vant.ts` 独立集成入口 |
 
-数据类型校验函数库。
+### bool — 导出函数
 
-**函数**: `is`, `isEqual`, `isEmail`, `isNumeric`, `isHttpUrl`, `isLandline`, `isBlob`, `containsHTML`, `isNonEmptyObject`, `isNonVirtualPhone`
+`is` · `isEqual` · `isEmail` · `isNumeric` · `isHttpUrl` · `isLandline` · `isBlob` · `containsHTML` · `isNonEmptyObject` · `isNonVirtualPhone` · `isArray` · `isString` · `isNumber` · `isBoolean` · `isFunction` · `isDate` · `isNil` · `notNil` 等
 
-### shared
+### shared — 导出函数
 
-常用工具函数库。
+`cloneDeep` · `camelize` · `camelToKebab` · `chunk` · `clamp` · `interceptor` · `interceptorAll` · `noop` · `omit` · `padStr` · `pick` · `toArray` · `shallowMerge` · `toFixed` · `forEachObject`
 
-**函数**: `cloneDeep`, `camelize`, `camelToKebab`, `chunk`, `clamp`, `interceptor`, `interceptorAll`, `noop`, `omit`, `padStr`, `pick`, `toArray`, `shallowMerge`, `toFixed`, `forEachObject`
+## 依赖关系
 
-### bem
+```
+validator → shared → bool
+bem       → bool
+```
 
-CSS命名函数，遵循BEM规范。
+所有跨包依赖使用 `workspace:*` 协议。
 
-### make
+## 构建
 
-数字处理函数库。
-
-### types
-
-仅发布TypeScript类型定义文件（`.d.ts`），无构建产物。
-
-### validator
-
-表单验证库，支持antd和vant组件集成。
-
-## 构建与测试
-
-### 构建流程
-
-每个包的 `package.json` 定义了相同的构建脚本：
+### 每个包的构建脚本
 
 ```bash
-"scripts": {
-  "clean": "rimraf ./dist",
-  "lint": "eslint ./src --ext .ts",
-  "build:types": "tsc -p ./tsconfig.json --emitDeclarationOnly",  # 生成 .d.ts
-  "build:bundle": "ts-node ../../scripts/build.ts",               # esbuild打包
-  "build": "npm run clean && npm run lint && npm run build:types && npm run build:bundle",
-  "test": "jest"
+clean        # rimraf ./dist
+lint         # eslint ./src --ext .ts
+build:types  # tsc --emitDeclarationOnly  →  生成 dist/index.d.ts
+build:bundle # ts-node ../../scripts/build.ts  →  esbuild 打包
+build        # clean → lint → build:types → build:bundle
+dev          # build --w（watch 模式）
+```
+
+### 构建产物
+
+每个包的 `dist/` 目录包含：
+
+| 文件 | 格式 |
+|------|------|
+| `index.d.ts` | TypeScript 声明文件 |
+| `index.esm.mjs` | ES Module |
+| `index.cjs.js` | CommonJS |
+| `index.min.js` | IIFE 压缩版（设置了 `iife: true` 的包） |
+
+> `types` 包无需构建，直接发布 `index.d.ts`。
+
+### build.json
+
+每个包根目录的 `build.json` 是 esbuild 的入口配置：
+
+```json
+{
+  "root": true,
+  "iife": true,
+  "name": "index",
+  "filepath": "index.ts",
+  "globalName": "txjs_bool"
 }
 ```
 
-**构建产物说明：**
+- `root: true` — 构建完整 bundle（入口为 `index.ts`）
+- `iife: true` — 额外生成 `index.min.js`（IIFE 格式）
+- `globalName` — IIFE 全局变量名
 
-- `dist/index.d.ts` - TypeScript声明
-- `dist/index.esm.mjs` - ES Module格式
-- `dist/index.cjs.js` - CommonJS格式
-- `dist/index.min.js` - IIFE压缩格式（部分包）
+### tsconfig.json（子包）
 
-### 命令
+```json
+{
+  "extends": "../../tsconfig",
+  "compilerOptions": { "outDir": "./dist", "declaration": true },
+  "include": ["src/**/*.ts*", "types/**/*.ts*"],
+  "exclude": ["**/node_modules", "**/.*/", "tests/**/*"]
+}
+```
+
+排除 `tests/` 避免测试文件混入构建产物。
+
+## 测试
+
+### 运行命令
+
+```bash
+# 所有包
+pnpm test
+
+# 单个包（以 bool 为例）
+pnpm --filter @txjs/bool test
+```
+
+### 配置
+
+测试统一使用根目录 `jest.config.ts`，各包通过 `--testPathPattern` 过滤：
+
+```bash
+# packages/bool/package.json 中的 test 脚本
+jest --config ../../jest.config.ts --testPathPattern=packages/bool
+```
+
+根配置的 `moduleNameMapper` 将 `@txjs/*` 指向对应包的 **源码**（`src/`），测试无需先构建：
+
+```ts
+'^@txjs/bool(.*)$':   '<rootDir>/packages/bool/src$1'
+'^@txjs/shared(.*)$': '<rootDir>/packages/shared/src$1'
+'^@txjs/bem(.*)$':    '<rootDir>/packages/bem/src$1'
+```
+
+### 测试文件位置
+
+```
+packages/<name>/tests/*.test.ts
+```
+
+## 常用命令
 
 ```bash
 # 构建所有包
@@ -83,85 +148,10 @@ pnpm test
 
 # 测试单个包
 pnpm --filter @txjs/bool test
+
+# 清理所有 dist
+pnpm run clean:dist
+
+# 清理所有 node_modules
+pnpm run clean:nm
 ```
-
-## 包配置
-
-### build.json
-
-每个包根目录的 `build.json` 定义esbuild入口：
-
-```json
-[
-  {
-    "root": true,
-    "iife": true,
-    "globalName": "TBool",
-    "name": "index",
-    "filepath": "index.ts"
-  },
-  { "name": "isEqual", "filepath": "isEqual.ts" }
-  // ...
-]
-```
-
-- `root: true` - 入口为index，生成完整bundle
-- `iife: true` - 同时生成.min.js压缩版本
-- `globalName` - IIFE格式的全局变量名
-
-### tsconfig.json
-
-子包继承根配置，排除tests目录避免构建冲突：
-
-```json
-{
-  "extends": "../../tsconfig",
-  "compilerOptions": { "outDir": "./dist", "declaration": true },
-  "include": ["src/**/*.ts*", "types/**/*.ts*"],
-  "exclude": ["**/node_modules", "**/.*/", "tests/**/*"]
-}
-```
-
-## 测试
-
-测试文件位于 `packages/<name>/tests/*.test.ts`
-
-**导入方式：** 测试从构建产物导入
-
-```ts
-import { isEqual } from '../dist'
-```
-
-**Jest配置：** 每个有测试的子包独立配置
-
-- `packages/bool/jest.config.ts`
-- `packages/bem/jest.config.ts`
-- `packages/shared/jest.config.ts`
-- 使用 `ts-jest` 转换TypeScript
-- `moduleNameMapper` 将 `../dist` 映射到对应的 CJS 文件
-
-## 依赖关系
-
-```
-validator → shared → bool
-bem → bool
-shared → bool (workspace)
-```
-
-## 注意事项
-
-1. **types包** 无需构建，仅包含 `.d.ts` 文件直接发布
-2. **validator** 的 `antd.ts` 和 `vant.ts` 是独立的验证器集成
-3. **workspace依赖** 使用 `workspace:*` 协议
-
-## CJS 扩展名差异
-
-构建产物中 CJS 文件扩展名不一致：
-
-| 包 | CJS 扩展名 |
-|----|-----------|
-| bool | `.js` |
-| shared | `.js` |
-| bem | `.cjs.js` |
-| validator | `.js` |
-| make | `.js` |

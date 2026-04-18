@@ -1,5 +1,5 @@
-import type { ValidationRuleFunc } from '../validation'
+import type { RuleFn } from '../types'
 
-export const min: ValidationRuleFunc = (value, param) => {
+export const min: RuleFn = (value, param) => {
   return value >= param
 }

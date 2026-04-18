@@ -1,5 +1,5 @@
-import type { ValidationRuleFunc } from '../validation'
+import type { RuleFn } from '../types'
 
-export const contains: ValidationRuleFunc = (value, parma) => {
+export const contains: RuleFn = (value, parma) => {
   return value.indexOf(parma) !== -1
 }

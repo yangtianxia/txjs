@@ -1,8 +1,8 @@
 import { notNil, isString } from '@txjs/bool'
 import { isNonEmptyArray } from '../utils'
-import type { ValidationRuleFunc } from '../validation'
+import type { RuleFn } from '../types'
 
-export const required: ValidationRuleFunc = (value, param, type) => {
+export const required: RuleFn = (value, param, type) => {
   if (type === 'array') {
     return isNonEmptyArray(value)
   }

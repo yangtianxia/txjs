@@ -1,6 +1,6 @@
 import { isEmail } from '@txjs/bool'
-import type { ValidationRuleFunc } from '../validation'
+import type { RuleFn } from '../types'
 
-export const email: ValidationRuleFunc = (value) => {
+export const email: RuleFn = (value) => {
   return isEmail(value)
 }

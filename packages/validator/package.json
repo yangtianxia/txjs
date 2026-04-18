@@ -13,15 +13,25 @@
       "import": "./dist/index.esm.mjs",
       "require": "./dist/index.cjs.js"
     },
+    "./antd": {
+      "types": "./dist/antd.d.ts",
+      "import": "./dist/antd.mjs",
+      "require": "./dist/antd.js"
+    },
+    "./vant": {
+      "types": "./dist/vant.d.ts",
+      "import": "./dist/vant.mjs",
+      "require": "./dist/vant.js"
+    },
+    "./rules": {
+      "types": "./dist/rules.d.ts",
+      "import": "./dist/rules.mjs",
+      "require": "./dist/rules.js"
+    },
     "./locale/*": {
       "types": "./dist/locale/*.d.ts",
       "import": "./dist/locale/*.mjs",
       "require": "./dist/locale/*.js"
-    },
-    "./defaults": {
-      "types": "./dist/defaults.d.ts",
-      "import": "./dist/defaults.mjs",
-      "require": "./dist/defaults.js"
     }
   },
   "files": [
@@ -58,10 +68,6 @@
   "homepage": "https://github.com/yangtianxia/txjs/#readme",
   "dependencies": {
     "@txjs/bool": "workspace:*",
-    "@txjs/shared": "workspace:*",
-    "extend": "^3.0.2"
-  },
-  "devDependencies": {
-    "@types/extend": "^3.0.4"
+    "@txjs/shared": "workspace:*"
   }
 }

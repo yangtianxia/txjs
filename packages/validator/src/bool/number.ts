@@ -1,6 +1,6 @@
 import { isNumeric } from '@txjs/bool'
-import type { ValidationRuleFunc } from '../validation'
+import type { RuleFn } from '../types'
 
-export const number: ValidationRuleFunc = (value) => {
+export const number: RuleFn = (value) => {
   return isNumeric(value)
 }

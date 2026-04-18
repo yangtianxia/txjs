@@ -1,6 +1,6 @@
 import { isHttpUrl } from '@txjs/bool'
-import type { ValidationRuleFunc } from '../validation'
+import type { RuleFn } from '../types'
 
-export const httpUrl: ValidationRuleFunc = (value) => {
+export const httpUrl: RuleFn = (value) => {
   return isHttpUrl(value)
 }

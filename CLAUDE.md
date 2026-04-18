@@ -1,167 +1,91 @@
 # TxJS Monorepo
 
+## 协作规范
+
+- **提交消息不得包含任何 AI 工具的特征信息**（session 链接、署名等），与普通人工提交保持一致
+
 ## 项目结构
 
 ```
 txjs/
 ├── packages/
-│   ├── bool/        # 数据类型校验函数库
-│   ├── bem/         # CSS命名函数 (BEM规范)
-│   ├── shared/      # 常用工具函数库
-│   ├── make/        # 数字处理函数
-│   ├── types/       # TypeScript类型定义（仅.d.ts）
-│   └── validator/   # 表单验证（支持antd/vant）
-├── scripts/          # 构建脚本 (build.ts, logger.ts, schema.json)
-└── jest.config.ts   # Jest根配置（各包独立配置）
+│   ├── bool/       # @txjs/bool      数据类型校验
+│   ├── bem/        # @txjs/bem       BEM CSS 类名生成
+│   ├── shared/     # @txjs/shared    通用工具函数
+│   ├── types/      # @txjs/types     纯类型定义（无构建）
+│   └── validator/  # @txjs/validator 表单验证
+├── scripts/build.ts  # esbuild 构建脚本
+├── jest.config.ts    # Jest 根配置（所有包共用）
+└── package.json      # 工作区根（node >=18.12 <21，pnpm 9.x）
 ```
-
-## 包说明
-
-### bool
-
-数据类型校验函数库。
-
-**函数**: `is`, `isEqual`, `isEmail`, `isNumeric`, `isHttpUrl`, `isLandline`, `isBlob`, `containsHTML`, `isNonEmptyObject`, `isNonVirtualPhone`
-
-### shared
-
-常用工具函数库。
-
-**函数**: `cloneDeep`, `camelize`, `camelToKebab`, `chunk`, `clamp`, `interceptor`, `interceptorAll`, `noop`, `omit`, `padStr`, `pick`, `toArray`, `shallowMerge`, `toFixed`, `forEachObject`
-
-### bem
-
-CSS命名函数，遵循BEM规范。
-
-### make
-
-数字处理函数库。
-
-### types
-
-仅发布TypeScript类型定义文件（`.d.ts`），无构建产物。
-
-### validator
-
-表单验证库，支持antd和vant组件集成。
-
-## 构建与测试
-
-### 构建流程
-
-每个包的 `package.json` 定义了相同的构建脚本：
-
-```bash
-"scripts": {
-  "clean": "rimraf ./dist",
-  "lint": "eslint ./src --ext .ts",
-  "build:types": "tsc -p ./tsconfig.json --emitDeclarationOnly",  # 生成 .d.ts
-  "build:bundle": "ts-node ../../scripts/build.ts",               # esbuild打包
-  "build": "npm run clean && npm run lint && npm run build:types && npm run build:bundle",
-  "test": "jest"
-}
-```
-
-**构建产物说明：**
-
-- `dist/index.d.ts` - TypeScript声明
-- `dist/index.esm.mjs` - ES Module格式
-- `dist/index.cjs.js` - CommonJS格式
-- `dist/index.min.js` - IIFE压缩格式（部分包）
-
-### 命令
-
-```bash
-# 构建所有包
-pnpm build
-
-# 构建单个包
-pnpm --filter @txjs/bool build
-
-# 测试所有包
-pnpm test
-
-# 测试单个包
-pnpm --filter @txjs/bool test
-```
-
-## 包配置
-
-### build.json
-
-每个包根目录的 `build.json` 定义esbuild入口：
-
-```json
-[
-  {
-    "root": true,
-    "iife": true,
-    "globalName": "TBool",
-    "name": "index",
-    "filepath": "index.ts"
-  },
-  { "name": "isEqual", "filepath": "isEqual.ts" }
-  // ...
-]
-```
-
-- `root: true` - 入口为index，生成完整bundle
-- `iife: true` - 同时生成.min.js压缩版本
-- `globalName` - IIFE格式的全局变量名
-
-### tsconfig.json
-
-子包继承根配置，排除tests目录避免构建冲突：
-
-```json
-{
-  "extends": "../../tsconfig",
-  "compilerOptions": { "outDir": "./dist", "declaration": true },
-  "include": ["src/**/*.ts*", "types/**/*.ts*"],
-  "exclude": ["**/node_modules", "**/.*/", "tests/**/*"]
-}
-```
-
-## 测试
-
-测试文件位于 `packages/<name>/tests/*.test.ts`
-
-**导入方式：** 测试从构建产物导入
-
-```ts
-import { isEqual } from '../dist'
-```
-
-**Jest配置：** 每个有测试的子包独立配置
-
-- `packages/bool/jest.config.ts`
-- `packages/bem/jest.config.ts`
-- `packages/shared/jest.config.ts`
-- 使用 `ts-jest` 转换TypeScript
-- `moduleNameMapper` 将 `../dist` 映射到对应的 CJS 文件
 
 ## 依赖关系
 
 ```
 validator → shared → bool
-bem → bool
-shared → bool (workspace)
+bem       → bool
 ```
 
-## 注意事项
+跨包依赖使用 `workspace:*` 协议。
 
-1. **types包** 无需构建，仅包含 `.d.ts` 文件直接发布
-2. **validator** 的 `antd.ts` 和 `vant.ts` 是独立的验证器集成
-3. **workspace依赖** 使用 `workspace:*` 协议
+## 常用命令
 
-## CJS 扩展名差异
+```bash
+pnpm build                      # 构建所有包
+pnpm --filter @txjs/bool build  # 构建单个包
+pnpm test                       # 测试所有包
+pnpm --filter @txjs/bool test   # 测试单个包
+```
 
-构建产物中 CJS 文件扩展名不一致：
+## 测试
 
-| 包 | CJS 扩展名 |
-|----|-----------|
-| bool | `.js` |
-| shared | `.js` |
-| bem | `.cjs.js` |
-| validator | `.js` |
-| make | `.js` |
+- 测试文件：`packages/<name>/tests/*.test.ts`
+- 统一使用根目录 `jest.config.ts`，**无需先构建**
+- `moduleNameMapper` 将 `@txjs/*` 直接映射到对应包的 `src/`，绕过 `dist/`
+
+```ts
+// jest.config.ts 中的映射
+'^@txjs/bool(.*)$':   '<rootDir>/packages/bool/src$1'
+'^@txjs/shared(.*)$': '<rootDir>/packages/shared/src$1'
+'^@txjs/bem(.*)$':    '<rootDir>/packages/bem/src$1'
+```
+
+## 构建
+
+### 流程
+
+每个包执行：`clean → lint → build:types（tsc）→ build:bundle（esbuild）`
+
+### build.json
+
+每个包根目录的 `build.json` 控制 esbuild 入口，可以是单个对象或数组：
+
+```jsonc
+// 单入口（bool、shared）
+{ "root": true, "iife": true, "name": "index", "filepath": "index.ts", "globalName": "txjs_bool" }
+
+// 多入口（validator）
+[
+  { "root": true, "iife": true, "name": "index", "filepath": "index.ts", "globalName": "txjs_validator" },
+  { "name": "defaults", "filepath": "defaults.ts", ... },
+  { "name": "zhCN", "filepath": "locale/zhCN.ts", "outDir": "locale", ... }
+]
+```
+
+**字段说明：**
+- `root: true` — 主入口，输出 `{name}.esm.mjs` / `{name}.cjs.js`
+- 非 root 入口 — 输出 `{name}.mjs` / `{name}.js`，并将其他入口标记为 external
+- `iife: true` — 额外输出 `{name}.min.js`（压缩 IIFE）
+- `outDir` — 输出到 `dist/{outDir}/` 子目录
+- 无 `build.json` 时（如 bem）— 回退为默认值 `{ root: true, name: 'index', filepath: 'index.ts' }`
+
+### 构建产物
+
+```
+dist/index.d.ts        # TypeScript 声明（tsc 生成）
+dist/index.esm.mjs     # ES Module
+dist/index.cjs.js      # CommonJS
+dist/index.min.js      # IIFE 压缩版（iife: true 时生成）
+```
+
+`types` 包无构建产物，直接发布 `index.d.ts`。

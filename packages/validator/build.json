@@ -8,9 +8,21 @@
   },
   {
     "iife": true,
-    "name": "defaults",
-    "globalName": "txjs_validator_defaults",
-    "filepath": "defaults.ts"
+    "name": "antd",
+    "filepath": "antd.ts",
+    "globalName": "txjs_validator_antd"
+  },
+  {
+    "iife": true,
+    "name": "vant",
+    "filepath": "vant.ts",
+    "globalName": "txjs_validator_vant"
+  },
+  {
+    "iife": true,
+    "name": "rules",
+    "filepath": "rules.ts",
+    "globalName": "txjs_validator_rules"
   },
   {
     "name": "zhCN",

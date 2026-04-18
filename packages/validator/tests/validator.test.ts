@@ -308,6 +308,21 @@ describe('VantValidator', () => {
     })
   })
 
+  describe('validateEmpty', () => {
+    test('无 required 时 validateEmpty 为 false（空值跳过）', () => {
+      const v = makeVant()
+      const [tel] = v.schema({ phone: { rules: ['telephone'] } }).phone
+      expect(tel.validateEmpty).toBe(false)
+    })
+
+    test('有 required 时 validateEmpty 为 true', () => {
+      const v = makeVant()
+      const rules = v.schema({ phone: { rules: ['required', 'telephone'] } })
+      expect(rules.phone[0].validateEmpty).toBe(true)
+      expect(rules.phone[1].validateEmpty).toBe(true)
+    })
+  })
+
   describe('返回值格式', () => {
     test('校验通过 validator 返回 true', () => {
       const v = makeVant()
@@ -319,28 +334,24 @@ describe('VantValidator', () => {
       const v = makeVant()
       const [req] = v.schema({ name: { label: '姓名', rules: ['required'] } }).name
       expect(runVant(req, '')).toBe(false)
-      const msg = typeof req.message === 'function' ? req.message() : req.message
+      // message 对齐 Vant FieldRuleMessage：(value, rule) => string
+      const msg = typeof req.message === 'function' ? req.message('', req) : req.message
       expect(msg).toContain('姓名')
-    })
-
-    test('空值且无 required 时返回 true', () => {
-      const v = makeVant()
-      const [tel] = v.schema({ phone: { rules: ['telephone'] } }).phone
-      expect(runVant(tel, '')).toBe(true)
     })
   })
 
   describe('locale 切换', () => {
-    test('errorPhase sync：message 为 getter，随 locale 变化', () => {
+    test('errorPhase sync：message 为函数，随 locale 变化', () => {
       const v = makeVant({ errorPhase: 'sync' })
       const [req] = v.schema({ name: { label: 'name', rules: ['required'] } }).name
 
       expect(typeof req.message).toBe('function')
-      const getMsg = req.message as () => string
+      const getMsg = (r: typeof req) =>
+        typeof r.message === 'function' ? r.message('', r) : r.message
 
-      expect(getMsg()).toMatch(/请输入/)
+      expect(getMsg(req)).toMatch(/请输入/)
       v.setLocale('enUS')
-      expect(getMsg()).toMatch(/Please enter/)
+      expect(getMsg(req)).toMatch(/Please enter/)
     })
 
     test('errorPhase pre：message 为静态字符串', () => {

@@ -1,6 +1,6 @@
 import { isPromise } from '@txjs/bool'
 import { BaseValidator } from './base'
-import { isEmptyFieldValue, formatTpl, formatTplByValue } from './utils'
+import { formatTpl, formatTplByValue } from './utils'
 import type { BaseTrigger, TriggerType, LocaleMap, RuleDefMap } from './types'
 import type { ValidatorRuleOptions, CustomRuleOptions } from './base'
 
@@ -17,14 +17,16 @@ function mapTrigger(trigger: BaseTrigger): string | string[] {
   return TRIGGER_MAP[trigger as TriggerType] ?? trigger
 }
 
-// vant 规则格式
-// message 支持 string 或 getter（兼容 Ref<string> 的响应式场景）
-// validator 签名: (value, rule) => boolean | Promise<boolean>
-// 自定义验证（custom）抛出异常时直接通过 validator 返回错误字符串
+// 对齐 Vant 4 FieldRule 类型
+// https://github.com/youzan/vant - packages/vant/src/field/types.ts
+export type VantRuleMessage = string | ((value: any, rule: VantRule) => string)
+
 export type VantRule = {
   trigger?: string | string[]
-  message?: string | (() => string)
-  validator: (value: any) => boolean | string | Promise<boolean | string>
+  // false = 空值时跳过验证（等价于非 required 字段），默认 true
+  validateEmpty?: boolean
+  message?: VantRuleMessage
+  validator?: (value: any, rule: VantRule) => boolean | string | Promise<boolean | string>
 }
 
 export class VantValidator<
@@ -35,16 +37,17 @@ export class VantValidator<
   protected createValidatorRule(options: ValidatorRuleOptions<Trigger>): VantRule {
     const { type, trigger, message, validators, param, hasRequired } = options
 
+    // 用 Vant 内置的 validateEmpty 控制空值跳过逻辑，无需在 validator 内手动判断
+    // hasRequired=false 时 validateEmpty=false，Vant 会跳过空值校验
     return {
       trigger: mapTrigger(trigger),
-      // message 作为独立字段，支持 getter 实现响应式 locale 切换
-      message,
-      validator: (value) => {
-        if (!hasRequired && isEmptyFieldValue(type, value)) {
-          return true
-        }
-        return validators.every((fn) => fn(value, param, type))
-      },
+      validateEmpty: hasRequired,
+      // message 对齐 Vant FieldRuleMessage 签名：(value, rule) => string
+      message:
+        typeof message === 'function'
+          ? (_value: any, _rule: VantRule) => (message as () => string)()
+          : message,
+      validator: (value) => validators.every((fn) => fn(value, param, type)),
     }
   }
 
@@ -53,11 +56,8 @@ export class VantValidator<
 
     return {
       trigger: mapTrigger(trigger),
+      validateEmpty: hasRequired,
       validator: (value) => {
-        if (!hasRequired && isEmptyFieldValue(type, value)) {
-          return true
-        }
-
         const formatError = (error: Error) => {
           const msg = formatTpl({ label, message: error.message })
           return formatTplByValue(msg, value) || false

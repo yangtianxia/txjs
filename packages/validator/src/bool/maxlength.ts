@@ -1,5 +1,5 @@
-import type { ValidationRuleFunc } from '../validation'
+import type { RuleFn } from '../types'
 
-export const maxlength: ValidationRuleFunc = (value, param) => {
+export const maxlength: RuleFn = (value, param) => {
   return value.length <= param
 }

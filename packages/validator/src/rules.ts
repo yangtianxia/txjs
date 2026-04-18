@@ -1,4 +1,4 @@
-import type { BaseTrigger, PropType } from './types'
+import type { BaseTrigger, RuleDefMap } from './types'
 import { absoluteUrl } from './bool/absoluteUrl'
 import { contains } from './bool/contains'
 import { required } from './bool/required'
@@ -16,14 +16,14 @@ import { range } from './bool/range'
 import { rangelength } from './bool/rangelength'
 import { telephone } from './bool/telephone'
 
-export default {
+const defaultRules = {
   absoluteUrl: {
     type: Boolean,
     trigger: 'blur' as BaseTrigger,
     validator: absoluteUrl,
   },
   contains: {
-    type: null as unknown as PropType<any>,
+    type: null,
     validator: contains,
   },
   email: {
@@ -71,11 +71,11 @@ export default {
     validator: number,
   },
   range: {
-    type: Array as PropType<number[]>,
+    type: Array,
     validator: range,
   },
   rangelength: {
-    type: Array as PropType<number[]>,
+    type: Array,
     validator: rangelength,
   },
   required: {
@@ -88,4 +88,6 @@ export default {
     trigger: 'blur' as BaseTrigger,
     validator: telephone,
   },
-}
+} satisfies RuleDefMap
+
+export default defaultRules

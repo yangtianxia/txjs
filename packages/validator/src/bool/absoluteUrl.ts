@@ -1,6 +1,6 @@
 import { isAbsoluteUrl } from '@txjs/bool'
-import type { ValidationRuleFunc } from '../validation'
+import type { RuleFn } from '../types'
 
-export const absoluteUrl: ValidationRuleFunc = (value) => {
+export const absoluteUrl: RuleFn = (value) => {
   return isAbsoluteUrl(value)
 }

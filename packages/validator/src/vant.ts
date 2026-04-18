@@ -18,9 +18,12 @@ function mapTrigger(trigger: BaseTrigger): string | string[] {
 }
 
 // vant 规则格式
-// validator 签名: (value, rule) => boolean | string | Promise<boolean | string>
+// message 支持 string 或 getter（兼容 Ref<string> 的响应式场景）
+// validator 签名: (value, rule) => boolean | Promise<boolean>
+// 自定义验证（custom）抛出异常时直接通过 validator 返回错误字符串
 export type VantRule = {
   trigger?: string | string[]
+  message?: string | (() => string)
   validator: (value: any) => boolean | string | Promise<boolean | string>
 }
 
@@ -34,16 +37,13 @@ export class VantValidator<
 
     return {
       trigger: mapTrigger(trigger),
+      // message 作为独立字段，支持 getter 实现响应式 locale 切换
+      message,
       validator: (value) => {
         if (!hasRequired && isEmptyFieldValue(type, value)) {
           return true
         }
-        const valid = validators.every((fn) => fn(value, param, type))
-        if (!valid) {
-          const msg = typeof message === 'function' ? message() : message
-          return formatTplByValue(msg, value) || false
-        }
-        return true
+        return validators.every((fn) => fn(value, param, type))
       },
     }
   }

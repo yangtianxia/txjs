@@ -309,18 +309,18 @@ describe('VantValidator', () => {
   })
 
   describe('返回值格式', () => {
-    test('校验通过返回 true', () => {
+    test('校验通过 validator 返回 true', () => {
       const v = makeVant()
       const [tel] = v.schema({ phone: { rules: ['telephone'] } }).phone
       expect(runVant(tel, '13800138000')).toBe(true)
     })
 
-    test('校验失败返回错误字符串', () => {
+    test('校验失败 validator 返回 false，message 字段包含错误消息', () => {
       const v = makeVant()
       const [req] = v.schema({ name: { label: '姓名', rules: ['required'] } }).name
-      const result = runVant(req, '')
-      expect(typeof result).toBe('string')
-      expect(result).toContain('姓名')
+      expect(runVant(req, '')).toBe(false)
+      const msg = typeof req.message === 'function' ? req.message() : req.message
+      expect(msg).toContain('姓名')
     })
 
     test('空值且无 required 时返回 true', () => {
@@ -331,16 +331,22 @@ describe('VantValidator', () => {
   })
 
   describe('locale 切换', () => {
-    test('切换 locale 后错误消息语言变化', () => {
+    test('errorPhase sync：message 为 getter，随 locale 变化', () => {
       const v = makeVant({ errorPhase: 'sync' })
       const [req] = v.schema({ name: { label: 'name', rules: ['required'] } }).name
 
-      const zhResult = runVant(req, '')
-      expect(zhResult).toMatch(/请输入/)
+      expect(typeof req.message).toBe('function')
+      const getMsg = req.message as () => string
 
+      expect(getMsg()).toMatch(/请输入/)
       v.setLocale('enUS')
-      const enResult = runVant(req, '')
-      expect(enResult).toMatch(/Please enter/)
+      expect(getMsg()).toMatch(/Please enter/)
+    })
+
+    test('errorPhase pre：message 为静态字符串', () => {
+      const v = makeVant({ errorPhase: 'pre' })
+      const [req] = v.schema({ name: { label: 'name', rules: ['required'] } }).name
+      expect(typeof req.message).toBe('string')
     })
   })
 

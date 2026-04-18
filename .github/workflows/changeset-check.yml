@@ -4,6 +4,14 @@ on:
   pull_request:
     branches:
       - master
+    paths-ignore:
+      - '**/*.md'
+      - '.github/**'
+      - '.changeset/**'
+      - 'jest.config.ts'
+      - 'tsconfig*.json'
+      - '.eslintrc*'
+      - '.prettierrc*'
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}

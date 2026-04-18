@@ -51,7 +51,7 @@ export type NamedRuleItem<R extends RuleDefMap> = {
 
 export type CustomRuleItem = {
   /** 内联自定义校验函数 */
-  custom: SchemaCustomFn
+  validator: SchemaCustomFn
   /** 触发时机 */
   trigger?: BaseTrigger
 }

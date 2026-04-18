@@ -248,7 +248,7 @@ describe('AntdValidator', () => {
       const [custom] = v.schema({
         tags: {
           type: 'array',
-          rules: [{ custom: () => { throw new Error('至少选一项') } }],
+          rules: [{ validator: () => { throw new Error('至少选一项') } }],
         },
       }).tags
       const err = await runAntd(custom, []).catch((e: Error) => e)
@@ -258,7 +258,7 @@ describe('AntdValidator', () => {
     test('custom 函数正常返回时通过', async () => {
       const v = makeAntd()
       const [custom] = v.schema({
-        tags: { rules: [{ custom: () => {} }] },
+        tags: { rules: [{ validator: () => {} }] },
       }).tags
       await expect(runAntd(custom, 'anything')).resolves.toBeUndefined()
     })
@@ -266,7 +266,7 @@ describe('AntdValidator', () => {
     test('custom 函数返回 rejected Promise 时失败', async () => {
       const v = makeAntd()
       const [custom] = v.schema({
-        x: { rules: [{ custom: () => Promise.reject(new Error('异步失败')) }] },
+        x: { rules: [{ validator: () => Promise.reject(new Error('异步失败')) }] },
       }).x
       await expect(runAntd(custom, 'val')).rejects.toThrow('异步失败')
     })
@@ -276,7 +276,7 @@ describe('AntdValidator', () => {
       const [custom] = v.schema({
         name: {
           rules: [{
-            custom: () => { throw new Error('不该执行') },
+            validator: () => { throw new Error('不该执行') },
           }],
         },
       }).name
@@ -350,7 +350,7 @@ describe('VantValidator', () => {
       const [custom] = v.schema({
         tags: {
           type: 'array',
-          rules: [{ custom: () => { throw new Error('至少选一项') } }],
+          rules: [{ validator: () => { throw new Error('至少选一项') } }],
         },
       }).tags
       const result = runVant(custom, [1])
@@ -360,7 +360,7 @@ describe('VantValidator', () => {
     test('custom 正常时返回 true', () => {
       const v = makeVant()
       const [custom] = v.schema({
-        x: { rules: [{ custom: () => {} }] },
+        x: { rules: [{ validator: () => {} }] },
       }).x
       expect(runVant(custom, 'val')).toBe(true)
     })
@@ -368,7 +368,7 @@ describe('VantValidator', () => {
     test('custom 返回 resolved Promise 时通过', async () => {
       const v = makeVant()
       const [custom] = v.schema({
-        x: { rules: [{ custom: () => Promise.resolve() }] },
+        x: { rules: [{ validator: () => Promise.resolve() }] },
       }).x
       await expect(runVant(custom, 'val')).resolves.toBe(true)
     })

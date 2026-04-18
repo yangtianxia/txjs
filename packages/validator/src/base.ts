@@ -165,7 +165,7 @@ export abstract class BaseValidator<
             validators: toArray(rule.validator),
           })
         )
-      } else if ('custom' in item) {
+      } else if ('validator' in item && !('rule' in item)) {
         output.push(this.#buildCustomRule(item, fieldKey, label, type, fieldTrigger, hasRequired))
       } else {
         const namedItem = item as NamedRuleItem<R>
@@ -250,14 +250,14 @@ export abstract class BaseValidator<
     fieldTrigger: BaseTrigger | undefined,
     hasRequired: boolean
   ): OutputRule {
-    if (!isFunction(item.custom)) {
-      printWarn(`"${fieldKey}" custom validator must be a function.`)
+    if (!isFunction(item.validator)) {
+      printWarn(`"${fieldKey}" validator must be a function.`)
     }
     return this.createCustomRule({
       type,
       trigger: (item.trigger ?? fieldTrigger ?? this.#trigger) as Trigger,
       label,
-      validator: item.custom,
+      validator: item.validator,
       hasRequired,
     })
   }

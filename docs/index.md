@@ -8,7 +8,7 @@ hero:
   actions:
     - theme: brand
       text: 快速开始
-      link: /packages/validator/
+      link: /packages/bool
     - theme: alt
       text: GitHub
       link: https://github.com/yangtianxia/txjs
@@ -23,7 +23,4 @@ features:
   - title: '@txjs/shared'
     details: 实用工具集合，包含深拷贝、对象操作、字符串转换、拦截器管理等
     link: /packages/shared
-  - title: '@txjs/validator'
-    details: 表单验证库，内置 16 条规则，支持 Antd 和 Vant 两种适配器，多语言切换
-    link: /packages/validator/
 ---

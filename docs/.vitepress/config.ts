@@ -8,7 +8,7 @@ export default defineConfig({
   themeConfig: {
     nav: [
       { text: '首页', link: '/' },
-      { text: '文档', link: '/packages/validator/' },
+      { text: '文档', link: '/packages/bool' },
       {
         text: 'GitHub',
         link: 'https://github.com/yangtianxia/txjs',
@@ -23,15 +23,6 @@ export default defineConfig({
           { text: '@txjs/bem', link: '/packages/bem' },
           { text: '@txjs/shared', link: '/packages/shared' },
           { text: '@txjs/types', link: '/packages/types' },
-        ],
-      },
-      {
-        text: '@txjs/validator',
-        items: [
-          { text: '介绍', link: '/packages/validator/' },
-          { text: '内置规则', link: '/packages/validator/rules' },
-          { text: 'AntdValidator', link: '/packages/validator/antd' },
-          { text: 'VantValidator', link: '/packages/validator/vant' },
         ],
       },
     ],

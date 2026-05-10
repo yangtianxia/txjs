@@ -3,16 +3,21 @@
   "version": "1.0.6",
   "description": "数据类型的校验工具，支持邮箱、手机号、URL、深度相等比较等",
   "sideEffects": false,
-  "main": "./dist/index.cjs.js",
-  "module": "./dist/index.esm.mjs",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
   "unpkg": "./dist/index.min.js",
   "jsdelivr": "./dist/index.min.js",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
-      "import": "./dist/index.esm.mjs",
-      "require": "./dist/index.cjs.js"
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.cjs"
+    },
+    "./*": {
+      "types": "./dist/*.d.ts",
+      "import": "./dist/*.mjs",
+      "require": "./dist/*.cjs"
     }
   },
   "files": [
@@ -23,10 +28,8 @@
     "clean": "rimraf ./dist",
     "lint": "eslint ./src --ext .ts",
     "format": "prettier ./src --write",
-    "build:types": "tsc -p ./tsconfig.json --emitDeclarationOnly",
-    "build:bundle": "ts-node ../../scripts/build.ts",
-    "build": "npm run clean && npm run lint && npm run build:types && npm run build:bundle",
-    "dev": "npm run build -- --w",
+    "build": "tsup",
+    "dev": "tsup --watch",
     "test": "jest --config ../../jest.config.ts --testPathPattern=packages/bool"
   },
   "publishConfig": {

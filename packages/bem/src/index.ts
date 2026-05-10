@@ -26,11 +26,12 @@ function rootCls(name: string, mods?: Mods): string {
   }
 
   if (isArray(mods)) {
-    return mods.reduce<string>((ret, cur) => ret + rootCls(name, cur), '')
+    return (mods as Base[]).reduce<string>((ret, cur) => ret + rootCls(name, cur), '')
   }
 
-  return Object.keys(mods).reduce(
-    (ret, cur) => ret + (mods[cur] ? rootCls(name, cur) : ''),
+  const modsRecord = mods as Record<string, any>
+  return Object.keys(modsRecord).reduce(
+    (ret, cur) => ret + (modsRecord[cur] ? rootCls(name, cur) : ''),
     ''
   )
 }
@@ -55,7 +56,10 @@ function moduleCls(cls: Cls, bem: ReturnType<typeof bemCls>) {
       .split(' ')
       .map((item) => (isAlways ? cls[item] || item : cls[item]))
       .join(' ')
-    return modules || (isString(el) ? cls[el] : isAlways ? str : '')
+    if (isString(el)) {
+      return modules || cls[el]
+    }
+    return modules || (isAlways ? str : '')
   }
 }
 
@@ -87,7 +91,7 @@ function BEM(name: string, cls: Cls): [string, ReturnType<typeof bemCls>]
 function BEM(name: string, cls?: Cls): [string, ReturnType<typeof bemCls>]
 function BEM(name: string, cls?: Cls) {
   const bem = bemCls(name)
-  return isPlainObject(cls) ? [name, moduleCls(cls, bem)] : [name, bem]
+  return isPlainObject(cls) ? [name, moduleCls(cls as Cls, bem)] : [name, bem]
 }
 
 BEM.config = function (partial: Partial<ConfigOption>) {

@@ -1,7 +1,0 @@
-{
-  "root": true,
-  "iife": true,
-  "name": "index",
-  "filepath": "index.ts",
-  "globalName": "txjs_bool"
-}

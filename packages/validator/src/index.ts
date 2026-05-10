@@ -1,8 +1,0 @@
-export * from './types'
-export { BaseValidator } from './base'
-export type { ValidatorRuleOptions, CustomRuleOptions } from './base'
-export { AntdValidator } from './antd'
-export type { AntdRule } from './antd'
-export { VantValidator } from './vant'
-export type { VantRule } from './vant'
-export { formatTpl, formatTplByValue } from './utils'

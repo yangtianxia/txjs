@@ -235,8 +235,16 @@ promise.catch(noop)
 
 调用单个拦截器，根据返回值决定继续或取消。支持同步与异步。
 
+`Interceptor` 类型由 `@txjs/shared` 直接导出：
+
 ```ts
-type Interceptor = (...args: any[]) => Promise<boolean> | boolean | undefined | void
+import { callInterceptor, type Interceptor } from '@txjs/shared'
+```
+
+```ts
+interface Interceptor {
+  (...args: any[]): Promise<boolean> | boolean | undefined | void
+}
 
 function callInterceptor(
   interceptor: Interceptor | undefined,

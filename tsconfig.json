@@ -1,16 +1,16 @@
 {
   "compilerOptions": {
     "baseUrl": ".",
-    "jsx": "preserve",
     "strict": true,
     "target": "ES2015",
     "module": "NodeNext",
+    "moduleResolution": "nodenext",
     "skipLibCheck": true,
     "esModuleInterop": true,
-    "moduleResolution": "nodenext",
-    "lib": [
-      "ES2015",
-      "DOM"
-    ]
-  }
+    "declaration": true,
+    "outDir": "./dist",
+    "lib": ["ES2015", "DOM"]
+  },
+  "include": ["src/**/*.ts"],
+  "exclude": ["node_modules", "dist"]
 }
